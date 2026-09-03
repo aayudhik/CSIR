@@ -1,19 +1,418 @@
 {
-  "version": "V3",
-  "features": [
-    "Adaptive Study Engine",
-    "Topic syllabus map",
-    "Study planner",
-    "Resource library",
-    "PYQ workflow",
-    "Mock workflow",
-    "Spaced revision",
-    "Readiness analytics",
-    "JRF to PhD"
+  "version": "V4",
+  "units": [
+    {
+      "name": "Mathematical Physics",
+      "topics": [
+        {
+          "name": "Vector algebra & vector calculus",
+          "level": "Foundation",
+          "book": "Arfken / Boas",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Linear algebra, matrices & eigenvalues",
+          "level": "Foundation",
+          "book": "Arfken / Boas",
+          "time": "4–6 h"
+        },
+        {
+          "name": "ODEs and special functions",
+          "level": "Core",
+          "book": "Arfken / Riley",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Fourier series, transforms & Laplace transforms",
+          "level": "Core",
+          "book": "Arfken / Boas",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Complex analysis",
+          "level": "Core",
+          "book": "Arfken / Boas",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Probability and statistics",
+          "level": "Core",
+          "book": "Arfken / Walpole",
+          "time": "3–5 h"
+        },
+        {
+          "name": "Numerical methods",
+          "level": "Core",
+          "book": "Numerical Recipes / standard notes",
+          "time": "3–5 h"
+        }
+      ]
+    },
+    {
+      "name": "Classical Mechanics",
+      "topics": [
+        {
+          "name": "Lagrangian mechanics",
+          "level": "Foundation",
+          "book": "Goldstein",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Hamiltonian mechanics",
+          "level": "Core",
+          "book": "Goldstein",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Central force motion",
+          "level": "Core",
+          "book": "Goldstein",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Small oscillations & normal modes",
+          "level": "Core",
+          "book": "Goldstein",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Rigid body dynamics",
+          "level": "Core",
+          "book": "Goldstein",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Special relativity",
+          "level": "Foundation",
+          "book": "Taylor & Wheeler / standard text",
+          "time": "3–5 h"
+        }
+      ]
+    },
+    {
+      "name": "Electromagnetic Theory",
+      "topics": [
+        {
+          "name": "Electrostatics & boundary-value problems",
+          "level": "Foundation",
+          "book": "Griffiths",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Magnetostatics",
+          "level": "Foundation",
+          "book": "Griffiths",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Maxwell equations & electromagnetic waves",
+          "level": "Core",
+          "book": "Griffiths",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Potentials and gauge",
+          "level": "Core",
+          "book": "Griffiths",
+          "time": "3–5 h"
+        },
+        {
+          "name": "Reflection, refraction & polarization",
+          "level": "Core",
+          "book": "Griffiths",
+          "time": "4–6 h"
+        }
+      ]
+    },
+    {
+      "name": "Quantum Mechanics",
+      "topics": [
+        {
+          "name": "Wave mechanics & Schrödinger equation",
+          "level": "Foundation",
+          "book": "Griffiths",
+          "time": "5–7 h"
+        },
+        {
+          "name": "One-dimensional potentials",
+          "level": "Foundation",
+          "book": "Griffiths",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Harmonic oscillator",
+          "level": "Core",
+          "book": "Griffiths / Sakurai",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Angular momentum & spin",
+          "level": "Core",
+          "book": "Griffiths / Sakurai",
+          "time": "6–8 h"
+        },
+        {
+          "name": "Hydrogen atom",
+          "level": "Core",
+          "book": "Griffiths",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Perturbation & variational methods",
+          "level": "Advanced",
+          "book": "Griffiths / Sakurai",
+          "time": "6–8 h"
+        },
+        {
+          "name": "WKB approximation & scattering",
+          "level": "Advanced",
+          "book": "Griffiths",
+          "time": "5–7 h"
+        }
+      ]
+    },
+    {
+      "name": "Thermodynamics & Statistical Physics",
+      "topics": [
+        {
+          "name": "Thermodynamic laws & entropy",
+          "level": "Foundation",
+          "book": "Kittel & Kroemer",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Thermodynamic potentials & Maxwell relations",
+          "level": "Core",
+          "book": "Kittel & Kroemer",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Kinetic theory",
+          "level": "Foundation",
+          "book": "Reif / Kittel",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Ensembles & partition functions",
+          "level": "Core",
+          "book": "Kittel & Kroemer",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Bose-Einstein & Fermi-Dirac statistics",
+          "level": "Advanced",
+          "book": "Kittel & Kroemer",
+          "time": "5–7 h"
+        }
+      ]
+    },
+    {
+      "name": "Electronics & Experimental Methods",
+      "topics": [
+        {
+          "name": "Semiconductor devices",
+          "level": "Foundation",
+          "book": "standard electronics text",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Diodes, transistors & FETs",
+          "level": "Core",
+          "book": "standard electronics text",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Operational amplifiers",
+          "level": "Core",
+          "book": "standard electronics text",
+          "time": "3–5 h"
+        },
+        {
+          "name": "Digital logic",
+          "level": "Foundation",
+          "book": "standard electronics text",
+          "time": "3–5 h"
+        },
+        {
+          "name": "Measurements, errors & uncertainty",
+          "level": "Foundation",
+          "book": "standard laboratory text",
+          "time": "3–4 h"
+        }
+      ]
+    },
+    {
+      "name": "Atomic & Molecular Physics",
+      "topics": [
+        {
+          "name": "Atomic spectra & angular momentum",
+          "level": "Core",
+          "book": "Eisberg & Resnick",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Zeeman/Stark effects",
+          "level": "Advanced",
+          "book": "Eisberg & Resnick",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Lasers",
+          "level": "Core",
+          "book": "standard optics text",
+          "time": "3–5 h"
+        },
+        {
+          "name": "Rotational, vibrational & electronic spectra",
+          "level": "Core",
+          "book": "standard molecular physics text",
+          "time": "6–8 h"
+        }
+      ]
+    },
+    {
+      "name": "Nuclear & Particle Physics",
+      "topics": [
+        {
+          "name": "Nuclear properties & binding energy",
+          "level": "Foundation",
+          "book": "Krane",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Nuclear models",
+          "level": "Core",
+          "book": "Krane",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Radioactive decay & nuclear reactions",
+          "level": "Core",
+          "book": "Krane",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Particle classification, quarks & leptons",
+          "level": "Foundation",
+          "book": "standard particle text",
+          "time": "3–5 h"
+        }
+      ]
+    },
+    {
+      "name": "Condensed Matter / Solid State",
+      "topics": [
+        {
+          "name": "Crystal structure & reciprocal lattice",
+          "level": "Foundation",
+          "book": "Kittel",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Phonons & lattice vibrations",
+          "level": "Core",
+          "book": "Kittel",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Free-electron & band theory",
+          "level": "Core",
+          "book": "Kittel",
+          "time": "5–7 h"
+        },
+        {
+          "name": "Semiconductors",
+          "level": "Core",
+          "book": "Kittel",
+          "time": "4–6 h"
+        },
+        {
+          "name": "Magnetism & superconductivity",
+          "level": "Advanced",
+          "book": "Kittel",
+          "time": "6–8 h"
+        }
+      ]
+    }
   ],
-  "official_sources": {
-    "CSIR-HRDG": "https://www.csirhrdg.res.in/Home/Index/1/InPage/39/26",
-    "NTA Bulletin": "https://csirnet.nta.nic.in/information-bulletin/",
-    "NTA Documents": "https://csirnet.nta.nic.in/documents/"
-  }
+  "resources": [
+    {
+      "name": "CSIR-HRDG",
+      "title": "Official syllabus / exam scheme",
+      "type": "Official",
+      "url": "https://www.csirhrdg.res.in/Home/Index/1/InPage/39/26"
+    },
+    {
+      "name": "CSIR-HRDG",
+      "title": "Question papers & answer keys archive",
+      "type": "Official",
+      "url": "https://csirhrdg.res.in/Home/Index/1/Default/3456/81"
+    },
+    {
+      "name": "NTA CSIR-NET",
+      "title": "2026 Information Bulletin",
+      "type": "Official",
+      "url": "https://csirnet.nta.nic.in/information-bulletin/"
+    },
+    {
+      "name": "NTA CSIR-NET",
+      "title": "2026 documents: question papers / answer keys",
+      "type": "Official",
+      "url": "https://csirnet.nta.nic.in/documents/"
+    },
+    {
+      "name": "Arfken, Weber & Harris",
+      "title": "Mathematical Methods for Physicists",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Boas",
+      "title": "Mathematical Methods in the Physical Sciences",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Goldstein, Poole & Safko",
+      "title": "Classical Mechanics",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Griffiths",
+      "title": "Introduction to Electrodynamics",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Griffiths",
+      "title": "Introduction to Quantum Mechanics",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Sakurai & Napolitano",
+      "title": "Modern Quantum Mechanics",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Kittel & Kroemer",
+      "title": "Thermal Physics",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Krane",
+      "title": "Introductory Nuclear Physics",
+      "type": "Book",
+      "url": ""
+    },
+    {
+      "name": "Kittel",
+      "title": "Introduction to Solid State Physics",
+      "type": "Book",
+      "url": ""
+    }
+  ]
 }

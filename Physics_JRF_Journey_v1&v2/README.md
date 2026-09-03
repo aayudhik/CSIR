@@ -1,11 +1,23 @@
-# Physics JRF Journey V3
+# Physics JRF Journey V4
 
-V3 extends the V1/V2 portal with an adaptive Study Engine, readiness framework and a clearer learning workflow.
+V4 is the academic-engine layer.
 
-Open `index.html` directly, or deploy the folder through Netlify.
+Included:
+- topic-level Physical Sciences learning map
+- topic mastery workflow: concept → examples → practice → PYQ → error log → revision
+- adaptive daily planner
+- curated book list
+- official CSIR-HRDG and NTA links
+- PYQ integration architecture
+- mock-test and error-analysis workflow
+- spaced revision queue
+- JRF readiness decision rules
+- JRF → PhD tracker
 
-Official references checked September 3, 2026:
-- CSIR-HRDG Physical Sciences exam scheme/syllabus
-- NTA CSIR-NET 2026 Information Bulletin/Documents
+Official sources:
+CSIR-HRDG Physical Sciences: https://www.csirhrdg.res.in/Home/Index/1/InPage/39/26
+CSIR-HRDG Question/Answer archive: https://csirhrdg.res.in/Home/Index/1/Default/3456/81
+NTA documents: https://csirnet.nta.nic.in/documents/
+NTA 2026 bulletin: https://csirnet.nta.nic.in/information-bulletin/
 
-Next production milestone: real topic-by-topic videos, exact book chapters, verified PYQs with explanations, timed scoring, database/user accounts, and automatic readiness calculation.
+Important: CSIR-HRDG published a 2026 notice regarding existing and revised syllabi. The applicable exam cycle should be selected before finalizing the production syllabus map.
