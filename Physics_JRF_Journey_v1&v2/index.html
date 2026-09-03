@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Physics JRF Journey</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#e7eaf0;--brand:#5b5bd6;--brand2:#7c5cff;--good:#159570;--warn:#d98a00;--bad:#d84b5b;--shadow:0 8px 30px rgba(20,30,60,.07)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button{font:inherit;cursor:pointer}.app{display:flex;min-height:100vh}.side{width:255px;background:#10152a;color:#dbe2ff;padding:22px 15px;position:fixed;inset:0 auto 0 0;overflow:auto}.logo{font-size:20px;font-weight:800;padding:8px 10px 25px;color:#fff}.logo small{display:block;font-size:11px;color:#98a3c7;font-weight:500;margin-top:4px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#b9c2e2;text-align:left;padding:11px 12px;border-radius:10px}.nav button:hover,.nav button.active{background:#242b4a;color:#fff}.main{margin-left:255px;width:calc(100% - 255px);padding:28px 34px 50px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0;font-size:28px}.pill{padding:7px 11px;background:#eeedff;color:#5148c8;border-radius:999px;font-size:12px;font-weight:700}.hero{background:linear-gradient(120deg,#5b5bd6,#7c5cff);color:#fff;border-radius:22px;padding:28px;display:flex;justify-content:space-between;gap:25px;box-shadow:var(--shadow)}.hero h2{font-size:28px;margin:0 0 8px}.hero p{margin:0;color:#e7e7ff;max-width:650px}.hero .progress{min-width:220px}.bar{height:9px;background:rgba(255,255,255,.25);border-radius:9px;overflow:hidden;margin:13px 0}.bar i{display:block;height:100%;background:#fff;border-radius:9px}.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:var(--shadow)}.stat{font-size:27px;font-weight:800;margin:8px 0 3px}.muted{color:var(--muted);font-size:13px}.section{margin-top:25px}.section h3{margin:0 0 13px;font-size:18px}.task{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.task input{margin-top:4px;accent-color:var(--brand)}.tag{font-size:11px;font-weight:700;padding:5px 8px;border-radius:7px;background:#f0f2f8;color:#586174}.green{background:#e9f8f2;color:#12805f}.orange{background:#fff5df;color:#a96b00}.red{background:#ffebee;color:#b93648}.road{display:grid;gap:14px}.phase{display:grid;grid-template-columns:55px 1fr auto;gap:15px;align-items:center}.num{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:#ecebff;color:#5148c8;font-weight:800}.phase h4{margin:0 0 4px}.phase p{margin:0;color:var(--muted);font-size:13px}.phase .pct{font-weight:800;color:#555f76}.subject{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}.subject:last-child{border:0}.subject h4{margin:0 0 5px}.subject p{margin:0;color:var(--muted);font-size:12px}.topicgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.topic{padding:13px;border:1px solid var(--line);border-radius:12px;background:#fbfcff}.topic b{display:block;margin-bottom:5px}.topic span{font-size:12px;color:var(--muted);line-height:1.5}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}.input,.select{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink)}.btn{border:0;border-radius:10px;padding:10px 14px;background:var(--brand);color:#fff;font-weight:700}.btn.alt{background:#eef0f7;color:#384056}.resource{display:flex;justify-content:space-between;gap:15px;align-items:center}.resource h4{margin:0 0 5px}.resource a{color:#5148c8;text-decoration:none;font-size:12px;font-weight:700}.score{height:8px;background:#edf0f5;border-radius:8px;overflow:hidden}.score i{display:block;height:100%;background:#5b5bd6}.hidden{display:none}.footer{color:#8991a4;font-size:11px;margin-top:30px}.notice{padding:13px 15px;border-left:4px solid #d98a00;background:#fffaf0;border-radius:9px;color:#72500b;font-size:12px;line-height:1.5}
+@media(max-width:1000px){.g4,.g3{grid-template-columns:repeat(2,1fr)}.side{width:215px}.main{margin-left:215px;width:calc(100% - 215px);padding:22px}.hero{display:block}.hero .progress{margin-top:20px}.topicgrid{grid-template-columns:1fr}}
+@media(max-width:700px){.side{position:static;width:100%;height:auto}.app{display:block}.main{margin:0;width:100%}.g4,.g3,.g2{grid-template-columns:1fr}.top{display:block}.top .pill{display:inline-block;margin-top:8px}.phase{grid-template-columns:45px 1fr}.phase .pct{grid-column:2}}
+</style>
+
+<style id="v2-css">
+.ai-box{margin-top:15px;background:#f7f6ff;border:1px solid #dedcff;border-radius:14px;padding:15px}.ai-box b{color:#5148c8}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}.mini{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}.mini strong{font-size:19px;display:block}.mini span{font-size:11px;color:var(--muted)}
+.resource a.real{display:inline-block;margin-top:7px;padding:6px 9px;background:#eeedff;border-radius:7px}
+.lesson{border:1px solid var(--line);border-radius:13px;padding:15px;margin:10px 0;background:#fff}.lesson h4{margin:0 0 5px}.lesson .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.chips span{font-size:10px;padding:5px 7px;border-radius:7px;background:#f0f2f8;color:#566074;font-weight:700}
+@media(max-width:800px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <div class="logo">⚛ Physics JRF Journey<small>M.Sc. → CSIR-NET → JRF → PhD</small></div>
+  <div class="nav">
+    <button class="active" onclick="show('dashboard',this)">🏠 Dashboard</button>
+    <button onclick="show('roadmap',this)">🧭 Roadmap</button>
+    <button onclick="show('syllabus',this)">📋 Syllabus</button>
+    <button onclick="show('resources',this)">🎥 Resources</button>
+    <button onclick="show('pyq',this)">📝 PYQ Practice</button>
+    <button onclick="show('mock',this)">🧪 Mock Tests</button>
+    <button onclick="show('revision',this)">🔄 Revision Planner</button>
+    <button onclick="show('progress',this)">📊 Progress</button>
+    <button onclick="show('phd',this)">🎓 PhD Journey</button>
+    <button onclick="show('engine',this)">⚡ Study Engine</button>
+  </div>
+</aside>
+<main class="main">
+<section id="dashboard">
+  <div class="top"><h1>Good morning, Scholar 👋</h1><span class="pill">Mother + Aspirant Mode</span></div>
+  <div class="hero">
+    <div><h2>Your JRF journey starts here.</h2><p>A realistic, structured study system for rebuilding Physics fundamentals, mastering CSIR-NET Physical Sciences, and progressing toward JRF and PhD.</p><div class="bar"><i style="width:17%"></i></div><b>17% overall roadmap progress</b></div>
+    <div class="progress"><div class="muted" style="color:#e7e7ff">Current phase</div><h3 style="margin:6px 0">Phase 1 · Foundation</h3><div class="muted" style="color:#e7e7ff">Today's target · 2h 30m</div></div>
+  </div>
+  <div class="section grid g4">
+    <div class="card"><div class="muted">Syllabus</div><div class="stat">17%</div><div class="score"><i style="width:17%"></i></div></div>
+    <div class="card"><div class="muted">PYQs solved</div><div class="stat">38</div><div class="muted">Target: 1,500+</div></div>
+    <div class="card"><div class="muted">Mock average</div><div class="stat">—</div><div class="muted">Start after foundation</div></div>
+    <div class="card"><div class="muted">Study streak</div><div class="stat">7 days 🔥</div><div class="muted">Keep it sustainable</div></div>
+  </div>
+  <div class="section grid g2">
+    <div class="card"><h3>Today's plan</h3>
+      <label class="task"><input type="checkbox" data-task><span><b>Mathematical Physics</b><br><span class="muted">Vector calculus + differential equations · 45 min</span></span></label>
+      <label class="task"><input type="checkbox" data-task><span><b>Quantum Mechanics</b><br><span class="muted">Watch concept lesson + notes · 40 min</span></span></label>
+      <label class="task"><input type="checkbox" data-task><span><b>PYQ practice</b><br><span class="muted">10 Part-B questions · 35 min</span></span></label>
+      <label class="task"><input type="checkbox" data-task><span><b>Part-A aptitude</b><br><span class="muted">Quantitative reasoning · 20 min</span></span></label>
+      <label class="task"><input type="checkbox" data-task><span><b>Revision</b><br><span class="muted">Formula recall · 10 min</span></span></label>
+    </div>
+    <div class="card"><h3>JRF readiness</h3><div class="stat">—</div><p class="muted">Readiness is calculated after enough practice data is available.</p>
+      <div style="margin-top:18px">Concept foundation<div class="score"><i style="width:31%"></i></div></div>
+      <div style="margin-top:12px">PYQ mastery<div class="score"><i style="width:18%"></i></div></div>
+      <div style="margin-top:12px">Part-C ability<div class="score"><i style="width:9%"></i></div></div>
+      <div style="margin-top:12px">Revision consistency<div class="score"><i style="width:42%"></i></div></div>
+    </div>
+  </div>
+  <div class="section notice">Official exam note: the current CSIR-HRDG Physical Sciences page lists a 3-hour, 200-mark paper with Part A (30), Part B (70) and Part C (100), and 25% negative marking for wrong answers. Always verify the latest NTA/CSIR notice before an exam cycle.</div>
+</section>
+
+<section id="roadmap" class="hidden">
+  <div class="top"><h1>🧭 End-to-end roadmap</h1><span class="pill">Designed for 3–4 hrs/day</span></div>
+  <div class="card road">
+    <div class="phase"><div class="num">0</div><div><h4>Diagnostic & Restart</h4><p>1 week · baseline test, study routine, identify weak areas.</p></div><div class="pct">0%</div></div>
+    <div class="phase"><div class="num">1</div><div><h4>Foundation Rebuild</h4><p>8–10 weeks · mathematics + essential undergraduate Physics.</p></div><div class="pct">17%</div></div>
+    <div class="phase"><div class="num">2</div><div><h4>Core Physical Sciences</h4><p>16–20 weeks · complete syllabus systematically.</p></div><div class="pct">0%</div></div>
+    <div class="phase"><div class="num">3</div><div><h4>PYQ Mastery</h4><p>6–8 weeks · topic-wise, year-wise and Part-B/C practice.</p></div><div class="pct">0%</div></div>
+    <div class="phase"><div class="num">4</div><div><h4>Advanced Problem Solving</h4><p>6–8 weeks · analytical Part-C focus and mixed problems.</p></div><div class="pct">0%</div></div>
+    <div class="phase"><div class="num">5</div><div><h4>Mock Test Engine</h4><p>6–8 weeks · full 3-hour simulations, timing and error analysis.</p></div><div class="pct">0%</div></div>
+    <div class="phase"><div class="num">6</div><div><h4>JRF Final Sprint</h4><p>30–45 days · revision, PYQs, mocks, weak-area elimination.</p></div><div class="pct">0%</div></div>
+    <div class="phase"><div class="num">7</div><div><h4>PhD Journey</h4><p>JRF → research area → institutes → faculty → applications → interview.</p></div><div class="pct">0%</div></div>
+  </div>
+  <div class="section grid g3">
+    <div class="card"><h3>Normal day</h3><p class="muted">45m concept · 45m problems · 45m PYQ · 20m Part A · 15m revision</p></div>
+    <div class="card"><h3>Busy day</h3><p class="muted">45m lecture · 45m questions · 30m revision</p></div>
+    <div class="card"><h3>Emergency day</h3><p class="muted">20m concept · 25m PYQ · 15m formula recall. Never break the chain.</p></div>
+  </div>
+</section>
+
+<section id="syllabus" class="hidden">
+  <div class="top"><h1>📋 Physical Sciences syllabus map</h1><span class="pill">2026 baseline</span></div>
+  <div class="card"><p class="muted">The topic map below is a learning blueprint. The official CSIR-HRDG page should remain the source of truth for the exam cycle. The 2026 revised-syllabus proposal adds/changes several areas, so this portal intentionally labels the official syllabus as the authority.</p></div>
+  <div class="section grid g2" id="subjects"></div>
+</section>
+
+<section id="resources" class="hidden">
+  <div class="top"><h1>🎥 Learning resources</h1><span class="pill">Curated, not overloaded</span></div>
+  <div class="controls"><input class="input" id="resSearch" placeholder="Search topic / book / resource..." oninput="filterResources()"></div>
+  <div class="grid g2" id="resourcesList"></div>
+</section>
+
+<section id="pyq" class="hidden">
+  <div class="top"><h1>📝 PYQ Practice</h1><span class="pill">Build the question muscle</span></div>
+  <div class="grid g3">
+    <div class="card"><div class="muted">Topic-wise</div><div class="stat">38</div><p class="muted">Questions solved</p><button class="btn" onclick="toast('Topic practice module ready for question-bank integration.')">Practice</button></div>
+    <div class="card"><div class="muted">Part B</div><div class="stat">—</div><p class="muted">Target: concept accuracy</p><button class="btn" onclick="toast('Part B practice selected.')">Start</button></div>
+    <div class="card"><div class="muted">Part C</div><div class="stat">—</div><p class="muted">Target: analytical ability</p><button class="btn" onclick="toast('Part C practice selected.')">Start</button></div>
+  </div>
+  <div class="section card"><h3>Recommended workflow</h3><p class="muted">Concept → solved examples → 10 easy questions → 10 mixed questions → PYQs → error log → reattempt after 7 days.</p></div>
+</section>
+
+<section id="mock" class="hidden">
+  <div class="top"><h1>🧪 Mock Tests</h1><span class="pill">3-hour simulation</span></div>
+  <div class="grid g3">
+    <div class="card"><h3>Diagnostic Mock</h3><p class="muted">Take before serious preparation. No score pressure.</p><button class="btn" onclick="toast('Diagnostic mock placeholder — connect question bank next.')">Start</button></div>
+    <div class="card"><h3>Unit Mock</h3><p class="muted">One subject, timed practice.</p><button class="btn" onclick="toast('Unit mock placeholder — connect question bank next.')">Start</button></div>
+    <div class="card"><h3>Full JRF Mock</h3><p class="muted">3 hours · 200 marks · Part A/B/C.</p><button class="btn" onclick="toast('Full mock placeholder — connect question bank next.')">Start</button></div>
+  </div>
+  <div class="section card"><h3>Error analysis template</h3><div class="topicgrid"><div class="topic"><b>Concept error</b><span>Didn't know / misunderstood the concept.</span></div><div class="topic"><b>Calculation error</b><span>Concept was right; arithmetic/algebra failed.</span></div><div class="topic"><b>Formula recall</b><span>Could not retrieve the required relation.</span></div><div class="topic"><b>Time pressure</b><span>Could solve but couldn't finish in time.</span></div></div></div>
+</section>
+
+<section id="revision" class="hidden">
+  <div class="top"><h1>🔄 Revision Planner</h1><span class="pill">24h · 7d · 21d · 45d</span></div>
+  <div class="card"><h3>Spaced revision queue</h3>
+    <div class="task"><span class="tag orange">TODAY</span><span><b>Vector calculus</b><br><span class="muted">Revision 2 · 15 minutes</span></span></div>
+    <div class="task"><span class="tag orange">TODAY</span><span><b>Probability basics</b><br><span class="muted">Revision 1 · 10 minutes</span></span></div>
+    <div class="task"><span class="tag green">UPCOMING</span><span><b>Schrödinger equation</b><br><span class="muted">Revision 3 · in 5 days</span></span></div>
+  </div>
+</section>
+
+<section id="progress" class="hidden">
+  <div class="top"><h1>📊 Progress analytics</h1><span class="pill">Live local tracker</span></div>
+  <div class="grid g3">
+    <div class="card"><div class="muted">Concept completion</div><div class="stat">17%</div><div class="score"><i style="width:17%"></i></div></div>
+    <div class="card"><div class="muted">Practice accuracy</div><div class="stat">—</div><p class="muted">Need 20+ answered questions.</p></div>
+    <div class="card"><div class="muted">Revision consistency</div><div class="stat">84%</div><div class="score"><i style="width:84%"></i></div></div>
+  </div>
+  <div class="section card"><h3>Subject health</h3><div id="health"></div></div>
+</section>
+
+<section id="phd" class="hidden">
+  <div class="top"><h1>🎓 JRF → PhD Journey</h1><span class="pill">Post-qualification path</span></div>
+  <div class="card road">
+    <div class="phase"><div class="num">1</div><div><h4>Choose research direction</h4><p>Quantum, condensed matter, nuclear, particle, optics, astrophysics, computational, materials, etc.</p></div></div>
+    <div class="phase"><div class="num">2</div><div><h4>Build institute shortlist</h4><p>Map research groups, faculty, eligibility and application windows.</p></div></div>
+    <div class="phase"><div class="num">3</div><div><h4>Prepare research profile</h4><p>CV, statement of purpose, research interests, projects and interview basics.</p></div></div>
+    <div class="phase"><div class="num">4</div><div><h4>Apply & interview</h4><p>Track applications, written tests, interviews and joining requirements.</p></div></div>
+  </div>
+</section>
+
+<section id="engine" class="hidden">
+  <div class="top"><h1>⚡ Study Engine</h1><span class="pill">Adaptive preparation</span></div>
+  <div class="card">
+    <h3>Today's adaptive recommendation</h3>
+    <p class="muted">The engine prioritizes weak concepts, due revisions and Part-C practice instead of simply moving to the next chapter.</p>
+    <div class="kpi-row">
+      <div class="mini"><strong>2h 30m</strong><span>Available today</span></div>
+      <div class="mini"><strong>3</strong><span>Due revisions</span></div>
+      <div class="mini"><strong>10</strong><span>PYQs target</span></div>
+      <div class="mini"><strong>20</strong><span>Part-A minutes</span></div>
+      <div class="mini"><strong>0</strong><span>Mocks completed</span></div>
+    </div>
+    <div class="ai-box"><b>Coach recommendation</b><br><span class="muted">Prioritize Mathematical Physics today. Your current foundation is weakest there. After the concept lesson, solve 10 Part-B questions before attempting Part-C.</span></div>
+  </div>
+  <div class="section card">
+    <h3>Current learning path</h3>
+    <div class="lesson"><h4>1. Vector Calculus</h4><span class="muted">Foundation · 45 minutes</span><div class="chips"><span>CONCEPT</span><span>EXAMPLES</span><span>PYQ</span><span>REVISION</span></div></div>
+    <div class="lesson"><h4>2. Quantum Mechanics — Operators</h4><span class="muted">Core · 40 minutes</span><div class="chips"><span>VIDEO</span><span>NOTES</span><span>10 QUESTIONS</span></div></div>
+    <div class="lesson"><h4>3. Part-A Quantitative Reasoning</h4><span class="muted">20 minutes</span><div class="chips"><span>10 QUESTIONS</span><span>REVIEW ERRORS</span></div></div>
+  </div>
+  <div class="section card">
+    <h3>Question-bank roadmap</h3>
+    <p class="muted">Next production milestone: import verified CSIR-NET papers/question data, tag each question by year, unit, topic, Part B/C, difficulty and concept, then connect it to the learning engine.</p>
+    <button class="btn" onclick="toast('Question-bank architecture is ready for the next data import.')">Prepare Question Bank</button>
+  </div>
+</section>
+
+<div class="footer">Physics JRF Journey · Prototype v1 · Official exam facts should always be rechecked on CSIR-HRDG/NTA before an exam cycle.</div>
+</main></div>
+
+<script>
+const subjects=[
+["Mathematical Physics",["Vector algebra & calculus","Linear algebra, matrices, eigenvalues","ODEs","Special functions","Fourier series/transforms","Laplace transforms","Complex analysis","Probability & distributions","Computational techniques / numerical methods"]],
+["Classical Mechanics",["Newtonian mechanics","Central force & two-body problems","Scattering","Rigid body dynamics","Non-inertial frames","Variational principle","Lagrangian mechanics","Hamiltonian mechanics","Small oscillations & normal modes","Special relativity"]],
+["Electromagnetic Theory",["Electrostatics","Boundary-value problems","Magnetostatics","Electromagnetic induction","Maxwell equations","Potentials & gauge invariance","EM waves","Dielectrics & conductors","Reflection/refraction/polarization","Charged-particle dynamics"]],
+["Quantum Mechanics",["Wave-particle duality","Schrödinger equation","1-D potentials","Harmonic oscillator","Angular momentum","Spin","Hydrogen atom","Approximation methods","Perturbation theory","Variational & WKB methods","Scattering","Identical particles"]],
+["Thermodynamics & Statistical Physics",["Laws of thermodynamics","Entropy","Thermodynamic potentials","Maxwell relations","Kinetic theory","Ensembles","Partition functions","Classical statistics","Bose-Einstein statistics","Fermi-Dirac statistics","Quantum gases"]],
+["Electronics & Experimental Methods",["Circuit analysis","Semiconductors","Diodes","Transistors","FET","Amplifiers","Operational amplifiers","Oscillators","Digital logic","Measurement & error analysis"]],
+["Atomic & Molecular Physics",["Atomic spectra","Spin & magnetic moments","Zeeman/Stark effects","Fine/hyperfine structure","Selection rules","Laser basics","Rotational spectra","Vibrational spectra","Electronic spectra"]],
+["Nuclear & Particle Physics",["Nuclear properties","Binding energy","Nuclear models","Radioactive decay","Nuclear reactions","Scattering","Detectors","Particle classification","Quarks & leptons","Conservation laws"]],
+["Condensed Matter / Solid State",["Crystal structure","Reciprocal lattice","Phonons","Free electron models","Band theory","Semiconductors","Magnetism","Superconductivity","Defects & materials basics"]],
+["General Aptitude · Part A",["Quantitative reasoning","Graphs & data interpretation","Logical reasoning","Basic probability","Numerical aptitude","General science","Research aptitude"]]
+];
+const resources=[
+["Arfken, Weber & Harris","Mathematical Methods for Physicists","Mathematical Physics","Reference book"],
+["Goldstein, Poole & Safko","Classical Mechanics","Classical Mechanics","Advanced reference"],
+["Griffiths","Introduction to Electrodynamics","Electromagnetic Theory","Core reference"],
+["Griffiths","Introduction to Quantum Mechanics","Quantum Mechanics","Core reference"],
+["Sakurai & Napolitano","Modern Quantum Mechanics","Quantum Mechanics","Advanced reference"],
+["Kittel & Kroemer","Thermal Physics","Thermodynamics","Core reference"],
+["Huang","Statistical Mechanics","Statistical Physics","Advanced reference"],
+["Krane","Introductory Nuclear Physics","Nuclear Physics","Core reference"],
+["CSIR-HRDG","Physical Sciences official syllabus & exam scheme","Official","Primary source"],
+["NTA CSIR-NET","2026 Information Bulletin and documents","Official","Primary source"]
+];
+function show(id,btn){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo(0,0)}
+function renderSubjects(){document.getElementById('subjects').innerHTML=subjects.map((s,i)=>`<div class="card"><div class="subject"><div><h4>${s[0]}</h4><p>${s[1].length} learning clusters</p></div><span class="tag">${i<5?'Core':'Support'}</span></div><div class="topicgrid">${s[1].map(t=>`<div class="topic"><b>${t}</b><span>Concept → examples → PYQs → test → revision</span></div>`).join('')}</div></div>`).join('')}
+function renderResources(list=resources){document.getElementById('resourcesList').innerHTML=list.map(r=>{let u=''; if(r[0]==='CSIR-HRDG')u='https://www.csirhrdg.res.in/Home/Index/1/InPage/39/26'; if(r[0]==='NTA CSIR-NET')u='https://csirnet.nta.nic.in/documents/'; return `<div class="card resource"><div><h4>${r[0]}</h4><div class="muted">${r[1]}</div><div class="muted">${r[3]}</div>${u?`<a class="real" href="${u}" target="_blank">Open official resource ↗</a>`:''}</div><span class="tag">${r[2]}</span></div>`}).join('')}
+function filterResources(){const q=document.getElementById('resSearch').value.toLowerCase();renderResources(resources.filter(r=>r.join(' ').toLowerCase().includes(q)))}
+function renderHealth(){document.getElementById('health').innerHTML=subjects.map((s,i)=>{let p=[31,24,22,18,27,20,15,12,10,42][i]||15;return `<div style="margin:14px 0"><div style="display:flex;justify-content:space-between;font-size:13px"><b>${s[0]}</b><span class="muted">${p}%</span></div><div class="score"><i style="width:${p}%"></i></div></div>`}).join('')}
+function toast(msg){let x=document.createElement('div');x.textContent=msg;x.style='position:fixed;right:20px;bottom:20px;background:#10152a;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:0 8px 30px #0003;z-index:10';document.body.appendChild(x);setTimeout(()=>x.remove(),2200)}
+document.querySelectorAll('[data-task]').forEach((c,i)=>{c.checked=localStorage.getItem('task'+i)==='1';c.onchange=()=>localStorage.setItem('task'+i,c.checked?'1':'0')});
+renderSubjects();renderResources();renderHealth();
+document.querySelectorAll('[data-task]').forEach((c,i)=>{c.checked=localStorage.getItem('task'+i)==='1';});
+</script>
+</body>
+</html>

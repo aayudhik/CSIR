@@ -1,0 +1,213 @@
+{
+  "subjects": [
+    {
+      "name": "Mathematical Physics",
+      "topics": [
+        "Vector algebra & calculus",
+        "Linear algebra, matrices, eigenvalues",
+        "ODEs",
+        "Special functions",
+        "Fourier series/transforms",
+        "Laplace transforms",
+        "Complex analysis",
+        "Probability & distributions",
+        "Computational techniques / numerical methods"
+      ]
+    },
+    {
+      "name": "Classical Mechanics",
+      "topics": [
+        "Newtonian mechanics",
+        "Central force & two-body problems",
+        "Scattering",
+        "Rigid body dynamics",
+        "Non-inertial frames",
+        "Variational principle",
+        "Lagrangian mechanics",
+        "Hamiltonian mechanics",
+        "Small oscillations & normal modes",
+        "Special relativity"
+      ]
+    },
+    {
+      "name": "Electromagnetic Theory",
+      "topics": [
+        "Electrostatics",
+        "Boundary-value problems",
+        "Magnetostatics",
+        "Electromagnetic induction",
+        "Maxwell equations",
+        "Potentials & gauge invariance",
+        "EM waves",
+        "Dielectrics & conductors",
+        "Reflection/refraction/polarization",
+        "Charged-particle dynamics"
+      ]
+    },
+    {
+      "name": "Quantum Mechanics",
+      "topics": [
+        "Wave-particle duality",
+        "Schrödinger equation",
+        "1-D potentials",
+        "Harmonic oscillator",
+        "Angular momentum",
+        "Spin",
+        "Hydrogen atom",
+        "Approximation methods",
+        "Perturbation theory",
+        "Variational & WKB methods",
+        "Scattering",
+        "Identical particles"
+      ]
+    },
+    {
+      "name": "Thermodynamics & Statistical Physics",
+      "topics": [
+        "Laws of thermodynamics",
+        "Entropy",
+        "Thermodynamic potentials",
+        "Maxwell relations",
+        "Kinetic theory",
+        "Ensembles",
+        "Partition functions",
+        "Classical statistics",
+        "Bose-Einstein statistics",
+        "Fermi-Dirac statistics",
+        "Quantum gases"
+      ]
+    },
+    {
+      "name": "Electronics & Experimental Methods",
+      "topics": [
+        "Circuit analysis",
+        "Semiconductors",
+        "Diodes",
+        "Transistors",
+        "FET",
+        "Amplifiers",
+        "Operational amplifiers",
+        "Oscillators",
+        "Digital logic",
+        "Measurement & error analysis"
+      ]
+    },
+    {
+      "name": "Atomic & Molecular Physics",
+      "topics": [
+        "Atomic spectra",
+        "Spin & magnetic moments",
+        "Zeeman/Stark effects",
+        "Fine/hyperfine structure",
+        "Selection rules",
+        "Laser basics",
+        "Rotational spectra",
+        "Vibrational spectra",
+        "Electronic spectra"
+      ]
+    },
+    {
+      "name": "Nuclear & Particle Physics",
+      "topics": [
+        "Nuclear properties",
+        "Binding energy",
+        "Nuclear models",
+        "Radioactive decay",
+        "Nuclear reactions",
+        "Scattering",
+        "Detectors",
+        "Particle classification",
+        "Quarks & leptons",
+        "Conservation laws"
+      ]
+    },
+    {
+      "name": "Condensed Matter / Solid State",
+      "topics": [
+        "Crystal structure",
+        "Reciprocal lattice",
+        "Phonons",
+        "Free electron models",
+        "Band theory",
+        "Semiconductors",
+        "Magnetism",
+        "Superconductivity",
+        "Defects & materials basics"
+      ]
+    },
+    {
+      "name": "General Aptitude · Part A",
+      "topics": [
+        "Quantitative reasoning",
+        "Graphs & data interpretation",
+        "Logical reasoning",
+        "Basic probability",
+        "Numerical aptitude",
+        "General science",
+        "Research aptitude"
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "author": "Arfken, Weber & Harris",
+      "title": "Mathematical Methods for Physicists",
+      "category": "Mathematical Physics",
+      "type": "Reference book"
+    },
+    {
+      "author": "Goldstein, Poole & Safko",
+      "title": "Classical Mechanics",
+      "category": "Classical Mechanics",
+      "type": "Advanced reference"
+    },
+    {
+      "author": "Griffiths",
+      "title": "Introduction to Electrodynamics",
+      "category": "Electromagnetic Theory",
+      "type": "Core reference"
+    },
+    {
+      "author": "Griffiths",
+      "title": "Introduction to Quantum Mechanics",
+      "category": "Quantum Mechanics",
+      "type": "Core reference"
+    },
+    {
+      "author": "Sakurai & Napolitano",
+      "title": "Modern Quantum Mechanics",
+      "category": "Quantum Mechanics",
+      "type": "Advanced reference"
+    },
+    {
+      "author": "Kittel & Kroemer",
+      "title": "Thermal Physics",
+      "category": "Thermodynamics",
+      "type": "Core reference"
+    },
+    {
+      "author": "Huang",
+      "title": "Statistical Mechanics",
+      "category": "Statistical Physics",
+      "type": "Advanced reference"
+    },
+    {
+      "author": "Krane",
+      "title": "Introductory Nuclear Physics",
+      "category": "Nuclear Physics",
+      "type": "Core reference"
+    },
+    {
+      "author": "CSIR-HRDG",
+      "title": "Physical Sciences official syllabus & exam scheme",
+      "category": "Official",
+      "type": "Primary source"
+    },
+    {
+      "author": "NTA CSIR-NET",
+      "title": "2026 Information Bulletin and documents",
+      "category": "Official",
+      "type": "Primary source"
+    }
+  ]
+}
