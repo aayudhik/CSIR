@@ -19,7 +19,10 @@ button{font:inherit;cursor:pointer}.app{display:flex;min-height:100vh}.side{widt
 .lesson{border:1px solid var(--line);border-radius:13px;padding:15px;margin:10px 0;background:#fff}.lesson h4{margin:0 0 5px}.lesson .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.chips span{font-size:10px;padding:5px 7px;border-radius:7px;background:#f0f2f8;color:#566074;font-weight:700}
 @media(max-width:800px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
 </style>
-</head>
+<style>
+.v3grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.v3mini{padding:14px;border:1px solid var(--line);border-radius:12px;background:#fff}.v3mini b{font-size:20px;display:block}.v3lesson{padding:14px;border:1px solid var(--line);border-radius:12px;margin:9px 0}.v3lesson small{color:var(--muted)}.v3chip{display:inline-block;padding:5px 7px;border-radius:7px;background:#eef0f7;color:#596276;font-size:10px;font-weight:700;margin:7px 4px 0 0}
+@media(max-width:850px){.v3grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.v3grid{grid-template-columns:1fr}}
+</style></head>
 <body>
 <div class="app">
 <aside class="side">
@@ -33,7 +36,7 @@ button{font:inherit;cursor:pointer}.app{display:flex;min-height:100vh}.side{widt
     <button onclick="show('mock',this)">🧪 Mock Tests</button>
     <button onclick="show('revision',this)">🔄 Revision Planner</button>
     <button onclick="show('progress',this)">📊 Progress</button>
-    <button onclick="show('phd',this)">🎓 PhD Journey</button>
+    <button onclick="show('phd',this)">🎓 PhD Journey</button><button onclick="show('engine',this)">⚡ Study Engine</button>
     <button onclick="show('engine',this)">⚡ Study Engine</button>
   </div>
 </aside>
@@ -175,6 +178,32 @@ button{font:inherit;cursor:pointer}.app{display:flex;min-height:100vh}.side{widt
   </div>
 </section>
 
+
+<section id="engine" class="hidden">
+<div class="top"><h1>⚡ Adaptive Study Engine</h1><span class="pill">V3</span></div>
+<div class="card">
+<h3>Today's recommendation</h3>
+<p class="muted">The engine balances available time, weak topics, PYQs and revision instead of simply moving chapter-by-chapter.</p>
+<div class="v3grid">
+<div class="v3mini"><span class="muted">Available</span><b>2h 30m</b><span class="muted">today</span></div>
+<div class="v3mini"><span class="muted">Due revision</span><b>3</b><span class="muted">topics</span></div>
+<div class="v3mini"><span class="muted">PYQ target</span><b>10</b><span class="muted">Part B</span></div>
+<div class="v3mini"><span class="muted">Focus</span><b>Part C</b><span class="muted">weak area</span></div>
+</div>
+</div>
+<div class="section card"><h3>Recommended learning sequence</h3>
+<div class="v3lesson"><b>1. Mathematical Physics — Vector Calculus</b><br><small>45 minutes · foundation</small><br><span class="v3chip">CONCEPT</span><span class="v3chip">EXAMPLES</span><span class="v3chip">8 PROBLEMS</span></div>
+<div class="v3lesson"><b>2. Quantum Mechanics — Operators</b><br><small>40 minutes · core Physics</small><br><span class="v3chip">VIDEO</span><span class="v3chip">NOTES</span><span class="v3chip">PYQ</span></div>
+<div class="v3lesson"><b>3. Part-A Quantitative Reasoning</b><br><small>20 minutes · aptitude</small><br><span class="v3chip">10 QUESTIONS</span><span class="v3chip">TIMED</span></div>
+<div class="v3lesson"><b>4. Formula + error recall</b><br><small>15 minutes · spaced revision</small><br><span class="v3chip">RECALL</span><span class="v3chip">ERROR LOG</span></div>
+</div>
+<div class="section card"><h3>JRF readiness model</h3><p class="muted">V3 exposes the scoring framework; the production version will calculate it from actual question and mock-test data.</p>
+<div>Concept foundation <b style="float:right">72%</b><div class="bar"><i style="width:72%"></i></div></div>
+<div style="margin-top:10px">PYQ accuracy <b style="float:right">71%</b><div class="bar"><i style="width:71%"></i></div></div>
+<div style="margin-top:10px">Part-C analytical skill <b style="float:right">41%</b><div class="bar"><i style="width:41%"></i></div></div>
+<div style="margin-top:10px">Revision consistency <b style="float:right">84%</b><div class="bar"><i style="width:84%"></i></div></div>
+</div>
+</section>
 <div class="footer">Physics JRF Journey · Prototype v1 · Official exam facts should always be rechecked on CSIR-HRDG/NTA before an exam cycle.</div>
 </main></div>
 
@@ -192,16 +221,17 @@ const subjects=[
 ["General Aptitude · Part A",["Quantitative reasoning","Graphs & data interpretation","Logical reasoning","Basic probability","Numerical aptitude","General science","Research aptitude"]]
 ];
 const resources=[
-["Arfken, Weber & Harris","Mathematical Methods for Physicists","Mathematical Physics","Reference book"],
-["Goldstein, Poole & Safko","Classical Mechanics","Classical Mechanics","Advanced reference"],
-["Griffiths","Introduction to Electrodynamics","Electromagnetic Theory","Core reference"],
-["Griffiths","Introduction to Quantum Mechanics","Quantum Mechanics","Core reference"],
-["Sakurai & Napolitano","Modern Quantum Mechanics","Quantum Mechanics","Advanced reference"],
-["Kittel & Kroemer","Thermal Physics","Thermodynamics","Core reference"],
-["Huang","Statistical Mechanics","Statistical Physics","Advanced reference"],
-["Krane","Introductory Nuclear Physics","Nuclear Physics","Core reference"],
-["CSIR-HRDG","Physical Sciences official syllabus & exam scheme","Official","Primary source"],
-["NTA CSIR-NET","2026 Information Bulletin and documents","Official","Primary source"]
+["Arfken, Weber & Harris","Mathematical Methods for Physicists","Mathematical Physics","Book"],
+["Goldstein, Poole & Safko","Classical Mechanics","Classical Mechanics","Book"],
+["Griffiths","Introduction to Electrodynamics","Electromagnetic Theory","Book"],
+["Griffiths","Introduction to Quantum Mechanics","Quantum Mechanics","Book"],
+["Sakurai & Napolitano","Modern Quantum Mechanics","Quantum Mechanics","Advanced book"],
+["Kittel & Kroemer","Thermal Physics","Thermodynamics","Book"],
+["Huang","Statistical Mechanics","Statistical Physics","Advanced book"],
+["Krane","Introductory Nuclear Physics","Nuclear Physics","Book"],
+["PW IIT JAM & CSIR NET","Quantum Mechanics — Concepts & Questions","Quantum Mechanics","YouTube"],
+["CSIR-HRDG","Physical Sciences official syllabus & exam scheme","Official","Official source"],
+["NTA CSIR-NET","2026 Information Bulletin / documents","Official","Official source"]
 ];
 function show(id,btn){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo(0,0)}
 function renderSubjects(){document.getElementById('subjects').innerHTML=subjects.map((s,i)=>`<div class="card"><div class="subject"><div><h4>${s[0]}</h4><p>${s[1].length} learning clusters</p></div><span class="tag">${i<5?'Core':'Support'}</span></div><div class="topicgrid">${s[1].map(t=>`<div class="topic"><b>${t}</b><span>Concept → examples → PYQs → test → revision</span></div>`).join('')}</div></div>`).join('')}

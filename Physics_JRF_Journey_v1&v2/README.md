@@ -1,12 +1,11 @@
-# Physics JRF Journey — Prototype v1
+# Physics JRF Journey V3
 
-Open `index.html` in a browser.
+V3 extends the V1/V2 portal with an adaptive Study Engine, readiness framework and a clearer learning workflow.
 
-This prototype contains the dashboard, mother-friendly study modes, roadmap, syllabus map, resource library, PYQ/mock placeholders, revision planner, progress analytics and JRF→PhD journey.
+Open `index.html` directly, or deploy the folder through Netlify.
 
-Academic source basis:
+Official references checked September 3, 2026:
 - CSIR-HRDG Physical Sciences exam scheme/syllabus
-- NTA CSIR-NET 2026 Information Bulletin and documents
-- CSIR-HRDG 2026 revised-syllabus consultation notice
+- NTA CSIR-NET 2026 Information Bulletin/Documents
 
-Next build: React/Next.js + database + verified YouTube resources + actual PYQs + timed mocks + adaptive planner + AI tutor.
+Next production milestone: real topic-by-topic videos, exact book chapters, verified PYQs with explanations, timed scoring, database/user accounts, and automatic readiness calculation.
