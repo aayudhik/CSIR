@@ -1,23 +1,20 @@
-# Physics JRF Journey V4
+# Physics JRF Journey V5 — Complete Content Build
 
-V4 is the academic-engine layer.
+This is a V4-continuation V5 build focused on actual study content rather than GUI-only screens.
 
-Included:
-- topic-level Physical Sciences learning map
-- topic mastery workflow: concept → examples → practice → PYQ → error log → revision
-- adaptive daily planner
-- curated book list
-- official CSIR-HRDG and NTA links
-- PYQ integration architecture
-- mock-test and error-analysis workflow
-- spaced revision queue
-- JRF readiness decision rules
-- JRF → PhD tracker
+## Included
+- 101 topic learning path across 11 subject areas
+- Core lesson/overview, learning objectives, syllabus coverage, concepts, formula focus, worked-example method, common mistakes, revision cards
+- 3 practice questions per topic (303 starter questions)
+- Topic mastery saved in browser localStorage
+- Search/filter by subject and level
+- PYQ Lab linked to the official CSIR-HRDG archive
+- Official CSIR-HRDG/NTA syllabus, exam-scheme, bulletin, documents and model-paper links
+- Book, NPTEL, MIT OpenCourseWare and OpenStax resource directory
+- Mixed 20-question mini mock generator
 
-Official sources:
-CSIR-HRDG Physical Sciences: https://www.csirhrdg.res.in/Home/Index/1/InPage/39/26
-CSIR-HRDG Question/Answer archive: https://csirhrdg.res.in/Home/Index/1/Default/3456/81
-NTA documents: https://csirnet.nta.nic.in/documents/
-NTA 2026 bulletin: https://csirnet.nta.nic.in/information-bulletin/
+## Important
+The app deliberately links to official PYQ archives rather than reproducing copyrighted question-paper text. Always verify the applicable exam bulletin/syllabus before an exam.
 
-Important: CSIR-HRDG published a 2026 notice regarding existing and revised syllabi. The applicable exam cycle should be selected before finalizing the production syllabus map.
+## Deploy
+This is a static site. Publish the folder containing `index.html` on Netlify/GitHub Pages or copy its contents into the existing V4 app directory.
