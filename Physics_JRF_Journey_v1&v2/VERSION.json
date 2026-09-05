@@ -1,12 +1,16 @@
 {
-  "version": "V5.6.1",
-  "title": "Physics JRF Journey \u2014 Interactive Study Portal",
-  "base": "V5.2 \u2192 V5.6",
-  "status": "interactive-fix",
-  "changes": [
-    "Clickable V5 architecture actions",
-    "Dashboard quick-action buttons",
-    "Improved study database loading error handling",
-    "CSS unit normalization for reliable rendering"
+  "version": "V5.7",
+  "status": "Build 1",
+  "title": "Question Bank & PYQ Library",
+  "date": "2026-09-05",
+  "features": [
+    "Expanded topic practice bank",
+    "Randomized Practice Lab",
+    "Randomized Revision checks",
+    "Randomized Mini Mock",
+    "PYQ library 2012-December 2025",
+    "Official CSIR-HRDG archive integration",
+    "External paper links instead of bundled PDFs",
+    "Preserve V5.1 Vector Algebra continuity"
   ]
 }

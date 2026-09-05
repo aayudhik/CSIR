@@ -1,22 +1,17 @@
-# Physics JRF Journey V5.6 — Complete V5.2 to V5.6
+# Physics JRF Journey — V5.7
 
-This package is a direct continuation of the V5/V5.1 work and is intended to replace the current V5 static site contents.
+V5.7 extends V5.6.1 into an exam-preparation engine.
 
-## Included
-- **V5.2:** 11 subject areas and 101 mapped topics with levels, search and filters.
-- **V5.3:** topic-specific core notes, learning objectives and key concepts.
-- **V5.4:** formula sheets, worked examples, one-minute revision and flashcards.
-- **V5.5:** Part B/C practice bank, topic-wise practice and PYQ mapping to the official archive. Copyrighted PYQ text is not reproduced.
-- **V5.6:** mastery dashboard, browser localStorage progress, planner, revision deck, mini mock and responsive UI.
-- **V5.1 continuity:** Vector Algebra retains the detailed V5.1 theory, formulas, derivations, practice and flashcards.
+## V5.7 additions
+- Expanded topic practice: 10 questions exposed per topic, with a larger structured bank.
+- Question Bank JSON with topic/subject/difficulty/type metadata.
+- Randomized Practice Lab with topic, subject, mixed and weak-topic modes.
+- Randomized Revision checks.
+- Randomized Mini Mock with 20/40/50/75 question modes.
+- Previous-year Physical Sciences paper library covering 2012 through December 2025.
+- External paper/archive links to avoid redistributing copyrighted PDFs.
+- Official CSIR-HRDG archive link included.
+- V5.1 Vector Algebra file preserved when available.
 
-## Deploy
-Static site. Keep `index.html` and `data/` together and publish the folder on Netlify/GitHub Pages or copy these files into the existing repository.
-
-## Important
-Progress is stored in the browser's localStorage. Official exam rules and current syllabus should always be checked against the applicable CSIR/NTA bulletin.
-
-
-## V5.6.1 Interactive Fix
-
-V5.6.1 keeps the complete V5.2–V5.6 study database and adds explicit working entry points from the architecture screen and dashboard into Study Content, Practice, Revision and Mini Mock. It also improves static-host loading diagnostics and normalizes CSS units.
+## Important content note
+The V5.7 question bank in this build is the first expanded engine layer. It contains original concept/method practice generated from the existing topic metadata. It is not a replacement for a fully curated 1,000+ CSIR-NET PYQ/Part-B/Part-C corpus. Future content passes should deepen numerical, analytical and PYQ-mapped questions topic by topic.
