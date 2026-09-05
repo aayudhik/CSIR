@@ -1,16 +1,13 @@
 {
-  "version": "V5.7",
-  "status": "Build 1",
-  "title": "Question Bank & PYQ Library",
-  "date": "2026-09-05",
-  "features": [
-    "Expanded topic practice bank",
-    "Randomized Practice Lab",
-    "Randomized Revision checks",
-    "Randomized Mini Mock",
-    "PYQ library 2012-December 2025",
-    "Official CSIR-HRDG archive integration",
-    "External paper links instead of bundled PDFs",
-    "Preserve V5.1 Vector Algebra continuity"
+  "version": "5.7.1",
+  "title": "Physics JRF Journey",
+  "release": "Question Engine Reliability Fix",
+  "changes": [
+    "Fisher-Yates randomization",
+    "Per-mode session history to avoid immediate question-set repetition",
+    "Topic question preview in Study Content",
+    "Question attempt and accuracy tracking",
+    "Randomized Revision and Mini Mock with duplicate protection",
+    "Cache-busted V5.7.1 data loading"
   ]
 }
