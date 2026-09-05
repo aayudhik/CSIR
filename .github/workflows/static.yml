@@ -1,10 +1,8 @@
-
 name: Deploy CSIR V5.7
 
-'on':
+on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -15,19 +13,13 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
 
-      - name: Upload website
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: 'Physics_JRF_Journey_v1&v2'
+          path: "Physics_JRF_Journey_v1&v2"
 
-      - name: Deploy website
-        uses: actions/deploy-pages@v5
-```
+      - uses: actions/deploy-pages@v5
