@@ -1,0 +1,222 @@
+{
+  "id": "MP-01",
+  "subject": "Mathematical Physics",
+  "topic": "Vector Algebra",
+  "version": "V5.1",
+  "learning_objectives": [
+    "Represent vectors in Cartesian components and unit-vector bases.",
+    "Use dot and cross products for projections, angles, areas and torque.",
+    "Use scalar and vector triple products and interpret their geometry.",
+    "Recognize vector-product identities and common CSIR-NET traps."
+  ],
+  "theory": [
+    {
+      "heading": "Vectors and components",
+      "content": "A = A_x i + A_y j + A_z k. Its magnitude is |A| = sqrt(A_x^2 + A_y^2 + A_z^2). A unit vector is A_hat = A/|A| for A != 0."
+    },
+    {
+      "heading": "Dot product",
+      "content": "A·B = |A||B|cos(theta) = A_xB_x + A_yB_y + A_zB_z. It is a scalar. The scalar projection of A on B is A·B_hat."
+    },
+    {
+      "heading": "Cross product",
+      "content": "A×B is normal to the plane of A and B, with magnitude |A×B| = |A||B|sin(theta). It is anti-commutative: A×B = -B×A."
+    },
+    {
+      "heading": "Scalar triple product",
+      "content": "A·(B×C) is the signed volume of the parallelepiped formed by A, B and C. It is zero when the vectors are coplanar."
+    },
+    {
+      "heading": "Vector triple product",
+      "content": "A×(B×C) = B(A·C) - C(A·B). Cross multiplication is not associative."
+    },
+    {
+      "heading": "Physical applications",
+      "content": "Work by a constant force is W = F·Delta r; torque is tau = r×F; angular momentum is L = r×p."
+    }
+  ],
+  "formula_sheet": [
+    "|A| = sqrt(A·A)",
+    "A_hat = A/|A|",
+    "A·B = |A||B|cos(theta)",
+    "Vector projection of A on B = [(A·B)/|B|^2]B",
+    "|A×B| = |A||B|sin(theta)",
+    "Area(parallelogram) = |A×B|",
+    "Area(triangle) = |A×B|/2",
+    "A·(B×C) = B·(C×A) = C·(A×B)",
+    "A×(B×C) = B(A·C) - C(A·B)",
+    "(A×B)×C = B(A·C) - A(B·C)"
+  ],
+  "worked_examples": [
+    {
+      "title": "Projection",
+      "problem": "Find the scalar projection of A=(2,-1,2) on B=(1,2,2).",
+      "solution": "A·B=4 and |B|=3, so the scalar projection is 4/3."
+    },
+    {
+      "title": "Triangle area",
+      "problem": "Find the area of the triangle formed by A=(1,0,0) and B=(0,2,0).",
+      "solution": "A×B=(0,0,2), so the triangle area is |A×B|/2 = 1."
+    },
+    {
+      "title": "Coplanarity",
+      "problem": "Test A=(1,2,3), B=(2,1,1), C=(3,3,4).",
+      "solution": "C=A+B, so the three vectors are linearly dependent and A·(B×C)=0."
+    }
+  ],
+  "derivations": [
+    {
+      "title": "Dot product from components",
+      "steps": [
+        "Write A=A_x i+A_y j+A_z k and B=B_x i+B_y j+B_z k.",
+        "Use i·i=j·j=k·k=1 and cross terms zero.",
+        "Expand to obtain A·B=A_xB_x+A_yB_y+A_zB_z.",
+        "Equate to |A||B|cos(theta)."
+      ]
+    },
+    {
+      "title": "Cross-product magnitude",
+      "steps": [
+        "The parallelogram base is |A|.",
+        "Its perpendicular height is |B|sin(theta).",
+        "Therefore area is |A||B|sin(theta), the magnitude of A×B."
+      ]
+    }
+  ],
+  "part_b_practice": [
+    {
+      "id": "VA-B01",
+      "question": "If A·B=0 for two nonzero vectors, the angle is:",
+      "options": [
+        "0°",
+        "45°",
+        "90°",
+        "180°"
+      ],
+      "answer": 2,
+      "explanation": "A·B=|A||B|cos(theta)=0, hence theta=90°."
+    },
+    {
+      "id": "VA-B02",
+      "question": "The magnitude of (i+j)×(i-j) is:",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "sqrt(2)"
+      ],
+      "answer": 2,
+      "explanation": "The cross product is -2k, whose magnitude is 2."
+    },
+    {
+      "id": "VA-B03",
+      "question": "If A×B=0 for nonzero vectors, they are:",
+      "options": [
+        "perpendicular",
+        "parallel or anti-parallel",
+        "unit vectors",
+        "necessarily equal"
+      ],
+      "answer": 1,
+      "explanation": "sin(theta)=0, so theta is 0 or 180 degrees."
+    },
+    {
+      "id": "VA-B04",
+      "question": "The scalar triple product of three coplanar vectors is:",
+      "options": [
+        "1",
+        "their total magnitude",
+        "0",
+        "undefined"
+      ],
+      "answer": 2,
+      "explanation": "It represents signed volume, which vanishes for coplanar vectors."
+    },
+    {
+      "id": "VA-B05",
+      "question": "Which identity is correct?",
+      "options": [
+        "A×(B×C)=(A×B)×C",
+        "A×(B×C)=B(A·C)-C(A·B)",
+        "A×B=B×A",
+        "A·(B×C)=0 always"
+      ],
+      "answer": 1,
+      "explanation": "This is the vector triple-product identity."
+    }
+  ],
+  "part_c_practice": [
+    {
+      "id": "VA-C01",
+      "question": "A force F=3i+4j acts at r=2i-j. Find torque about the origin.",
+      "answer": "11k",
+      "explanation": "r×F has k component 2(4)-(-1)(3)=11."
+    },
+    {
+      "id": "VA-C02",
+      "question": "For A=(1,1,0), B=(1,0,1), find a unit vector perpendicular to both.",
+      "answer": "(1,-1,-1)/sqrt(3), up to sign.",
+      "explanation": "A×B=(1,-1,-1). Normalize it."
+    },
+    {
+      "id": "VA-C03",
+      "question": "Given |A|=2, |B|=3 and |A+B|=sqrt(19), find the angle.",
+      "answer": "60°",
+      "explanation": "19=4+9+12cos(theta), so cos(theta)=1/2."
+    }
+  ],
+  "common_mistakes": [
+    "Confusing scalar projection with vector projection.",
+    "Forgetting A×B = -B×A.",
+    "Treating cross products as associative.",
+    "Using sin(theta) for the dot product.",
+    "Dropping absolute values for geometric area/volume."
+  ],
+  "flashcards": [
+    {
+      "front": "When is A·B zero?",
+      "back": "For nonzero vectors, when they are perpendicular."
+    },
+    {
+      "front": "When is A×B zero?",
+      "back": "When the vectors are parallel/anti-parallel or one is zero."
+    },
+    {
+      "front": "What is |A×B|?",
+      "back": "The area of the parallelogram spanned by A and B."
+    },
+    {
+      "front": "What is |A·(B×C)|?",
+      "back": "The volume of the parallelepiped spanned by A, B and C."
+    },
+    {
+      "front": "Is cross product associative?",
+      "back": "No."
+    }
+  ],
+  "revision": {
+    "one_minute": "Dot -> angle/projection/work. Cross -> normal/area/torque. Triple product -> volume/coplanarity.",
+    "five_minute": "Re-derive dot/cross formulas, recall both triple-product identities, solve one projection and one torque problem."
+  },
+  "resources": [
+    {
+      "title": "CSIR-HRDG Physical Sciences exam scheme",
+      "url": "https://www.csirhrdg.res.in/Home/Index/1/InPage/39/26",
+      "type": "official"
+    },
+    {
+      "title": "CSIR-HRDG syllabus hub",
+      "url": "https://www.csirhrdg.res.in/Home/Index/1/Default/3485/78",
+      "type": "official"
+    },
+    {
+      "title": "CSIR-HRDG question papers and answer keys",
+      "url": "https://www.csirhrdg.res.in/Home/Index/1/Default/3456/81",
+      "type": "official"
+    }
+  ],
+  "pyq_mapping": {
+    "status": "verified-source mapping pending",
+    "note": "Use the official CSIR-HRDG archive for historical papers and final answer keys rather than reproducing copyrighted paper text."
+  }
+}
