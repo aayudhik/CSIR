@@ -15,3 +15,8 @@ Static site. Keep `index.html` and `data/` together and publish the folder on Ne
 
 ## Important
 Progress is stored in the browser's localStorage. Official exam rules and current syllabus should always be checked against the applicable CSIR/NTA bulletin.
+
+
+## V5.6.1 Interactive Fix
+
+V5.6.1 keeps the complete V5.2–V5.6 study database and adds explicit working entry points from the architecture screen and dashboard into Study Content, Practice, Revision and Mini Mock. It also improves static-host loading diagnostics and normalizes CSS units.
