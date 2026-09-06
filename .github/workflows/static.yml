@@ -43,7 +43,7 @@ jobs:
           PY
 
       - name: Inject V5.8 enhancement layers
-        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.3"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
+        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.3"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
