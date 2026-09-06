@@ -1,7 +1,7 @@
 {
-  "version": "5.8.3",
+  "version": "5.8.4",
   "title": "Physics JRF Journey",
-  "release": "V5.8.3 Performance, Reliability & Offline Foundation",
+  "release": "V5.8.4 SEO & Public Experience",
   "changes": [
     "Dashboard welcome message updated to Welcome Dear CSIR Aspirant",
     "Rebuilt Study Content reader as a deeper structured study route",
@@ -17,6 +17,11 @@
     "Added V5.8.2 loading, onboarding, quick resume, recent activity and retry layer",
     "Added V5.8.3 service worker with network-first data caching and offline fallback",
     "Added installable PWA manifest foundation",
-    "GitHub Pages deployment uses the V5.8 application entrypoint and enhancement injection layer"
+    "Added SEO title metadata, canonical URL, description, robots directives and social sharing metadata",
+    "Added Schema.org EducationalOrganization, WebSite and Course structured data",
+    "Added sitemap.xml and robots.txt",
+    "Added friendly 404 page",
+    "Added public Help & FAQ, feedback entry point and visible release badge",
+    "GitHub Pages deployment uses the V5.8 application entrypoint and enhancement injection layers"
   ]
 }
