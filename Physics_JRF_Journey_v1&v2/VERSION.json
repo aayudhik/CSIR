@@ -1,17 +1,13 @@
 {
-  "version": "5.8.7",
+  "version": "5.8.8",
   "title": "Physics JRF Journey",
-  "release": "V5.8.7 Exam Intelligence Engine",
+  "release": "V5.8.8 Fast Startup",
   "changes": [
-    "Added exam-readiness score using mastery, accuracy and practice coverage",
-    "Added topic priority intelligence for exam-focused study planning",
-    "Added PYQ-linked topic signals from the existing question bank",
-    "Added high, medium and low priority topic classification",
-    "Added exam-focused priority queue in Progress Analytics",
-    "Added next exam focus recommendation",
-    "Added exam strategy guidance for weak, untested and PYQ-linked areas",
-    "Updated offline cache for the V5.8.7 intelligence layer",
-    "Preserved all V5.8.2 stability, V5.8.3 offline/PWA, V5.8.4 public/SEO, V5.8.5 accessibility and V5.8.6 adaptive learning features",
-    "GitHub Pages deployment injects the V5.8.7 Exam Intelligence Engine layer"
+    "Removed the blocking full-screen startup wait from the enhancement layer",
+    "Dashboard now becomes visible immediately while study data loads in the background",
+    "Added a non-blocking loading status indicator",
+    "Added cache-busting for the updated startup layer",
+    "Refreshed the service-worker cache version",
+    "Preserved V5.8.7 Exam Intelligence, adaptive learning, accessibility, SEO and offline features"
   ]
 }
