@@ -1,4 +1,4 @@
-name: Deploy CSIR V5.9.1
+name: Deploy CSIR V5.9.1 Stable
 
 on:
   push:
@@ -14,6 +14,9 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  ROOT: Physics_JRF_Journey_v1&v2
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,122 +24,135 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Validate application source
+
+      - name: Validate source files and JSON
         shell: bash
         run: |
           set -euo pipefail
-          ROOT="Physics_JRF_Journey_v1&v2"
           test -s "$ROOT/v58-final.html"
           test -s "$ROOT/v58-enhancements.js"
-          test -s "$ROOT/v590-clean-brand.js"
           test -s "$ROOT/v585-accessibility.js"
           test -s "$ROOT/v586-learning.js"
           test -s "$ROOT/v587-exam-intelligence.js"
+          test -s "$ROOT/v590-clean-brand.js"
           test -s "$ROOT/v591-spaced-review.js"
-          test -s "$ROOT/tools/content-audit-v59.js"
+          test -s "$ROOT/v584-head.html"
           test -s "$ROOT/tools/build-v591-expansion.js"
+          test -s "$ROOT/tools/build-v591-pages.js"
+          test -s "$ROOT/tools/content-audit-v59.js"
           test -s "$ROOT/sw.js"
           test -s "$ROOT/manifest.webmanifest"
-          test -s "$ROOT/data/study-content.json"
-          test -s "$ROOT/data/question-bank.json"
-          test -s "$ROOT/data/paper-index.json"
-          test -s "$ROOT/data/pyq-index.json"
-          test -s "$ROOT/data/reference-books.json"
           for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
-          node -e "const fs=require('fs'); for(const f of fs.readdirSync('$ROOT/data').filter(x=>x.endsWith('.json'))){JSON.parse(fs.readFileSync('$ROOT/data/'+f,'utf8')); console.log('JSON OK:',f)}"
-          node -e "JSON.parse(require('fs').readFileSync('$ROOT/manifest.webmanifest','utf8'))"
-      - name: Build V5.9.1 deep content expansion
+          node - <<'NODE'
+          const fs=require('fs');
+          const root=process.env.ROOT;
+          for(const f of fs.readdirSync(`${root}/data`).filter(x=>x.endsWith('.json'))){
+            JSON.parse(fs.readFileSync(`${root}/data/${f}`,'utf8'));
+            console.log('JSON OK:',f);
+          }
+          JSON.parse(fs.readFileSync(`${root}/manifest.webmanifest`,'utf8'));
+          NODE
+
+      - name: Build V5.9.1 expansion source
         shell: bash
         run: |
           set -euo pipefail
-          node "Physics_JRF_Journey_v1&v2/tools/build-v591-expansion.js"
-          node -e "const r=JSON.parse(require('fs').readFileSync('Physics_JRF_Journey_v1&v2/data/content-expansion-v5.9.1.json','utf8')); if(r.records.length<30||r.questions.length<150) process.exit(1); console.log('Expansion OK:',r.records.length,'topics',r.questions.length,'questions')"
-      - name: Run V5.9 deep content audit
+          node "$ROOT/tools/build-v591-expansion.js"
+          node - <<'NODE'
+          const fs=require('fs');
+          const p=`${process.env.ROOT}/data/content-expansion-v5.9.1.json`;
+          const r=JSON.parse(fs.readFileSync(p,'utf8'));
+          const topics=Array.isArray(r.topics)?r.topics:(Array.isArray(r.records)?r.records:[]);
+          const questions=Array.isArray(r.questions)?r.questions:[];
+          if(topics.length<30) throw new Error(`Expansion topics too small: ${topics.length}`);
+          if(questions.length<150) throw new Error(`Expansion questions too small: ${questions.length}`);
+          console.log(`Expansion source OK: ${topics.length} topics, ${questions.length} questions`);
+          NODE
+
+      - name: Normalize expansion into study-content schema and build Pages entrypoint
         shell: bash
         run: |
           set -euo pipefail
-          node "Physics_JRF_Journey_v1&v2/tools/content-audit-v59.js"
-          test -s "Physics_JRF_Journey_v1&v2/data/content-audit-v5.9.json"
-          node -e "const r=JSON.parse(require('fs').readFileSync('Physics_JRF_Journey_v1&v2/data/content-audit-v5.9.json','utf8')); if(!r.summary||r.summary.topic_count<130||!Array.isArray(r.topics)) process.exit(1); console.log('Audit OK:',r.summary)"
-      - name: Select V5.9.1 application entrypoint
-        run: cp "Physics_JRF_Journey_v1&v2/v58-final.html" "Physics_JRF_Journey_v1&v2/index.html"
-      - name: Apply fast non-blocking data startup and V5.9.1 expansion
+          node "$ROOT/tools/build-v591-pages.js"
+          test -s "$ROOT/index.html"
+          node --check "$ROOT/tools/build-v591-pages.js"
+
+      - name: Run merged-content audit after assembly
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          root=Path('Physics_JRF_Journey_v1&v2');index=root/'index.html';text=index.read_text(encoding='utf-8')
-          new_load="\n".join([
-          "async function load(){",
-          "  data={subjects:[],topics:[]};",
-          "  questions=[]; papers=[]; books=[];",
-          "  initNav(); bind(); renderHome(); renderTopics(); renderBooks(); renderPapers(); renderPractice(true); renderRevision(true); renderMock(false); renderPlanner();",
-          "  const get=async(url)=>{const r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()};",
-          "  const fail=(name,e)=>{console.warn('V5.9.1 data load failed:',name,e);};",
-          "  get(DATA+'?v=5.9.1').then(s=>{data=s;data.topics=flatTopics(s);fillSelectors();renderHome();renderTopics();renderPlanner()}).catch(e=>fail('study content',e));",
-          "  get(QB+'?v=5.9.1').then(q=>{questions=q.questions||[];renderHome();renderPractice(true);renderMock(false)}).catch(e=>fail('question bank',e));",
-          "  get(PAPERS+'?v=5.9.1').then(p=>{papers=p.papers||[];renderPapers()}).catch(e=>fail('question papers',e));",
-          "  get(BOOKS+'?v=5.9.1').then(b=>{books=b.subjects||[];renderBooks()}).catch(e=>fail('reference books',e));",
-          "  get('./data/content-expansion-v5.9.1.json?v=5.9.1').then(x=>{data.records=(data.records||[]).concat(x.records||[]);data.topics=flatTopics(data);questions=questions.concat(x.questions||[]);fillSelectors();renderHome();renderTopics();renderPractice(true);renderMock(false);renderPlanner();}).catch(e=>fail('V5.9.1 expansion',e));",
-          "}"
-          ])
-          start=text.find('async function load(){');end=text.find('\nfunction init()',start)
-          if start<0 or end<0:raise SystemExit('Could not locate load()')
-          index.write_text(text[:start]+new_load+'\nfunction init()'+text[end+len('\nfunction init()'):],encoding='utf-8')
-          PY
-      - name: Refresh service worker cache version
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p=Path('Physics_JRF_Journey_v1&v2/sw.js');t=p.read_text(encoding='utf-8');t=re.sub(r"const VERSION='[^']+';","const VERSION='pjr-v591-2';",t,count=1);p.write_text(t,encoding='utf-8')
-          PY
-      - name: Inject SEO metadata
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          root=Path('Physics_JRF_Journey_v1&v2');index=root/'index.html';head=(root/'v584-head.html').read_text(encoding='utf-8');index.write_text(index.read_text(encoding='utf-8').replace('</head>',head+'</head>',1),encoding='utf-8')
-          PY
-      - name: Inject V5.9.1 application layers
-        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.9.1"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script><script src="v590-clean-brand.js?v=5.9.1"></script><script src="v591-spaced-review.js?v=5.9.1"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
-      - name: Remove legacy V5.8 FINAL branding from generated site
-        run: python -c "from pathlib import Path;p=Path('Physics_JRF_Journey_v1&v2/index.html');p.write_text(p.read_text(encoding='utf-8').replace('V5.8 FINAL',''),encoding='utf-8')"
-      - name: Validate generated Pages entrypoint
+          node "$ROOT/tools/content-audit-v59.js"
+          test -s "$ROOT/data/content-audit-v5.9.json"
+          node - <<'NODE'
+          const fs=require('fs');
+          const p=`${process.env.ROOT}/data/content-audit-v5.9.json`;
+          const r=JSON.parse(fs.readFileSync(p,'utf8'));
+          if(!r.summary||r.summary.topic_count<130||!Array.isArray(r.topics)) throw new Error('Merged audit did not meet minimum topic coverage');
+          console.log('Merged audit OK:',r.summary);
+          NODE
+
+      - name: Validate generated application artifact
         shell: bash
         run: |
           set -euo pipefail
-          INDEX="Physics_JRF_Journey_v1&v2/index.html"
+          INDEX="$ROOT/index.html"
           test -s "$INDEX"
+          grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
+          grep -q 'content-expansion-v5.9.1.json?v=5.9.1' "$INDEX"
+          grep -q 'pjr:data-ready' "$INDEX"
           for src in v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js v591-spaced-review.js; do grep -q "$src" "$INDEX"; done
           if grep -q 'v584-public.js' "$INDEX"; then echo 'Removed public layer still present'; exit 1; fi
           if grep -q 'V5.8 FINAL' "$INDEX"; then echo 'Legacy V5.8 FINAL branding still present'; exit 1; fi
-          grep -q 'content-expansion-v5.9.1.json' "$INDEX"
-          grep -q 'v=5.9.1' "$INDEX"
-          grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
-          grep -q '</body>' "$INDEX"
-      - name: Validate generated JavaScript
+          node - <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const html=fs.readFileSync(`${process.env.ROOT}/index.html`,'utf8');
+          const scripts=[...html.matchAll(/<script(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(Boolean);
+          if(scripts.length!==1) throw new Error(`Expected one inline application script, found ${scripts.length}`);
+          new vm.Script(scripts[0],{filename:'generated-index-inline.js'});
+          if((html.match(/async function load\(\)\{/g)||[]).length!==1) throw new Error('Generated index contains an invalid load() structure');
+          if(!/<\/body>\s*<\/html>\s*$/.test(html)) throw new Error('Generated HTML closing structure is invalid');
+          console.log('Generated index syntax OK');
+          NODE
+
+      - name: Verify artifact contents before upload
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          text=Path('Physics_JRF_Journey_v1&v2/index.html').read_text(encoding='utf-8')
-          scripts=re.findall(r'<script(?![^>]*application/ld\+json)[^>]*>(.*?)</script>',text,re.S|re.I)
-          if not scripts: raise SystemExit('Inline application script not found')
-          Path('/tmp/app.js').write_text(scripts[0],encoding='utf-8')
-          PY
-          node --check /tmp/app.js
+          test -f "$ROOT/index.html"
+          test -f "$ROOT/data/study-content.json"
+          test -f "$ROOT/data/question-bank.json"
+          test -f "$ROOT/data/content-expansion-v5.9.1.json"
+          test -f "$ROOT/data/content-audit-v5.9.json"
+          echo 'Pages artifact root:'
+          find "$ROOT" -maxdepth 2 -type f | sort | head -200
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "Physics_JRF_Journey_v1&v2"
+          path: "$ROOT"
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify deployed Pages response
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          test -n "$PAGE_URL"
+          for attempt in 1 2 3 4 5; do
+            if curl -fsSL --max-time 20 "$PAGE_URL" | grep -q 'Welcome Dear CSIR Aspirant'; then
+              echo "Pages deployment verified: $PAGE_URL"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Pages deployment did not return the expected application marker: $PAGE_URL"
+          exit 1
