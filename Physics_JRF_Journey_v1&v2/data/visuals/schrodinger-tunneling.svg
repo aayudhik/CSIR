@@ -1,0 +1,78 @@
+<svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Finite Potential Barrier and Quantum Tunneling</title>
+  <desc id="desc">Three panels show a finite rectangular potential barrier with particle energy below the barrier, a wavefunction that decays exponentially inside the barrier and remains nonzero beyond it, and conservation of probability current.</desc>
+  <defs>
+    <style>
+      .title{font:700 26px system-ui,sans-serif;fill:#263238}.subtitle{font:italic 14px system-ui,sans-serif;fill:#5f6368}
+      .panel{font:700 16px system-ui,sans-serif;fill:#263238}.axis{font:12px system-ui,sans-serif;fill:#37474f}.note{font:12px system-ui,sans-serif;fill:#546e7a}
+      .bold{font-weight:700}.energy{stroke:#7e57c2;stroke-width:2;stroke-dasharray:7 5}.barrier{fill:#ef5350;fill-opacity:.18;stroke:#c62828;stroke-width:2}
+      .axisline{stroke:#263238;stroke-width:2}.grid{stroke:#eceff1;stroke-width:1}.incident{stroke:#1e88e5;stroke-width:2.5;fill:none}.reflected{stroke:#e53935;stroke-width:2.5;fill:none;stroke-dasharray:7 4}
+      .decay{stroke:#fb8c00;stroke-width:3;fill:none}.transmitted{stroke:#2e7d32;stroke-width:2.5;fill:none}.current{stroke:#455a64;stroke-width:2}
+      .forbidden{font:700 14px system-ui,sans-serif;fill:#b71c1c}.insight{fill:#f1f8e9;stroke:#43a047;stroke-width:2}.formula{font:700 12px system-ui,sans-serif;fill:#37474f}
+    </style>
+    <marker id="axisArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#263238"/></marker>
+    <marker id="blueArrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#1e88e5"/></marker>
+    <marker id="redArrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#e53935"/></marker>
+    <marker id="greenArrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 Z" fill="#2e7d32"/></marker>
+  </defs>
+
+  <text x="600" y="34" text-anchor="middle" class="title">Finite Potential Barrier and Quantum Tunneling</text>
+  <text x="600" y="56" text-anchor="middle" class="subtitle">A particle with E &lt; V₀ has zero classical transmission, but finite quantum transmission</text>
+
+  <!-- PANEL 1 -->
+  <text x="90" y="92" class="panel">1. Potential Function V(x)</text>
+  <line x1="100" y1="285" x2="100" y2="105" class="axisline" marker-end="url(#axisArrow)"/>
+  <line x1="100" y1="285" x2="1080" y2="285" class="axisline" marker-end="url(#axisArrow)"/>
+  <line x1="100" y1="235" x2="1080" y2="235" class="energy"/>
+  <text x="82" y="239" text-anchor="end" class="axis bold">E</text>
+  <text x="82" y="112" text-anchor="end" class="axis">V</text><text x="1090" y="289" class="axis">x</text>
+  <line x1="100" y1="285" x2="390" y2="285" class="axisline"/><line x1="710" y1="285" x2="1080" y2="285" class="axisline"/>
+  <rect x="390" y="165" width="320" height="120" class="barrier"/>
+  <line x1="390" y1="165" x2="710" y2="165" class="axisline"/>
+  <text x="550" y="187" text-anchor="middle" class="axis bold">V = V₀</text>
+  <text x="245" y="130" text-anchor="middle" class="axis bold">Region I</text><text x="550" y="130" text-anchor="middle" class="axis bold">Region II: Barrier</text><text x="895" y="130" text-anchor="middle" class="axis bold">Region III</text>
+  <line x1="370" y1="165" x2="370" y2="235" stroke="#546e7a"/><line x1="360" y1="165" x2="380" y2="165" stroke="#546e7a"/><line x1="360" y1="235" x2="380" y2="235" stroke="#546e7a"/>
+  <text x="350" y="204" text-anchor="end" class="note">V₀ − E</text>
+  <line x1="390" y1="303" x2="710" y2="303" stroke="#546e7a"/><line x1="390" y1="295" x2="390" y2="311" stroke="#546e7a"/><line x1="710" y1="295" x2="710" y2="311" stroke="#546e7a"/>
+  <text x="550" y="321" text-anchor="middle" class="note bold">barrier width d</text>
+  <text x="550" y="347" text-anchor="middle" class="forbidden">Classical: E &lt; V₀ → no barrier crossing</text>
+  <text x="550" y="366" text-anchor="middle" class="note bold">Quantum: ψ penetrates the forbidden region → T &gt; 0</text>
+
+  <!-- PANEL 2 -->
+  <text x="90" y="405" class="panel">2. Wavefunction Behavior ψ(x)</text>
+  <line x1="100" y1="610" x2="100" y2="430" class="axisline" marker-end="url(#axisArrow)"/><line x1="100" y1="610" x2="1080" y2="610" class="axisline" marker-end="url(#axisArrow)"/>
+  <rect x="390" y="430" width="320" height="180" fill="#fff8e1" fill-opacity=".8"/>
+  <line x1="390" y1="430" x2="390" y2="610" stroke="#c62828" stroke-dasharray="4 4"/><line x1="710" y1="430" x2="710" y2="610" stroke="#c62828" stroke-dasharray="4 4"/>
+  <text x="550" y="450" text-anchor="middle" class="axis bold">Classically forbidden: E &lt; V₀</text>
+  <text x="82" y="614" text-anchor="end" class="axis">0</text><text x="82" y="440" text-anchor="end" class="axis">ψ</text><text x="1090" y="614" class="axis">x</text>
+  <!-- incident + reflected standing/interference pattern in Region I -->
+  <path d="M100 610 C120 575 140 545 160 610 S200 675 220 610 S260 545 280 610 S320 675 340 610 S370 570 390 610" class="incident"/>
+  <path d="M390 610 C370 570 350 545 330 610 S290 675 270 610 S230 545 210 610 S170 675 150 610 S120 570 100 610" class="reflected"/>
+  <!-- exponentially decaying evanescent tail; explicitly nonzero at x=d -->
+  <path d="M390 610 C405 590 420 575 435 582 C455 591 470 598 490 601 C515 605 540 607 565 608 C590 609 615 609.5 640 609.7 C665 609.8 690 609.9 710 610" class="decay"/>
+  <!-- transmitted wave -->
+  <path d="M710 610 C730 595 750 600 770 610 S810 625 830 610 S870 595 890 610 S930 625 950 610 S990 595 1010 610 S1045 622 1080 610" class="transmitted"/>
+  <path d="M225 555 L275 555" class="incident" marker-end="url(#blueArrow)"/><text x="250" y="545" text-anchor="middle" class="note" fill="#1e88e5">incident</text>
+  <path d="M315 565 L265 565" class="reflected" marker-end="url(#redArrow)"/><text x="290" y="555" text-anchor="middle" class="note" fill="#e53935">reflected</text>
+  <text x="550" y="510" text-anchor="middle" class="note bold" fill="#ef6c00">ψ ∝ e⁻ᵏˣ</text>
+  <text x="550" y="528" text-anchor="middle" class="formula">κ = √[2m(V₀ − E)] / ℏ</text>
+  <text x="550" y="546" text-anchor="middle" class="note">ψ remains non-zero throughout the barrier</text>
+  <path d="M850 555 L900 555" class="transmitted" marker-end="url(#greenArrow)"/><text x="875" y="545" text-anchor="middle" class="note" fill="#2e7d32">transmitted</text>
+  <text x="245" y="645" text-anchor="middle" class="note bold">Region I: oscillatory</text><text x="550" y="645" text-anchor="middle" class="note bold">Region II: exponential decay</text><text x="895" y="645" text-anchor="middle" class="note bold">Region III: smaller oscillation</text>
+  <text x="550" y="666" text-anchor="middle" class="note">k = √(2mE)/ℏ outside the barrier</text>
+
+  <!-- PANEL 3 -->
+  <text x="90" y="700" class="panel">3. Probability Current Conservation</text>
+  <text x="150" y="735" class="note bold">Current magnitudes:</text>
+  <rect x="150" y="750" width="190" height="32" rx="4" fill="#1e88e5" fill-opacity=".18" stroke="#1e88e5" class="current"/><text x="245" y="771" text-anchor="middle" class="note bold">Iᵢ (incident)</text>
+  <text x="365" y="773" class="panel">=</text>
+  <rect x="395" y="750" width="150" height="32" rx="4" fill="#e53935" fill-opacity=".18" stroke="#e53935" class="current"/><text x="470" y="771" text-anchor="middle" class="note bold">|Iᵣ| (reflected)</text>
+  <text x="570" y="773" class="panel">+</text>
+  <rect x="600" y="750" width="105" height="32" rx="4" fill="#2e7d32" fill-opacity=".18" stroke="#2e7d32" class="current"/><text x="652" y="771" text-anchor="middle" class="note bold">Iₜ</text>
+  <text x="755" y="771" class="formula">T = Iₜ / Iᵢ</text><text x="875" y="771" class="note">0 &lt; T &lt; 1 for a finite barrier</text>
+  <rect x="150" y="800" width="900" height="46" rx="6" class="insight"/>
+  <text x="600" y="820" text-anchor="middle" class="formula">WKB / thick-barrier limit: T ≈ e⁻²ᵏᵈ = e⁻²ᵈ√[2m(V₀−E)]/ℏ</text>
+  <text x="600" y="838" text-anchor="middle" class="note">Tunneling decreases exponentially as barrier width d or height V₀−E increases.</text>
+  <rect x="150" y="855" width="900" height="34" rx="6" fill="#f8f9fa" stroke="#90a4ae"/>
+  <text x="600" y="877" text-anchor="middle" class="note bold">KEY INSIGHT: Barrier penetration is purely quantum — even when E &lt; V, probability beyond the barrier is non-zero.</text>
+</svg>
