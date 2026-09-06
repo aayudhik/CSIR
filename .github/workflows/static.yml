@@ -34,7 +34,6 @@ jobs:
           ROOT="Physics_JRF_Journey_v1&v2"
           test -s "$ROOT/v58-final.html"
           test -s "$ROOT/v58-enhancements.js"
-          test -s "$ROOT/v584-public.js"
           test -s "$ROOT/v585-accessibility.js"
           test -s "$ROOT/v586-learning.js"
           test -s "$ROOT/v587-exam-intelligence.js"
@@ -116,7 +115,7 @@ jobs:
           PY
 
       - name: Inject V5.9 application layers
-        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.9.0"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
+        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.9.0"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
 
       - name: Validate generated Pages entrypoint
         shell: bash
@@ -124,7 +123,8 @@ jobs:
           set -euo pipefail
           INDEX="Physics_JRF_Journey_v1&v2/index.html"
           test -s "$INDEX"
-          for src in v58-enhancements.js v584-public.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js; do grep -q "$src" "$INDEX"; done
+          for src in v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js; do grep -q "$src" "$INDEX"; done
+          if grep -q 'v584-public.js' "$INDEX"; then echo 'Removed public layer still present'; exit 1; fi
           grep -q 'v=5.9.0' "$INDEX"
           grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
           grep -q '</body>' "$INDEX"
