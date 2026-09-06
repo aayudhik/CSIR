@@ -91,6 +91,7 @@
     document.documentElement.dataset.authenticated = 'true';
     reveal();
     addLogout();
+    window.dispatchEvent(new CustomEvent('pjrj:authenticated', { detail: { userId: session.user.id } }));
     client.auth.onAuthStateChange((event, nextSession) => {
       if (event === 'SIGNED_OUT' || !nextSession) location.replace(AUTH_PAGE);
       else window.PJRJ_AUTH_USER = nextSession.user;
