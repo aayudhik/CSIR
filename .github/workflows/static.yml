@@ -1,4 +1,4 @@
-name: Deploy CSIR V5.8
+name: Deploy CSIR V5.9
 
 on:
   push:
@@ -38,6 +38,7 @@ jobs:
           test -s "$ROOT/v585-accessibility.js"
           test -s "$ROOT/v586-learning.js"
           test -s "$ROOT/v587-exam-intelligence.js"
+          test -s "$ROOT/tools/content-audit-v59.js"
           test -s "$ROOT/sw.js"
           test -s "$ROOT/manifest.webmanifest"
           test -s "$ROOT/data/study-content.json"
@@ -45,11 +46,19 @@ jobs:
           test -s "$ROOT/data/paper-index.json"
           test -s "$ROOT/data/pyq-index.json"
           test -s "$ROOT/data/reference-books.json"
-          for f in "$ROOT"/*.js; do node --check "$f"; done
+          for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
           node -e "const fs=require('fs'); for(const f of fs.readdirSync('$ROOT/data').filter(x=>x.endsWith('.json'))){JSON.parse(fs.readFileSync('$ROOT/data/'+f,'utf8')); console.log('JSON OK:',f)}"
           node -e "JSON.parse(require('fs').readFileSync('$ROOT/manifest.webmanifest','utf8'))"
 
-      - name: Select V5.8 application entrypoint
+      - name: Run V5.9 deep content audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          node "Physics_JRF_Journey_v1&v2/tools/content-audit-v59.js"
+          test -s "Physics_JRF_Journey_v1&v2/data/content-audit-v5.9.json"
+          node -e "const r=JSON.parse(require('fs').readFileSync('Physics_JRF_Journey_v1&v2/data/content-audit-v5.9.json','utf8')); if(r.version!=='V5.9'||!r.summary||!Array.isArray(r.topics)) process.exit(1); console.log('Audit OK:',r.summary)"
+
+      - name: Select V5.9 application entrypoint
         run: cp "Physics_JRF_Journey_v1&v2/v58-final.html" "Physics_JRF_Journey_v1&v2/index.html"
 
       - name: Apply fast non-blocking data startup
@@ -67,11 +76,11 @@ jobs:
               "  questions=[]; papers=[]; books=[];",
               "  initNav(); bind(); renderHome(); renderTopics(); renderBooks(); renderPapers(); renderPractice(true); renderRevision(true); renderMock(false); renderPlanner();",
               "  const get=async(url)=>{const r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()};",
-              "  const fail=(name,e)=>{console.warn('V5.8 data load failed:',name,e);};",
-              "  get(DATA+'?v=5.8.9').then(s=>{data=s;data.topics=flatTopics(s);fillSelectors();renderHome();renderTopics();renderPlanner()}).catch(e=>fail('study content',e));",
-              "  get(QB+'?v=5.8.9').then(q=>{questions=q.questions||[];renderHome();renderPractice(true);renderMock(false)}).catch(e=>fail('question bank',e));",
-              "  get(PAPERS+'?v=5.8.9').then(p=>{papers=p.papers||[];renderPapers()}).catch(e=>fail('question papers',e));",
-              "  get(BOOKS+'?v=5.8.9').then(b=>{books=b.subjects||[];renderBooks()}).catch(e=>fail('reference books',e));",
+              "  const fail=(name,e)=>{console.warn('V5.9 data load failed:',name,e);};",
+              "  get(DATA+'?v=5.9.0').then(s=>{data=s;data.topics=flatTopics(s);fillSelectors();renderHome();renderTopics();renderPlanner()}).catch(e=>fail('study content',e));",
+              "  get(QB+'?v=5.9.0').then(q=>{questions=q.questions||[];renderHome();renderPractice(true);renderMock(false)}).catch(e=>fail('question bank',e));",
+              "  get(PAPERS+'?v=5.9.0').then(p=>{papers=p.papers||[];renderPapers()}).catch(e=>fail('question papers',e));",
+              "  get(BOOKS+'?v=5.9.0').then(b=>{books=b.subjects||[];renderBooks()}).catch(e=>fail('reference books',e));",
               "}"
           ])
           start = text.find('async function load(){')
@@ -80,7 +89,7 @@ jobs:
               raise SystemExit('Could not locate application load() function')
           text = text[:start] + new_load + '\nfunction init()' + text[end + len('\nfunction init()'):]
           index.write_text(text, encoding='utf-8')
-          print('Applied non-blocking startup loader')
+          print('Applied V5.9 non-blocking startup loader')
           PY
 
       - name: Refresh service worker cache version
@@ -90,7 +99,7 @@ jobs:
           from pathlib import Path
           p=Path('Physics_JRF_Journey_v1&v2/sw.js')
           t=p.read_text(encoding='utf-8')
-          t=t.replace("const VERSION='pjr-v587-1';", "const VERSION='pjr-v589-1';")
+          t=t.replace("const VERSION='pjr-v589-1';", "const VERSION='pjr-v590-1';")
           p.write_text(t,encoding='utf-8')
           PY
 
@@ -106,8 +115,8 @@ jobs:
           index.write_text(text, encoding='utf-8')
           PY
 
-      - name: Inject V5.8 enhancement layers
-        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.9"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
+      - name: Inject V5.9 application layers
+        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.9.0"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
 
       - name: Validate generated Pages entrypoint
         shell: bash
@@ -116,7 +125,7 @@ jobs:
           INDEX="Physics_JRF_Journey_v1&v2/index.html"
           test -s "$INDEX"
           for src in v58-enhancements.js v584-public.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js; do grep -q "$src" "$INDEX"; done
-          grep -q 'v=5.8.9' "$INDEX"
+          grep -q 'v=5.9.0' "$INDEX"
           grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
           grep -q '</body>' "$INDEX"
 
