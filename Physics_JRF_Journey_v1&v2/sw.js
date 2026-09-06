@@ -1,5 +1,5 @@
-/* Physics JRF Journey V5.8.7 — offline/cache foundation */
-const VERSION='pjr-v587-1';
+/* Physics JRF Journey V5.8.8 — offline/cache foundation */
+const VERSION='pjr-v588-1';
 const SHELL=VERSION+'-shell';
 const DATA=VERSION+'-data';
 const SHELL_FILES=['./','./index.html','./v58-final.html','./v58-enhancements.js','./v584-public.js','./v585-accessibility.js','./v586-learning.js','./v587-exam-intelligence.js','./manifest.webmanifest'];
