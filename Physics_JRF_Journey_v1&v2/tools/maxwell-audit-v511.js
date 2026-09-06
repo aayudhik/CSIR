@@ -1,0 +1,33 @@
+const fs=require('fs');
+const path=require('path');
+const ROOT=path.resolve(__dirname,'..');
+const DATA=path.join(ROOT,'data','deep-content-v5.11-maxwell.json');
+const VIS=path.join(ROOT,'data','visuals');
+const VIEWER=path.join(ROOT,'maxwell-visuals-v511.js');
+const OUTDIR=path.join(ROOT,'data','audits');
+const OUT=path.join(OUTDIR,'maxwell-v5.11-audit.json');
+const MD=path.join(OUTDIR,'maxwell-v5.11-audit.md');
+const read=p=>fs.readFileSync(p,'utf8');
+const d=JSON.parse(read(DATA));
+const requiredVisuals=['maxwell-gauss-electric.svg','maxwell-faraday-induction.svg','maxwell-em-wave.svg','maxwell-poynting.svg'];
+const checks=[];
+function check(name,ok,detail){checks.push({name,ok:Boolean(ok),detail});}
+check('Identity',d.version==='V5.11'&&d.topic_id==='EM-MAXWELL-V511'&&d.topic==="Maxwell's Equations",'V5.11 Maxwell identity is present');
+check('Conceptual foundation',Array.isArray(d.why_this_matters?.historical_journey)&&d.why_this_matters.historical_journey.length>=3,'Historical/conceptual foundation present');
+check('Four equations',d.equations&&Object.keys(d.equations).length===4&&Object.values(d.equations).every(x=>x.integral&&x.differential),'All four Maxwell equations have integral and differential forms');
+check('Derivations',Array.isArray(d.derivations)&&d.derivations.length>=3&&d.derivations.slice(0,3).every(x=>Array.isArray(x.steps)&&x.steps.length>=5&&x.result),'At least 3 complete derivations');
+check('Worked examples',Array.isArray(d.worked_examples)&&d.worked_examples.length>=4&&d.worked_examples.every(x=>Array.isArray(x.solution)&&x.solution.length>=2&&x.answer),'At least 4 worked examples with solutions');
+check('Practice',Array.isArray(d.practice_problems)&&d.practice_problems.length===15&&d.practice_problems.every(x=>Array.isArray(x.options)&&x.options.length===4&&Number.isInteger(x.answer)&&x.explanation),'Exactly 15 four-option practice questions');
+check('Boundary conditions',Array.isArray(d.boundary_conditions)&&d.boundary_conditions.length>=4,'Interface boundary conditions present');
+check('Waves and energy',Boolean(d.electromagnetic_waves&&d.poynting),'Wave and Poynting coverage present');
+check('Revision/exam',Array.isArray(d.revision_deck)&&d.revision_deck.length>=8&&Array.isArray(d.exam_patterns)&&d.exam_patterns.length>=5,'Revision deck and exam patterns present');
+let rendered=0;for(const f of requiredVisuals){const p=path.join(VIS,f);const ok=fs.existsSync(p)&&fs.statSync(p).size>500;check(`Visual ${f}`,ok,ok?'SVG present and non-empty':'SVG missing');if(ok)rendered++;}
+const viewer=fs.existsSync(VIEWER)?read(VIEWER):'';
+check('Viewer integration',requiredVisuals.every(f=>viewer.includes(f))&&viewer.includes('pjr:data-ready'),'Maxwell viewer references all four SVGs and the data-ready hook');
+const scores={conceptual_foundation:d.why_this_matters?.historical_journey?.length>=3?1.5:0,equations:d.equations&&Object.keys(d.equations).length===4?1:0,derivations:Array.isArray(d.derivations)&&d.derivations.length>=3?2:0,worked_examples:Array.isArray(d.worked_examples)&&d.worked_examples.length>=4?1.5:0,practice:Array.isArray(d.practice_problems)&&d.practice_problems.length===15?1.5:0,visuals:Math.min(1,rendered/4),revision_exam:Array.isArray(d.revision_deck)&&d.revision_deck.length>=8&&Array.isArray(d.exam_patterns)&&d.exam_patterns.length>=5?0.5:0};
+const total=Object.values(scores).reduce((a,b)=>a+b,0);
+const audit={version:'V5.11',topic:d.topic,topic_id:d.topic_id,generated_at:new Date().toISOString(),scores, total, visual_rendered:`${rendered}/4`,checks,certification:total>=8.5&&rendered===4&&checks.every(c=>c.ok)?'A-GRADE CERTIFIED':'NOT CERTIFIED'};
+fs.mkdirSync(OUTDIR,{recursive:true});fs.writeFileSync(OUT,JSON.stringify(audit,null,2));
+const md=['# Maxwell V5.11 Audit','','| Category | Score |','|---|---:|',`| Conceptual Foundation | ${scores.conceptual_foundation}/1.5 |`,`| Four Equations | ${scores.equations}/1.0 |`,`| Derivations | ${scores.derivations}/2.0 |`,`| Worked Examples | ${scores.worked_examples}/1.5 |`,`| Practice | ${scores.practice}/1.5 |`,`| Visuals | ${scores.visuals}/1.0 |`,`| Revision & Exam | ${scores.revision_exam}/0.5 |`,`| **Total** | **${total}/9.0** |`,'',`Visuals rendered: **${rendered}/4**`,`Certification: **${audit.certification}**`,'','## Checks','',...checks.map(c=>`- ${c.ok?'PASS':'FAIL'} — ${c.name}: ${c.detail}`),''].join('\n');fs.writeFileSync(MD,md);
+console.log(`Maxwell V5.11 audit: ${total}/9.0; rendered diagrams ${rendered}/4; ${audit.certification}`);
+if(audit.certification!=='A-GRADE CERTIFIED')process.exit(1);
