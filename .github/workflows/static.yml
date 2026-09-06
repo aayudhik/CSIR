@@ -1,4 +1,4 @@
-name: Deploy CSIR V5.9.1 Stable
+name: Deploy CSIR V5.9.2 Stable
 
 on:
   push:
@@ -39,12 +39,17 @@ jobs:
           test -s "$ROOT/v587-exam-intelligence.js"
           test -s "$ROOT/v590-clean-brand.js"
           test -s "$ROOT/v591-spaced-review.js"
+          test -s "$ROOT/v592-review.js"
           test -s "$ROOT/v584-head.html"
           test -s "$ROOT/tools/build-v591-expansion.js"
           test -s "$ROOT/tools/build-v591-pages.js"
           test -s "$ROOT/tools/content-audit-v59.js"
           test -s "$ROOT/sw.js"
           test -s "$ROOT/manifest.webmanifest"
+          test -s "$ROOT/landing.html"
+          test -s "$ROOT/sitemap.xml"
+          test -s "$ROOT/robots.txt"
+          test -s "$ROOT/assets/og-image.svg"
           for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
           node - <<'NODE'
           const fs=require('fs');
@@ -52,7 +57,7 @@ jobs:
           for(const f of fs.readdirSync(`${root}/data`).filter(x=>x.endsWith('.json'))){JSON.parse(fs.readFileSync(`${root}/data/${f}`,'utf8'));console.log('JSON OK:',f)}
           JSON.parse(fs.readFileSync(`${root}/manifest.webmanifest`,'utf8'));
           NODE
-      - name: Generate and validate V5.9.1 expansion source
+      - name: Generate and validate V5.9.2 expansion source
         shell: bash
         run: |
           set -euo pipefail
@@ -62,7 +67,7 @@ jobs:
           const p=`${process.env.ROOT}/data/content-expansion-v5.9.1.json`;
           const r=JSON.parse(fs.readFileSync(p,'utf8'));
           if(!Array.isArray(r.topics)||r.topics.length<30) throw new Error('Expansion topics must contain at least 30 normalized topics');
-          if(!Array.isArray(r.questions)||r.questions.length<150) throw new Error('Expansion question bank must contain at least 150 questions');
+          if(!Array.isArray(r.questions)||r.questions.length<300) throw new Error('Expansion question bank must contain at least 300 questions');
           console.log(`Expansion source OK: ${r.topics.length} topics, ${r.questions.length} questions`);
           NODE
       - name: Build deterministic Pages entrypoint from V5.8 base
@@ -92,9 +97,13 @@ jobs:
           grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
           grep -q 'content-expansion-v5.9.1.json?v=5.9.1' "$INDEX"
           grep -q 'pjr:data-ready' "$INDEX"
+          grep -q 'v592-review.js' "$INDEX"
+          grep -q 'og:image' "$INDEX"
+          grep -q 'application/ld+json' "$INDEX"
           for src in v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js v591-spaced-review.js; do grep -q "$src" "$INDEX"; done
           if grep -q 'v584-public.js' "$INDEX"; then echo 'Removed public layer still present'; exit 1; fi
           if grep -q 'V5.8 FINAL' "$INDEX"; then echo 'Legacy V5.8 FINAL branding still present'; exit 1; fi
+          if grep -q 'V5.8 · Final Application Layer' "$INDEX"; then echo 'Legacy V5.8 application branding still present'; exit 1; fi
           node - <<'NODE'
           const fs=require('fs'),vm=require('vm');
           const html=fs.readFileSync(`${process.env.ROOT}/index.html`,'utf8');
@@ -109,8 +118,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json; do test -f "$ROOT/$f"; done
-          find "$ROOT" -maxdepth 2 -type f | sort | head -200
+          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json; do test -f "$ROOT/$f"; done
+          find "$ROOT" -maxdepth 2 -type f | sort | head -220
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
