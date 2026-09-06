@@ -1,5 +1,6 @@
 (() => {
   const AUTH_PAGE = './auth.html';
+  const AUTH_REDIRECT = `${location.origin}/CSIR/auth.html`;
   const SUPABASE_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
   const config = window.PJRJ_SUPABASE;
   if (!config) return;
@@ -57,7 +58,14 @@
       try {
         if (mode === 'signup') {
           const fullName = form.fullName.value.trim();
-          const { data, error } = await client.auth.signUp({ email, password, options: { data: { full_name: fullName } } });
+          const { data, error } = await client.auth.signUp({
+            email,
+            password,
+            options: {
+              data: { full_name: fullName },
+              emailRedirectTo: AUTH_REDIRECT
+            }
+          });
           if (error) throw error;
           if (data.session) location.replace('./');
           else message('Account created. Check your email to confirm your account, then return here to log in.');
@@ -77,7 +85,7 @@
       const email = form.email.value.trim();
       if (!email) return message('Enter your email address first, then choose Forgot password.', true);
       setBusy(form, true);
-      const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: `${location.origin}${location.pathname}` });
+      const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: AUTH_REDIRECT });
       setBusy(form, false);
       if (error) message(error.message, true); else message('Password reset instructions have been sent to your email.');
     });
