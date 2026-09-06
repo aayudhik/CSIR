@@ -10,9 +10,10 @@ permissions:
   pages: write
   id-token: write
 
+# Keep one deployment active; do not cancel it when another main commit arrives.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   ROOT: Physics_JRF_Journey_v1&v2
@@ -40,6 +41,7 @@ jobs:
           test -s "$ROOT/v590-clean-brand.js"
           test -s "$ROOT/v591-spaced-review.js"
           test -s "$ROOT/v592-review.js"
+          test -s "$ROOT/v592-ui-cleanup.js"
           test -s "$ROOT/v584-head.html"
           test -s "$ROOT/tools/build-v591-expansion.js"
           test -s "$ROOT/tools/build-v591-pages.js"
@@ -98,6 +100,7 @@ jobs:
           grep -q 'content-expansion-v5.9.1.json?v=5.9.1' "$INDEX"
           grep -q 'pjr:data-ready' "$INDEX"
           grep -q 'v592-review.js' "$INDEX"
+          grep -q 'v592-ui-cleanup.js' "$INDEX"
           grep -q 'og:image' "$INDEX"
           grep -q 'application/ld+json' "$INDEX"
           for src in v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js v591-spaced-review.js; do grep -q "$src" "$INDEX"; done
