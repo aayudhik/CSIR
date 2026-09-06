@@ -1,7 +1,7 @@
 {
-  "version": "5.8.4",
+  "version": "5.8.5",
   "title": "Physics JRF Journey",
-  "release": "V5.8.4 SEO & Public Experience",
+  "release": "V5.8.5 Accessibility & UI Polish",
   "changes": [
     "Dashboard welcome message updated to Welcome Dear CSIR Aspirant",
     "Rebuilt Study Content reader as a deeper structured study route",
@@ -22,6 +22,10 @@
     "Added sitemap.xml and robots.txt",
     "Added friendly 404 page",
     "Added public Help & FAQ, feedback entry point and visible release badge",
+    "Added V5.8.5 keyboard focus visibility, skip navigation and accessible control labeling",
+    "Added V5.8.5 dark mode with persistent local preference",
+    "Added V5.8.5 reduced-motion accessibility preference",
+    "Added V5.8.5 responsive accessibility toolbar for mobile screens",
     "GitHub Pages deployment uses the V5.8 application entrypoint and enhancement injection layers"
   ]
 }
