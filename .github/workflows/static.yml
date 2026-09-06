@@ -54,6 +54,7 @@ jobs:
           test -s "$ROOT/sitemap.xml"
           test -s "$ROOT/robots.txt"
           test -s "$ROOT/assets/og-image.svg"
+          test -s "$ROOT/data/deep-content-v5.10-schrodinger.json"
           for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
           node - <<'NODE'
           const fs=require('fs');
@@ -63,6 +64,13 @@ jobs:
             console.log('JSON OK:',f);
           }
           JSON.parse(fs.readFileSync(`${root}/manifest.webmanifest`,'utf8'));
+          const d=JSON.parse(fs.readFileSync(`${root}/data/deep-content-v5.10-schrodinger.json`,'utf8'));
+          if(d.version!=='V5.10'||d.topic!=='Schrödinger Equation') throw new Error('V5.10 Schrödinger content identity check failed');
+          if(!Array.isArray(d.worked_examples)||d.worked_examples.length<4) throw new Error('Schrödinger worked-example coverage incomplete');
+          if(!Array.isArray(d.practice_problems)||d.practice_problems.length!==15) throw new Error('Schrödinger practice coverage must contain 15 problems');
+          if(!Array.isArray(d.common_mistakes)||d.common_mistakes.length<8) throw new Error('Schrödinger common-mistake coverage incomplete');
+          if(!Array.isArray(d.visual_aids)||d.visual_aids.length!==4) throw new Error('Schrödinger visual-aid coverage incomplete');
+          console.log('V5.10 Schrödinger content validation OK');
           NODE
 
       - name: Generate and validate V5.9.1 expansion source
@@ -169,7 +177,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md; do
+          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json; do
             test -f "$ROOT/$f"
           done
           echo 'Pages artifact contents verified'
