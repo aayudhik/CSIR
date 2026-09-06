@@ -128,7 +128,7 @@ jobs:
           from pathlib import Path
           import re
           text=Path('Physics_JRF_Journey_v1&v2/index.html').read_text(encoding='utf-8')
-          scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',text,re.S)
+          scripts=re.findall(r'<script(?![^>]*application/ld\\+json)[^>]*>(.*?)</script>',text,re.S|re.I)
           if not scripts:
               raise SystemExit('Inline application script not found')
           Path('/tmp/app.js').write_text(scripts[0],encoding='utf-8')
