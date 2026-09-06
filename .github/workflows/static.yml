@@ -30,6 +30,9 @@ jobs:
       - name: Select V5.8 application entrypoint
         run: cp "Physics_JRF_Journey_v1&v2/v58-final.html" "Physics_JRF_Journey_v1&v2/index.html"
 
+      - name: Inject V5.8.2 stability and UX layer
+        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.2"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
