@@ -1,13 +1,13 @@
 {
-  "version": "5.8.8",
+  "version": "5.9.0",
   "title": "Physics JRF Journey",
-  "release": "V5.8.8 Fast Startup",
+  "release": "V5.9 Deep Content Engine — Audit",
   "changes": [
-    "Removed the blocking full-screen startup wait from the enhancement layer",
-    "Dashboard now becomes visible immediately while study data loads in the background",
-    "Added a non-blocking loading status indicator",
-    "Added cache-busting for the updated startup layer",
-    "Refreshed the service-worker cache version",
-    "Preserved V5.8.7 Exam Intelligence, adaptive learning, accessibility, SEO and offline features"
+    "Added an automated audit of all study-content topics",
+    "Scores topic depth, practice coverage and template-heavy content",
+    "Detects subject-level topic gaps against the V5.9 target curriculum",
+    "Flags missing high-value syllabus signals across major Physics subjects",
+    "Generates data/content-audit-v5.9.json during every Pages build",
+    "Preserves V5.8.8 fast startup and all existing learning layers"
   ]
 }
