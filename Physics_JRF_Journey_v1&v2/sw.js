@@ -1,8 +1,8 @@
-/* Physics JRF Journey V5.8.3 — offline/cache foundation */
-const VERSION='pjr-v583-1';
+/* Physics JRF Journey V5.8.6 — offline/cache foundation */
+const VERSION='pjr-v586-1';
 const SHELL=VERSION+'-shell';
 const DATA=VERSION+'-data';
-const SHELL_FILES=['./','./index.html','./v58-final.html','./v58-enhancements.js','./manifest.webmanifest'];
+const SHELL_FILES=['./','./index.html','./v58-final.html','./v58-enhancements.js','./v584-public.js','./v585-accessibility.js','./v586-learning.js','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(SHELL).then(cache=>cache.addAll(SHELL_FILES)).then(()=>self.skipWaiting()));
