@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">Free particle Gaussian wavepacket evolution</title>
+<desc id="desc">Five snapshots show a Gaussian wavepacket moving to the right while spreading with time because different momentum components acquire different phases.</desc>
+<defs><style>text{font-family:Arial,sans-serif;fill:#182235}.axis{stroke:#536174;stroke-width:2}.grid{stroke:#dfe5ee;stroke-width:1}.packet{fill:none;stroke:#315aa8;stroke-width:4}.density{fill:#8a3f8f;opacity:.20}.mean{stroke:#b04a4a;stroke-width:2;stroke-dasharray:7 6}</style></defs>
+<rect width="1200" height="760" rx="24" fill="#f8fafc"/>
+<text x="60" y="55" font-size="30" font-weight="700">Free-particle Gaussian wavepacket evolution</text>
+<text x="60" y="84" font-size="17">A localized quantum state moves and spreads; it is not a classical point particle with a perfectly sharp trajectory.</text>
+<g transform="translate(70,120)">
+<line x1="0" y1="480" x2="1050" y2="480" class="axis"/><line x1="0" y1="20" x2="0" y2="480" class="axis"/>
+<g class="grid"><line x1="210" y1="20" x2="210" y2="480"/><line x1="420" y1="20" x2="420" y2="480"/><line x1="630" y1="20" x2="630" y2="480"/><line x1="840" y1="20" x2="840" y2="480"/></g>
+<text x="5" y="515" font-size="14">x</text><text x="970" y="515" font-size="14">position</text>
+<g transform="translate(0,0)"><text x="10" y="45" font-size="18" font-weight="700">t = 0</text><path class="density" d="M30 440 C75 210 145 210 190 440 Z"/><path class="packet" d="M30 440 C75 210 145 210 190 440"/><line x1="110" y1="190" x2="110" y2="480" class="mean"/></g>
+<g transform="translate(210,0)"><text x="10" y="45" font-size="18" font-weight="700">t₁</text><path class="density" d="M20 440 C85 250 190 250 250 440 Z"/><path class="packet" d="M20 440 C85 250 190 250 250 440"/><line x1="135" y1="230" x2="135" y2="480" class="mean"/></g>
+<g transform="translate(420,0)"><text x="10" y="45" font-size="18" font-weight="700">t₂</text><path class="density" d="M0 440 C75 285 205 285 280 440 Z"/><path class="packet" d="M0 440 C75 285 205 285 280 440"/><line x1="150" y1="270" x2="150" y2="480" class="mean"/></g>
+<g transform="translate(630,0)"><text x="10" y="45" font-size="18" font-weight="700">t₃</text><path class="density" d="M0 440 C55 315 220 315 290 440 Z"/><path class="packet" d="M0 440 C55 315 220 315 290 440"/><line x1="160" y1="300" x2="160" y2="480" class="mean"/></g>
+<g transform="translate(840,0)"><text x="10" y="45" font-size="18" font-weight="700">late time</text><path class="density" d="M0 440 C40 345 235 345 300 440 Z"/><path class="packet" d="M0 440 C40 345 235 345 300 440"/><line x1="175" y1="330" x2="175" y2="480" class="mean"/></g>
+</g>
+<rect x="70" y="630" width="1060" height="78" rx="14" fill="#eef2ff" stroke="#c7d2fe"/>
+<text x="92" y="658" font-size="16" font-weight="700">Physics insight:</text><text x="220" y="658" font-size="16">the packet's momentum components have different energies, so their phases evolve at different rates.</text><text x="92" y="684" font-size="15">For a specified Gaussian model, the width grows with time; the exact formula depends on the chosen initial state and convention.</text>
+</svg>
