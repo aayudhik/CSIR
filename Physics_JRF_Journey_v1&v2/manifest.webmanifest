@@ -1,0 +1,11 @@
+{
+  "name": "Physics JRF Journey",
+  "short_name": "Physics JRF",
+  "description": "CSIR-NET Physical Sciences preparation workspace with deep study content, practice, previous papers, revision and analytics.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fb",
+  "theme_color": "#5753d8",
+  "lang": "en-IN"
+}
