@@ -42,8 +42,8 @@ jobs:
           index.write_text(text, encoding='utf-8')
           PY
 
-      - name: Inject V5.8.2 stability and UX layer
-        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.3"></script><script src="v584-public.js?v=5.8.4"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
+      - name: Inject V5.8 enhancement layers
+        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.3"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
