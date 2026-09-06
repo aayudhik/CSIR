@@ -76,8 +76,7 @@ jobs:
           marker = re.search(r'async function load\(\)\{.*?\}\nfunction init\(\)', text, re.S)
           if not marker:
               raise SystemExit('Could not locate application load() function')
-          replacement = new_load + '\nfunction init()'
-          text = text[:marker.start()] + replacement + text[marker.end():]
+          text = text[:marker.start()] + new_load + '\nfunction init()' + text[marker.end():]
           index.write_text(text, encoding='utf-8')
           print('Applied non-blocking startup loader')
           PY
@@ -119,9 +118,7 @@ jobs:
           done
           grep -q 'v=5.8.9' "$INDEX"
           grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
-          grep -q 'Applied non-blocking startup loader' /dev/null || true
           grep -q '</body>' "$INDEX"
-          node --check "$ROOT_PLACEHOLDER" 2>/dev/null || true
 
       - name: Validate generated JavaScript
         shell: bash
@@ -131,10 +128,10 @@ jobs:
           from pathlib import Path
           import re
           text=Path('Physics_JRF_Journey_v1&v2/index.html').read_text(encoding='utf-8')
-          m=re.search(r'<script>(.*?)</script>',text,re.S)
-          if not m:
+          scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',text,re.S)
+          if not scripts:
               raise SystemExit('Inline application script not found')
-          Path('/tmp/app.js').write_text(m.group(1),encoding='utf-8')
+          Path('/tmp/app.js').write_text(scripts[0],encoding='utf-8')
           PY
           node --check /tmp/app.js
 
