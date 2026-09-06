@@ -1,4 +1,4 @@
-name: Deploy CSIR V5.7
+name: Deploy CSIR V5.8
 
 on:
   push:
@@ -17,6 +17,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/configure-pages@v5
+
+      - name: Select V5.8 application entrypoint
+        run: cp "Physics_JRF_Journey_v1&v2/v58-final.html" "Physics_JRF_Journey_v1&v2/index.html"
 
       - uses: actions/upload-pages-artifact@v3
         with:
