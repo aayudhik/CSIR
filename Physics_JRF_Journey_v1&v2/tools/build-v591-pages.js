@@ -60,6 +60,7 @@ const start=html.indexOf('async function load(){'),end=html.indexOf('\nfunction 
 if(start<0||end<0)throw new Error('Could not locate canonical load()/init() boundary in v58-final.html');
 html=html.slice(0,start)+buildLoad()+'\nfunction init(){'+html.slice(end+'\nfunction init(){'.length);
 html=html.replaceAll('V5.8 FINAL','');
+html=html.replace(/<title>[^<]*<\/title>/i,'<title>Physics JRF Journey</title>');
 const head=read(path.join(ROOT,'v584-head.html'));html=html.replace('</head>',head+'</head>');
 const scripts='\n<script src="v58-enhancements.js?v=5.9.1"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script><script src="v590-clean-brand.js?v=5.9.1"></script><script src="v591-spaced-review.js?v=5.9.1"></script>\n';
 if(!html.includes('v591-spaced-review.js'))html=html.replace('</body>',scripts+'</body>');
@@ -67,6 +68,7 @@ if(!html.includes('content-expansion-v5.9.1.json?v=5.9.1'))throw new Error('Gene
 if((html.match(/async function load\(\)\{/g)||[]).length!==1)throw new Error('Generated app must contain exactly one load()');
 if(!html.includes('pjr:data-ready'))throw new Error('Generated app data-ready hook missing');
 if(html.includes('V5.8 FINAL'))throw new Error('Legacy branding remains in generated app');
+if(!/<title>Physics JRF Journey<\/title>/i.test(html))throw new Error('Generated page title is incorrect');
 const inline=[...html.matchAll(/<script(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(Boolean);
 if(inline.length!==1)throw new Error('Expected exactly one inline application script, found '+inline.length);
 new vm.Script(inline[0],{filename:'generated-index-inline.js'});
