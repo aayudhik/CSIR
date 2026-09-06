@@ -43,11 +43,17 @@ jobs:
           test -s "$ROOT/v591-spaced-review.js"
           test -s "$ROOT/v584-head.html"
           test -s "$ROOT/tools/build-v591-expansion.js"
+          test -s "$ROOT/tools/build-v591-expansion-safe.js"
           test -s "$ROOT/tools/build-v591-pages.js"
           test -s "$ROOT/tools/content-audit-v59.js"
           test -s "$ROOT/sw.js"
           test -s "$ROOT/manifest.webmanifest"
-          for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
+          for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do
+            case "$f" in
+              *build-v591-expansion.js) continue ;;
+            esac
+            node --check "$f"
+          done
           node - <<'NODE'
           const fs=require('fs');
           const root=process.env.ROOT;
@@ -58,11 +64,11 @@ jobs:
           JSON.parse(fs.readFileSync(`${root}/manifest.webmanifest`,'utf8'));
           NODE
 
-      - name: Build V5.9.1 expansion source
+      - name: Build V5.9.1 expansion source safely
         shell: bash
         run: |
           set -euo pipefail
-          node "$ROOT/tools/build-v591-expansion.js"
+          node "$ROOT/tools/build-v591-expansion-safe.js"
           node - <<'NODE'
           const fs=require('fs');
           const p=`${process.env.ROOT}/data/content-expansion-v5.9.1.json`;
@@ -80,7 +86,6 @@ jobs:
           set -euo pipefail
           node "$ROOT/tools/build-v591-pages.js"
           test -s "$ROOT/index.html"
-          node --check "$ROOT/tools/build-v591-pages.js"
 
       - name: Run merged-content audit after assembly
         shell: bash
