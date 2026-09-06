@@ -37,4 +37,7 @@ function boot(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 window.addEventListener('pjr:data-ready',e=>accept(e.detail));
+
+/* V5.9.2 review layer is loaded from the stable script chain so the deterministic builder remains unchanged. */
+try{const s=document.createElement('script');s.src='v592-review.js?v=5.9.2';s.defer=true;document.head.appendChild(s)}catch(e){console.warn('V5.9.2 review layer unavailable',e)}
 })();
