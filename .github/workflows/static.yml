@@ -102,7 +102,7 @@ jobs:
           set -euo pipefail
           INDEX="$ROOT/index.html"
           test -s "$INDEX"
-          grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
+          grep -q '<title>Physics JRF Journey</title>' "$INDEX"
           grep -q 'content-expansion-v5.9.1.json?v=5.9.1' "$INDEX"
           grep -q 'pjr:data-ready' "$INDEX"
           grep -q 'v592-review.js' "$INDEX"
@@ -139,12 +139,12 @@ jobs:
           test -n "$PAGE_URL"
           for attempt in 1 2 3 4 5; do
             RESPONSE="$(curl -fsSL --max-time 20 "$PAGE_URL")"
-            if grep -q 'Welcome Dear CSIR Aspirant' <<< "$RESPONSE"; then
+            if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE"; then
               echo "Pages deployment verified: $PAGE_URL"
               exit 0
             fi
-            echo "Verification attempt $attempt: application marker not found yet"
+            echo "Verification attempt $attempt: expected title not found yet"
             sleep 10
           done
-          echo "Pages deployment did not return the expected application marker: $PAGE_URL"
+          echo "Pages deployment did not return the expected application title: $PAGE_URL"
           exit 1
