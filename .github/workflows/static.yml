@@ -1,4 +1,4 @@
-name: Deploy CSIR V5.9.2 Stable
+name: Deploy CSIR V5 Final Stable
 
 on:
   push:
@@ -10,7 +10,6 @@ permissions:
   pages: write
   id-token: write
 
-# Keep one deployment active; do not cancel it when another main commit arrives.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -27,8 +26,10 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
       - name: Validate source files and JSON
         shell: bash
         run: |
@@ -57,10 +58,14 @@ jobs:
           node - <<'NODE'
           const fs=require('fs');
           const root=process.env.ROOT;
-          for(const f of fs.readdirSync(`${root}/data`).filter(x=>x.endsWith('.json'))){JSON.parse(fs.readFileSync(`${root}/data/${f}`,'utf8'));console.log('JSON OK:',f)}
+          for(const f of fs.readdirSync(`${root}/data`).filter(x=>x.endsWith('.json'))){
+            JSON.parse(fs.readFileSync(`${root}/data/${f}`,'utf8'));
+            console.log('JSON OK:',f);
+          }
           JSON.parse(fs.readFileSync(`${root}/manifest.webmanifest`,'utf8'));
           NODE
-      - name: Generate and validate V5.9.2 expansion source
+
+      - name: Generate and validate V5.9.1 expansion source
         shell: bash
         run: |
           set -euo pipefail
@@ -79,6 +84,7 @@ jobs:
           if(baseCount+expansionCount<1500) throw new Error(`Merged question target not met: ${baseCount}+${expansionCount}=${baseCount+expansionCount}`);
           console.log(`Expansion source OK: ${r.topics.length} topics, ${expansionCount} expansion questions, ${baseCount+expansionCount} total questions`);
           NODE
+
       - name: Run V5.10 automated 123-topic content-depth audit
         shell: bash
         run: |
@@ -97,20 +103,46 @@ jobs:
           console.log('V5.10 baseline:', JSON.stringify(s));
           console.log('V5.10 priority:', r.priority_topics.slice(0,10).map(t=>`${t.subject_id}:${t.topic}=${t.depth_score_10}`).join(' | '));
           NODE
-      - name: Publish V5.10 audit artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: v5.10-content-depth-audit
-          path: |
-            ${{ env.ROOT }}/data/content-depth-audit-v5.10.json
-            ${{ env.ROOT }}/data/content-depth-audit-v5.10.md
-          if-no-files-found: error
-      - name: Build deterministic Pages entrypoint from V5.8 base
+
+      - name: Build deterministic V5 final Pages entrypoint
         shell: bash
         run: |
           set -euo pipefail
           node "$ROOT/tools/build-v591-pages.js"
           test -s "$ROOT/index.html"
+
+      - name: Validate generated index before deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          INDEX="$ROOT/index.html"
+          test -s "$INDEX"
+          grep -q '^<!doctype html>' "$INDEX"
+          grep -qi '<html[^>]*>' "$INDEX"
+          grep -qi '<head>' "$INDEX"
+          grep -qi '</head>' "$INDEX"
+          grep -qi '<body' "$INDEX"
+          grep -qi '</body>' "$INDEX"
+          grep -qi '</html>' "$INDEX"
+          grep -q '<title>Physics JRF Journey</title>' "$INDEX"
+          ! grep -qE '\$\{[^}]+\}|<<<<<<<|=======|>>>>>>>' "$INDEX"
+          test "$(grep -oi '<html\b' "$INDEX" | wc -l)" -eq 1
+          test "$(grep -oi '</html>' "$INDEX" | wc -l)" -eq 1
+          test "$(grep -oi '<body\b' "$INDEX" | wc -l)" -eq 1
+          test "$(grep -oi '</body>' "$INDEX" | wc -l)" -eq 1
+          node - <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync(process.env.ROOT+'/index.html','utf8');
+          const src=[...html.matchAll(/<script[^>]+src=[\"']([^\"']+)[\"']/gi)].map(m=>m[1].split('?')[0]);
+          for(const s of src){
+            if(/^(https?:)?\//.test(s)) continue;
+            if(!fs.existsSync(process.env.ROOT+'/'+s)) throw new Error('Generated index references missing script: '+s);
+          }
+          const inline=[...html.matchAll(/<script(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(Boolean);
+          if(inline.length!==1) throw new Error('Expected exactly one inline application script, found '+inline.length);
+          console.log('Generated index validation OK:', {bytes:html.length, scripts:src.length, inlineScripts:inline.length});
+          NODE
+
       - name: Run merged-content audit after assembly
         shell: bash
         run: |
@@ -123,34 +155,35 @@ jobs:
           if(!r.summary||r.summary.topic_count<120||!Array.isArray(r.topics)) throw new Error('Merged audit did not meet minimum topic coverage');
           console.log('Merged audit OK:',r.summary);
           NODE
-      - name: Validate generated application artifact
-        shell: bash
-        run: |
-          set -euo pipefail
-          INDEX="$ROOT/index.html"
-          test -s "$INDEX"
-          # build-v591-pages.js performs the structural, JavaScript, branding,
-          # title, data-ready, script-chain and closing-tag validation before
-          # this gate. Keep this deployment gate intentionally minimal so it
-          # cannot disagree with the deterministic builder's source of truth.
-          grep -q '<title>Physics JRF Journey</title>' "$INDEX"
-          test -f "$ROOT/v592-review.js"
-          test -f "$ROOT/v592-ui-cleanup.js"
-          echo 'Generated application artifact gate OK'
+
+      - name: Publish content-depth audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: v5-final-content-depth-audit
+          path: |
+            ${{ env.ROOT }}/data/content-depth-audit-v5.10.json
+            ${{ env.ROOT }}/data/content-depth-audit-v5.10.md
+          if-no-files-found: error
+
       - name: Verify Pages artifact contents before upload
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md; do test -f "$ROOT/$f"; done
-          find "$ROOT" -maxdepth 2 -type f | sort | head -240
+          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md; do
+            test -f "$ROOT/$f"
+          done
+          echo 'Pages artifact contents verified'
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./Physics_JRF_Journey_v1&v2
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify deployed Pages response
+
+      - name: Verify deployed V5 response
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
@@ -159,12 +192,12 @@ jobs:
           test -n "$PAGE_URL"
           for attempt in 1 2 3 4 5; do
             RESPONSE="$(curl -fsSL --max-time 20 "$PAGE_URL")"
-            if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE"; then
-              echo "Pages deployment verified: $PAGE_URL"
+            if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE" && ! grep -qE '\$\{[^}]+\}|<<<<<<<|=======|>>>>>>>' <<< "$RESPONSE"; then
+              echo "V5 final deployment verified: $PAGE_URL"
               exit 0
             fi
-            echo "Verification attempt $attempt: expected title not found yet"
+            echo "Verification attempt $attempt: generated application not ready or contains invalid template markers"
             sleep 10
           done
-          echo "Pages deployment did not return the expected application title: $PAGE_URL"
+          echo "V5 deployment verification failed: $PAGE_URL"
           exit 1
