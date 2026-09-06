@@ -1,13 +1,18 @@
 {
-  "version": "5.7.1",
+  "version": "5.8.0",
   "title": "Physics JRF Journey",
-  "release": "Question Engine Reliability Fix",
+  "release": "V5.8 Final Application Layer",
   "changes": [
-    "Fisher-Yates randomization",
-    "Per-mode session history to avoid immediate question-set repetition",
-    "Topic question preview in Study Content",
-    "Question attempt and accuracy tracking",
-    "Randomized Revision and Mini Mock with duplicate protection",
-    "Cache-busted V5.7.1 data loading"
+    "Unified V5.8 final application layer",
+    "Integrated existing 101-topic study content reader",
+    "Integrated 1,215-question practice bank",
+    "Added randomized Practice Lab with topic, subject, mixed and weak modes",
+    "Added revision deck with topic filtering and randomized recall",
+    "Added mini mock with 20/40/50/75 question modes",
+    "Added previous question paper library and external archive links",
+    "Added local mastery, attempt, accuracy and weak-topic analytics",
+    "Added daily study planner with browser persistence",
+    "Added responsive GitHub Pages-compatible UI and cache-busted data loading",
+    "Preserved existing V5 study data and question bank"
   ]
 }
