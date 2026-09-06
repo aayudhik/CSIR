@@ -23,10 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-
       - name: Validate application source
         shell: bash
         run: |
@@ -34,6 +32,7 @@ jobs:
           ROOT="Physics_JRF_Journey_v1&v2"
           test -s "$ROOT/v58-final.html"
           test -s "$ROOT/v58-enhancements.js"
+          test -s "$ROOT/v590-clean-brand.js"
           test -s "$ROOT/v585-accessibility.js"
           test -s "$ROOT/v586-learning.js"
           test -s "$ROOT/v587-exam-intelligence.js"
@@ -48,7 +47,6 @@ jobs:
           for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
           node -e "const fs=require('fs'); for(const f of fs.readdirSync('$ROOT/data').filter(x=>x.endsWith('.json'))){JSON.parse(fs.readFileSync('$ROOT/data/'+f,'utf8')); console.log('JSON OK:',f)}"
           node -e "JSON.parse(require('fs').readFileSync('$ROOT/manifest.webmanifest','utf8'))"
-
       - name: Run V5.9 deep content audit
         shell: bash
         run: |
@@ -56,10 +54,8 @@ jobs:
           node "Physics_JRF_Journey_v1&v2/tools/content-audit-v59.js"
           test -s "Physics_JRF_Journey_v1&v2/data/content-audit-v5.9.json"
           node -e "const r=JSON.parse(require('fs').readFileSync('Physics_JRF_Journey_v1&v2/data/content-audit-v5.9.json','utf8')); if(r.version!=='V5.9'||!r.summary||!Array.isArray(r.topics)) process.exit(1); console.log('Audit OK:',r.summary)"
-
       - name: Select V5.9 application entrypoint
         run: cp "Physics_JRF_Journey_v1&v2/v58-final.html" "Physics_JRF_Journey_v1&v2/index.html"
-
       - name: Apply fast non-blocking data startup
         shell: bash
         run: |
@@ -84,13 +80,10 @@ jobs:
           ])
           start = text.find('async function load(){')
           end = text.find('\nfunction init()', start)
-          if start < 0 or end < 0:
-              raise SystemExit('Could not locate application load() function')
+          if start < 0 or end < 0: raise SystemExit('Could not locate application load() function')
           text = text[:start] + new_load + '\nfunction init()' + text[end + len('\nfunction init()'):]
           index.write_text(text, encoding='utf-8')
-          print('Applied V5.9 non-blocking startup loader')
           PY
-
       - name: Refresh service worker cache version
         shell: bash
         run: |
@@ -98,37 +91,33 @@ jobs:
           from pathlib import Path
           p=Path('Physics_JRF_Journey_v1&v2/sw.js')
           t=p.read_text(encoding='utf-8')
-          t=t.replace("const VERSION='pjr-v589-1';", "const VERSION='pjr-v590-1';")
+          import re
+          t=re.sub(r"const VERSION='[^']+';", "const VERSION='pjr-v590-2';", t, count=1)
           p.write_text(t,encoding='utf-8')
           PY
-
-      - name: Inject V5.8.4 SEO metadata
+      - name: Inject SEO metadata
         run: |
           python - <<'PY'
           from pathlib import Path
-          root = Path('Physics_JRF_Journey_v1&v2')
-          index = root / 'index.html'
-          head = (root / 'v584-head.html').read_text(encoding='utf-8')
-          text = index.read_text(encoding='utf-8')
-          text = text.replace('</head>', head + '</head>', 1)
-          index.write_text(text, encoding='utf-8')
+          root=Path('Physics_JRF_Journey_v1&v2'); index=root/'index.html'
+          head=(root/'v584-head.html').read_text(encoding='utf-8')
+          text=index.read_text(encoding='utf-8').replace('</head>',head+'</head>',1)
+          index.write_text(text,encoding='utf-8')
           PY
-
       - name: Inject V5.9 application layers
-        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.9.0"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
-
+        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.9.0"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script><script src="v590-clean-brand.js?v=5.9.0"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
       - name: Validate generated Pages entrypoint
         shell: bash
         run: |
           set -euo pipefail
           INDEX="Physics_JRF_Journey_v1&v2/index.html"
           test -s "$INDEX"
-          for src in v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js; do grep -q "$src" "$INDEX"; done
+          for src in v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js; do grep -q "$src" "$INDEX"; done
           if grep -q 'v584-public.js' "$INDEX"; then echo 'Removed public layer still present'; exit 1; fi
+          if grep -q 'V5.8 FINAL' "$INDEX"; then echo 'Legacy V5.8 FINAL branding still present'; exit 1; fi
           grep -q 'v=5.9.0' "$INDEX"
           grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
           grep -q '</body>' "$INDEX"
-
       - name: Validate generated JavaScript
         shell: bash
         run: |
@@ -138,17 +127,14 @@ jobs:
           import re
           text=Path('Physics_JRF_Journey_v1&v2/index.html').read_text(encoding='utf-8')
           scripts=re.findall(r'<script(?![^>]*application/ld\+json)[^>]*>(.*?)</script>',text,re.S|re.I)
-          if not scripts:
-              raise SystemExit('Inline application script not found')
+          if not scripts: raise SystemExit('Inline application script not found')
           Path('/tmp/app.js').write_text(scripts[0],encoding='utf-8')
           PY
           node --check /tmp/app.js
-
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: "Physics_JRF_Journey_v1&v2"
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
