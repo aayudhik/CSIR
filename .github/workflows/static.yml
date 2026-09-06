@@ -48,6 +48,7 @@ jobs:
           test -s "$ROOT/tools/build-v591-pages.js"
           test -s "$ROOT/tools/content-audit-v59.js"
           test -s "$ROOT/tools/content-audit-v510.js"
+          test -s "$ROOT/tools/schrodinger-audit-v510.js"
           test -s "$ROOT/sw.js"
           test -s "$ROOT/manifest.webmanifest"
           test -s "$ROOT/landing.html"
@@ -112,6 +113,27 @@ jobs:
           console.log('V5.10 priority:', r.priority_topics.slice(0,10).map(t=>`${t.subject_id}:${t.topic}=${t.depth_score_10}`).join(' | '));
           NODE
 
+      - name: Generate accessible Schrödinger V5.10 audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          node "$ROOT/tools/schrodinger-audit-v510.js"
+          test -s "$ROOT/data/audits/schrodinger-v5.10-audit.json"
+          test -s "$ROOT/data/audits/schrodinger-v5.10-audit.md"
+          node - <<'NODE'
+          const fs=require('fs');
+          const root=process.env.ROOT;
+          const r=JSON.parse(fs.readFileSync(`${root}/data/audits/schrodinger-v5.10-audit.json`,'utf8'));
+          if(r.topic!=='Schrödinger Equation') throw new Error('Schrödinger audit topic mismatch');
+          if(r.metrics.derivations_present!==3) throw new Error('Schrödinger audit derivation count mismatch');
+          if(r.metrics.worked_examples<4) throw new Error('Schrödinger audit example count mismatch');
+          if(r.metrics.practice_questions!==15) throw new Error('Schrödinger audit practice count mismatch');
+          if(r.metrics.visual_diagrams_specified!==4) throw new Error('Schrödinger audit visual specification count mismatch');
+          console.log('SCHRODINGER AUDIT SCORE:',r.metrics.average_depth_score_10+'/10');
+          console.log('SCHRODINGER BASELINE:',r.baseline_score_10+'/10');
+          console.log('SCHRODINGER IMPROVEMENT: +'+r.improvement_points);
+          NODE
+
       - name: Build deterministic V5 final Pages entrypoint
         shell: bash
         run: |
@@ -173,11 +195,20 @@ jobs:
             ${{ env.ROOT }}/data/content-depth-audit-v5.10.md
           if-no-files-found: error
 
+      - name: Publish Schrödinger audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: schrodinger-v5.10-audit
+          path: |
+            ${{ env.ROOT }}/data/audits/schrodinger-v5.10-audit.json
+            ${{ env.ROOT }}/data/audits/schrodinger-v5.10-audit.md
+          if-no-files-found: error
+
       - name: Verify Pages artifact contents before upload
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json; do
+          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json data/audits/schrodinger-v5.10-audit.json data/audits/schrodinger-v5.10-audit.md; do
             test -f "$ROOT/$f"
           done
           echo 'Pages artifact contents verified'
