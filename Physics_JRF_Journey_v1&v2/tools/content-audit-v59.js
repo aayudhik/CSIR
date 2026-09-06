@@ -1,142 +1,19 @@
-const fs = require('fs');
-const path = require('path');
-
-const ROOT = path.resolve(__dirname, '..');
-const DATA = path.join(ROOT, 'data', 'study-content.json');
-const OUT = path.join(ROOT, 'data', 'content-audit-v5.9.json');
-
-const SUBJECT_TARGETS = {
-  PA: {name:'Part A — General Aptitude', minTopics:15, keywords:['quantitative','reasoning','data interpretation','graph','series','probability','permutation','combinatorics']},
-  MP: {name:'Mathematical Physics', minTopics:10, keywords:['vector calculus','linear algebra','differential equation','complex analysis','fourier','laplace','special function','probability']},
-  CM: {name:'Classical Mechanics', minTopics:12, keywords:['lagrangian','hamiltonian','canonical','poisson bracket','central force','scattering','rigid body','collision','oscillation','normal mode']},
-  EM: {name:'Electromagnetic Theory', minTopics:18, keywords:['coulomb','gauss','laplace','poisson','boundary value','green','multipole','magnetostatic','faraday','maxwell','displacement current','poynting','wave','radiation','retarded potential','gauge','waveguide','cavity']},
-  QM: {name:'Quantum Mechanics', minTopics:20, keywords:['wavefunction','schrodinger','particle in a box','harmonic oscillator','angular momentum','spin','hydrogen','perturbation','variational','wkb','adiabatic','identical particle','scattering','born approximation','phase shift','time-dependent','fermi golden rule','selection rule','symmetry','conservation']},
-  TS: {name:'Thermodynamics & Statistical Physics', minTopics:14, keywords:['first law','second law','entropy','thermodynamic potential','maxwell relation','chemical potential','ensemble','partition function','microcanonical','canonical','grand canonical','fermi-dirac','bose-einstein','phase transition','boltzmann equation','transport','ising','critical exponent']},
-  EE: {name:'Electronics & Experimental Methods', minTopics:15, keywords:['semiconductor','p-n junction','diode','bjt','fet','op-amp','logic gate','amplifier','oscillator','error analysis','oscilloscope','spectroscopy','x-ray diffraction','electron microscopy','fourier transform','data acquisition']},
-  AM: {name:'Atomic & Molecular Physics', minTopics:12, keywords:['bohr','hydrogen','fine structure','hyperfine','zeeman','stark','selection rule','spin-orbit','molecular rotation','molecular vibration','raman','laser','spectroscopy']},
-  CP: {name:'Condensed Matter Physics', minTopics:16, keywords:['crystal','bravais','reciprocal lattice','miller','bragg','structure factor','free electron','nearly free electron','bloch','band gap','density of states','semiconductor','conductivity','heat capacity','diamagnetism','paramagnetism','ferromagnetism','superconductivity']},
-  NP: {name:'Nuclear & Particle Physics', minTopics:12, keywords:['nuclear','binding energy','semi-empirical','radioactive','decay','shell model','liquid drop','fission','fusion','scattering','standard model','quark','lepton','symmetry','conservation']},
-  RE: {name:'Relativity', minTopics:7, keywords:['lorentz','time dilation','length contraction','four-vector','relativistic energy','momentum','invariant','electromagnetic field']}
-};
-
-const REQUIRED_FIELDS = [
-  ['overview','overview'],
-  ['learning_objectives','learning objectives'],
-  ['syllabus_points','syllabus points'],
-  ['concepts','concepts'],
-  ['formula_focus','formula focus'],
-  ['worked_example','worked example'],
-  ['common_mistakes','common mistakes'],
-  ['practice','practice'],
-  ['core_notes','core notes'],
-  ['key_concepts','key concepts'],
-  ['formula_sheet','formula sheet'],
-  ['worked_example_detail','worked example detail'],
-  ['revision','revision'],
-  ['pyq_mapping','PYQ mapping'],
-  ['resources','resources']
-];
-
-const GENERIC_PATTERNS = [
-  /core ideas of /i,
-  /governing equations and how to derive\/use them/i,
-  /standard limiting cases, symmetries and conservation laws/i,
-  /write the governing definitions\/equations first/i,
-  /start with the defining equation for /i,
-  /this is the standard workflow/i,
-  /definitions, notation and physical interpretation of /i,
-  /standard equations, derivations and boundary\/initial conditions/i
-];
-
-function textOf(v){
-  if(v == null) return '';
-  if(typeof v === 'string') return v;
-  if(Array.isArray(v)) return v.map(textOf).join(' ');
-  if(typeof v === 'object') return Object.values(v).map(textOf).join(' ');
-  return String(v);
-}
-function countWords(v){ return textOf(v).trim().split(/\s+/).filter(Boolean).length; }
-function present(v){ return countWords(v) > 0; }
-function norm(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9+\- ]/g,' '); }
-function questionCount(r){
-  const a = Array.isArray(r.practice) ? r.practice.length : 0;
-  const b = Array.isArray(r.practice_v5_5) ? r.practice_v5_5.length : 0;
-  return Math.max(a,b);
-}
-function genericHits(r){
-  const all = REQUIRED_FIELDS.map(([k])=>textOf(r[k])).join('\n');
-  return GENERIC_PATTERNS.filter(p=>p.test(all)).length;
-}
-function depthScore(r){
-  let score=0;
-  const weights = {
-    overview:0.7, learning_objectives:0.5, syllabus_points:0.5, concepts:0.8,
-    formula_focus:0.7, worked_example:1.0, common_mistakes:0.7, practice:1.2,
-    core_notes:0.8, key_concepts:0.6, formula_sheet:0.6, worked_example_detail:1.0,
-    revision:0.6, pyq_mapping:0.8, resources:0.4
-  };
-  for(const [k] of REQUIRED_FIELDS) if(present(r[k])) score += weights[k]||0;
-  const q = questionCount(r);
-  if(q >= 10) score += 1.2; else if(q >= 6) score += 0.8; else if(q >= 3) score += 0.4;
-  const words = countWords(r.core_notes)+countWords(r.overview)+countWords(r.worked_example)+countWords(r.syllabus_points)+countWords(r.concepts);
-  if(words >= 700) score += 1.0; else if(words >= 400) score += 0.6; else if(words >= 200) score += 0.3;
-  score -= genericHits(r)*0.18;
-  return Math.max(0, Math.min(10, Number(score.toFixed(2))));
-}
-function level(score){ if(score >= 8) return 'Mastery'; if(score >= 6) return 'Application'; if(score >= 4) return 'Concept'; return 'Definition'; }
-
-const raw = JSON.parse(fs.readFileSync(DATA,'utf8'));
-const records = Array.isArray(raw.records) ? raw.records : [];
-const subjects = Array.isArray(raw.subjects) ? raw.subjects : [];
-
-const topicAudit = records.map(r => {
-  const missing = REQUIRED_FIELDS.filter(([k])=>!present(r[k])).map(([,label])=>label);
-  const q = questionCount(r);
-  if(q < 10) missing.push(`practice questions (<10; ${q})`);
-  const score = depthScore(r);
-  return {
-    id:r.id, subject_id:r.subject_id, subject:r.subject, topic:r.topic, sequence:r.sequence,
-    depth_score_10:score, depth_level:level(score),
-    word_count:countWords(r), practice_questions:q, generic_template_hits:genericHits(r), missing
-  };
-});
-
-const subjectAudit = subjects.map(s => {
-  const rows = topicAudit.filter(r=>r.subject_id===s.id);
-  const target = SUBJECT_TARGETS[s.id] || {name:s.name,minTopics:s.topic_count||0,keywords:[]};
-  const corpus = norm(rows.map(r=>records.find(x=>x.id===r.id)).map(textOf).join(' '));
-  const missingKeywords = target.keywords.filter(k=>!corpus.includes(norm(k)));
-  const avg = rows.length ? Number((rows.reduce((a,r)=>a+r.depth_score_10,0)/rows.length).toFixed(2)) : 0;
-  return {
-    id:s.id,name:s.name,current_topics:rows.length,target_min_topics:target.minTopics,
-    topic_gap:Math.max(0,target.minTopics-rows.length), average_depth_score_10:avg,
-    below_application:rows.filter(r=>r.depth_score_10<6).length,
-    mastery_ready:rows.filter(r=>r.depth_score_10>=8).length,
-    missing_keyword_signals:missingKeywords,
-    priority: rows.length < target.minTopics || avg < 5 ? 'CRITICAL' : avg < 6.5 ? 'HIGH' : 'MEDIUM'
-  };
-});
-
-const overall = topicAudit.length ? Number((topicAudit.reduce((a,r)=>a+r.depth_score_10,0)/topicAudit.length).toFixed(2)) : 0;
-const genericTopics = topicAudit.filter(r=>r.generic_template_hits>=3);
-const weakTopics = topicAudit.filter(r=>r.depth_score_10<4);
-const underPracticed = topicAudit.filter(r=>r.practice_questions<6);
-
-const report = {
-  version:'V5.9', generated_at:new Date().toISOString(), source_version:raw.version,
-  methodology:{max_depth_score:10, target_application:6, target_mastery:8, target_practice_questions:10},
-  summary:{topic_count:topicAudit.length, declared_subject_count:subjects.length, average_depth_score_10:overall, weak_topics:weakTopics.length, generic_template_topics:genericTopics.length, under_practiced_topics:underPracticed.length},
-  subjects:subjectAudit,
-  topics:topicAudit,
-  next_actions:[
-    'Replace generic/template passages with topic-specific physics explanations.',
-    'Raise major topics to Application or Mastery depth.',
-    'Create missing high-priority syllabus topics before adding more UI features.',
-    'Expand major-topic practice toward 10–15 questions with explicit difficulty and detailed solutions.',
-    'Add derivations, visual aids, prerequisites, related-topic links and PYQ mappings.'
-  ]
-};
-
-fs.writeFileSync(OUT, JSON.stringify(report,null,2)+'\n');
-console.log(`V5.9 content audit: ${topicAudit.length} topics; average depth ${overall}/10; weak ${weakTopics.length}; generic-heavy ${genericTopics.length}; under-practiced ${underPracticed.length}`);
-for(const s of subjectAudit) console.log(`${s.id}: ${s.current_topics} topics, target ${s.target_min_topics}, avg ${s.average_depth_score_10}/10, priority ${s.priority}`);
+const fs=require('fs');const path=require('path');
+const ROOT=path.resolve(__dirname,'..');const DATA=path.join(ROOT,'data','study-content.json');const EXP=path.join(ROOT,'data','content-expansion-v5.9.1.json');const OUT=path.join(ROOT,'data','content-audit-v5.9.json');
+const TARGETS={PA:15,MP:10,CM:12,EM:18,QM:20,TS:14,EE:15,AM:12,CP:16,NP:12,RE:7};
+const SIGNALS={PA:['quantitative','reasoning','data interpretation','probability','combinatorics'],MP:['vector calculus','linear algebra','differential equation','complex analysis','fourier','special function'],CM:['lagrangian','hamiltonian','poisson bracket','central force','rigid body','normal mode'],EM:['laplace','poisson','boundary value','green','multipole','poynting','radiation','retarded','gauge','waveguide'],QM:['perturbation','variational','wkb','adiabatic','identical particle','scattering','born','phase shift','density matrix','selection rule'],TS:['ensemble','partition function','grand canonical','fermi-dirac','bose-einstein','phase transition','boltzmann equation','transport','critical exponent'],EE:['semiconductor','p-n junction','diode','bjt','fet','op-amp','logic gate','error analysis','oscilloscope','spectroscopy','data acquisition'],AM:['fine structure','hyperfine','zeeman','stark','raman','laser','selection rule'],CP:['bravais','reciprocal lattice','miller','bragg','structure factor','bloch','band gap','density of states','nearly free','magnetism','superconductivity'],NP:['binding energy','radioactive','shell model','fission','fusion','standard model','quark','lepton','symmetry'],RE:['lorentz','time dilation','four-vector','relativistic energy','invariant','electromagnetic field']};
+const FIELDS=['overview','learning_objectives','syllabus_points','concepts','formula_focus','worked_example','common_mistakes','practice','core_notes','key_concepts','formula_sheet','worked_example_detail','revision','pyq_mapping','resources'];
+const BAD=[/core ideas of [^.]+/i,/standard equations, derivations/i,/standard limiting cases, symmetries/i,/write the governing definitions\/equations first/i,/start with the defining equation for/i,/this is the standard workflow/i,/physical meaning of [^.]+ is a core/i,/memorizing a formula without checking/i];
+function text(v){if(v==null)return'';if(typeof v==='string')return v;if(Array.isArray(v))return v.map(text).join(' ');if(typeof v==='object')return Object.values(v).map(text).join(' ');return String(v)}
+function words(v){return text(v).trim().split(/\s+/).filter(Boolean).length}
+function qcount(r){return Math.max(Array.isArray(r.practice)?r.practice.length:0,Array.isArray(r.practice_v5_5)?r.practice_v5_5.length:0)}
+function bad(r){return BAD.reduce((n,p)=>n+(p.test(text(r.overview))?1:0)+(p.test(text(r.core_notes))?1:0)+(p.test(text(r.worked_example))?1:0),0)}
+function specific(r){const c=text(r).toLowerCase();return {formula:/[=≥≤∫∑∇ħπ]|\b[A-Z][A-Za-z_]*\s*=/.test(c),derivation:/derive|derivation|diagonaliz|expand|integrat|differentiat|obtain/i.test(c),example:/For |For a |Given |Consider |Example/i.test(text(r.worked_example)+text(r.worked_example_detail)),interpret:/physical meaning|interpret|why |because|significance/i.test(c)}}
+function score(r){let s=0;for(const k of FIELDS)if(words(r[k])>0)s+=0.28;const q=qcount(r);s+=Math.min(1.6,q*0.16);const w=words(r.core_notes)+words(r.worked_example)+words(r.syllabus_points)+words(r.concepts);s+=Math.min(1.7,w/550);const z=specific(r);if(z.formula)s+=.55;if(z.derivation)s+=.65;if(z.example)s+=.55;if(z.interpret)s+=.35;s-=Math.min(2,bad(r)*.22);if(words(r.worked_example)<25)s-=.3;if(q<6)s-=.7;return Math.max(0,Math.min(10,+s.toFixed(2)))}
+function level(s){return s>=8?'Mastery':s>=6?'Application':s>=4?'Concept':'Definition'}
+const base=JSON.parse(fs.readFileSync(DATA,'utf8'));const ext=fs.existsSync(EXP)?JSON.parse(fs.readFileSync(EXP,'utf8')):{records:[],subjects:[]};const records=[...(base.records||[]),...(ext.records||[])];
+const ids=new Set((base.subjects||[]).map(s=>s.id));const subjects=[...(base.subjects||[])];for(const s of ext.subjects||[])if(!ids.has(s.id)){subjects.push(s);ids.add(s.id)}
+const topics=records.map(r=>{const missing=FIELDS.filter(k=>words(r[k])===0);const q=qcount(r);if(q<10)missing.push(`practice questions (<10; ${q})`);const sc=score(r);return{id:r.id,subject_id:r.subject_id,subject:r.subject,topic:r.topic,depth_score_10:sc,depth_level:level(sc),word_count:words(r),practice_questions:q,generic_template_hits:bad(r),specific_signals:specific(r),missing}});
+const subj=subjects.map(s=>{const rows=topics.filter(t=>t.subject_id===s.id);const corpus=text(records.filter(r=>r.subject_id===s.id)).toLowerCase();const signals=SIGNALS[s.id]||[];const miss=signals.filter(k=>!corpus.includes(k));const avg=rows.length?+(rows.reduce((a,r)=>a+r.depth_score_10,0)/rows.length).toFixed(2):0;const target=TARGETS[s.id]||s.topic_count||0;return{id:s.id,name:s.name,current_topics:rows.length,target_min_topics:target,topic_gap:Math.max(0,target-rows.length),average_depth_score_10:avg,below_application:rows.filter(r=>r.depth_score_10<6).length,mastery_ready:rows.filter(r=>r.depth_score_10>=8).length,missing_keyword_signals:miss,priority:rows.length<target||avg<6?'CRITICAL':avg<7?'HIGH':'MEDIUM'}});
+const avg=topics.length?+(topics.reduce((a,r)=>a+r.depth_score_10,0)/topics.length).toFixed(2):0;const report={version:'V5.9.1',generated_at:new Date().toISOString(),source_versions:[base.version,ext.version||null],methodology:{max_depth_score:10,practice_target:10,major_topic_target:15,application_threshold:6,mastery_threshold:8,penalties_for_generic_template:true,specificity_checks:['topic-specific formula','derivation evidence','worked example evidence','physical interpretation']},summary:{topic_count:topics.length,declared_subject_count:subjects.length,average_depth_score_10:avg,weak_topics:topics.filter(t=>t.depth_score_10<4).length,generic_heavy_topics:topics.filter(t=>t.generic_template_hits>=3).length,under_practiced_topics:topics.filter(t=>t.practice_questions<10).length,application_or_better:topics.filter(t=>t.depth_score_10>=6).length},subjects:subj,topics,next_actions:['Expand remaining subject topic gaps.','Replace generic template text with topic-specific derivations and examples.','Raise each major topic to at least 10 strong practice questions.','Map PYQ years/question identifiers without reproducing copyrighted paper text.','Use spaced review intervals 1,2,3,5,7,14,30 days.']};
+fs.writeFileSync(OUT,JSON.stringify(report,null,2)+'\n');console.log(`V5.9.1 audit: ${topics.length} topics; avg ${avg}/10; weak ${report.summary.weak_topics}; generic-heavy ${report.summary.generic_heavy_topics}; under-practiced ${report.summary.under_practiced_topics}`);for(const s of subj)console.log(`${s.id}: ${s.current_topics}/${s.target_min_topics}, avg ${s.average_depth_score_10}, ${s.priority}`);
