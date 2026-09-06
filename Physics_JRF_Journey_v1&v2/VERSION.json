@@ -1,18 +1,19 @@
 {
-  "version": "5.8.0",
+  "version": "5.8.1",
   "title": "Physics JRF Journey",
-  "release": "V5.8 Final Application Layer",
+  "release": "V5.8.1 Deep Study & Practice Fix",
   "changes": [
-    "Unified V5.8 final application layer",
-    "Integrated existing 101-topic study content reader",
-    "Integrated 1,215-question practice bank",
-    "Added randomized Practice Lab with topic, subject, mixed and weak modes",
-    "Added revision deck with topic filtering and randomized recall",
-    "Added mini mock with 20/40/50/75 question modes",
-    "Added previous question paper library and external archive links",
-    "Added local mastery, attempt, accuracy and weak-topic analytics",
-    "Added daily study planner with browser persistence",
-    "Added responsive GitHub Pages-compatible UI and cache-busted data loading",
-    "Preserved existing V5 study data and question bank"
+    "Dashboard welcome message updated to Welcome Dear CSIR Aspirant",
+    "Rebuilt Study Content reader as a deeper structured study route",
+    "Exposed topic objectives, syllabus, core notes, concept map, formula/derivation focus, worked example, exam traps, practice, PYQ mapping and revision together",
+    "Added subject-mapped reference book library with legal read/preview links",
+    "Added reference books directly inside topic detail pages",
+    "Fixed Practice Lab topic and subject filtering",
+    "Added separate subject filter for Subject Practice",
+    "Added Mixed Physics and Weak/Revision filter behavior",
+    "Added live matching-question counts and filter guidance",
+    "Reset practice answer state for each new randomized set",
+    "Preserved existing 1,215-question bank and local progress tracking",
+    "GitHub Pages workflow now deploys the V5.8.1 entrypoint"
   ]
 }
