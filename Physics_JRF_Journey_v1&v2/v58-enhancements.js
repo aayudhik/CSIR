@@ -1,10 +1,24 @@
-/* Physics JRF Journey V5.8.2 — stability + UX enhancement layer */
+/* Physics JRF Journey V5.8.3 — stability + UX + offline enhancement layer */
 (()=>{
   'use strict';
   const KEY='pjr_v582_meta', SESSION='pjr_v582_practice';
   const meta=(()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}})();
   const saveMeta=()=>{try{localStorage.setItem(KEY,JSON.stringify(meta))}catch(e){}};
-  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const esc=s=>String(s??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));
+
+  // V5.8.3 PWA/offline foundation. JSON data uses network-first caching in sw.js.
+  function installPWA(){
+    try{
+      if(!document.querySelector('link[rel="manifest"]')){
+        const link=document.createElement('link');link.rel='manifest';link.href='./manifest.webmanifest';document.head.appendChild(link);
+      }
+      if('serviceWorker' in navigator && !window.__pjrSWRegistered){
+        window.__pjrSWRegistered=true;
+        navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{window.__pjrSWRegistered=false});
+      }
+    }catch(e){}
+  }
+  installPWA();
 
   const style=document.createElement('style');
   style.textContent=`
@@ -50,15 +64,12 @@
     }
     renderResume();
 
-    // Persist the currently generated practice session so a refresh can be recovered later.
     const persist=()=>{try{localStorage.setItem(SESSION,JSON.stringify({qids:(window.practiceSession||[]).map(q=>q.qid),answers:window.practiceAnswers||{},savedAt:Date.now()}))}catch(e){}};
     if(window.answerPractice){const fn=window.answerPractice;window.answerPractice=function(){const r=fn.apply(this,arguments);persist();renderResume();return r}}
     const np=document.getElementById('newPractice'); if(np)np.addEventListener('click',()=>setTimeout(persist,0));
 
-    // Track completion of the first-run wizard and offer a short, useful workflow.
     if(!meta.onboarded){showWizard()}
 
-    // Recoverable error state for data-loading failures.
     const observer=new MutationObserver(()=>{
       const h=[...document.querySelectorAll('main h2')].find(x=>/data loading error/i.test(x.textContent||''));
       if(h&&!document.getElementById('v582-retry')){
@@ -89,6 +100,5 @@
     document.addEventListener('keydown',function escKey(e){if(e.key==='Escape'){close();document.removeEventListener('keydown',escKey)}});
   }
 
-  // Install after the original app's async data load. Also covers slow GitHub Pages starts.
   let tries=0;const timer=setInterval(()=>{tries++;if(install()||tries>80)clearInterval(timer)},250);
 })();
