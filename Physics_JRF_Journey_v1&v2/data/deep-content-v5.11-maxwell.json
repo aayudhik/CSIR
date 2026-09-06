@@ -1,0 +1,181 @@
+{
+  "version": "V5.11",
+  "topic_id": "EM-MAXWELL-V511",
+  "subject_id": "EM",
+  "subject": "Electromagnetic Theory",
+  "topic": "Maxwell's Equations",
+  "depth_target": 9,
+  "scope": "A CSIR-NET focused treatment of Maxwell's equations from physical motivation and four laws through differential and integral forms, boundary conditions, electromagnetic waves, Poynting theorem, worked problems, traps and revision.",
+  "learning_outcomes": [
+    "State and interpret all four Maxwell equations in integral and differential form.",
+    "Convert correctly between flux/circulation integrals and local differential equations using Gauss and Stokes theorems.",
+    "Explain displacement current and why Ampere's law must be completed for time-dependent fields.",
+    "Derive the electromagnetic wave equation and identify wave speed, impedance and transverse polarization.",
+    "Apply Maxwell boundary conditions and use them in standard CSIR-NET interface problems.",
+    "Use the Poynting vector and Poynting theorem to analyze electromagnetic energy transport and power flow.",
+    "Recognize symmetry, sign, orientation, limiting-case and dimensional traps in Part B/C questions."
+  ],
+  "why_this_matters": {
+    "historical_journey": [
+      {"period":"Pre-Maxwell","story":"Gauss, Faraday and Ampere supplied complementary laws for electric charge, magnetic fields and induction, but the laws were not yet a complete dynamical field theory."},
+      {"period":"Maxwell synthesis","story":"Maxwell introduced the displacement-current term, making charge conservation compatible with the field equations and predicting self-sustaining electromagnetic waves."},
+      {"period":"Modern viewpoint","story":"The four equations are local conservation/field relations that unify electrostatics, magnetostatics, induction, radiation and energy transport."}
+    ],
+    "advantage":"Maxwell's equations are a high-yield unifying framework: many CSIR-NET problems reduce to choosing the right equation, symmetry and boundary condition before doing algebra."
+  },
+  "equations": {
+    "gauss_electric": {"integral":"∮_S E·dA = Q_enclosed/ε₀","differential":"∇·E = ρ/ε₀","meaning":"Electric charge is the source of electric-field divergence."},
+    "gauss_magnetic": {"integral":"∮_S B·dA = 0","differential":"∇·B = 0","meaning":"There are no isolated magnetic monopoles in classical Maxwell theory; magnetic field lines have zero net flux through a closed surface."},
+    "faraday": {"integral":"∮_C E·dl = −d/dt ∫_S B·dA","differential":"∇×E = −∂B/∂t","meaning":"A changing magnetic flux produces a circulating electric field."},
+    "ampere_maxwell": {"integral":"∮_C B·dl = μ₀ I_enclosed + μ₀ε₀ d/dt ∫_S E·dA","differential":"∇×B = μ₀J + μ₀ε₀∂E/∂t","meaning":"Magnetic circulation is sourced by conduction current and displacement current."}
+  },
+  "mathematical_structure": {
+    "standard_forms": [
+      "∇·E = ρ/ε₀",
+      "∇·B = 0",
+      "∇×E = −∂B/∂t",
+      "∇×B = μ₀J + μ₀ε₀∂E/∂t",
+      "c = 1/√(μ₀ε₀)",
+      "S = E×H"
+    ],
+    "integral_to_differential": "Use Gauss's divergence theorem for flux integrals and Stokes' theorem for circulation integrals; compare the integrands for arbitrary volumes/surfaces.",
+    "symmetry_rule": "Choose Gaussian surfaces or Amperian loops only when the field magnitude/direction is sufficiently symmetric. Symmetry is a justification, not a shortcut to be assumed."
+  },
+  "derivations": [
+    {
+      "title":"Displacement current and charge conservation",
+      "goal":"Show why Ampere's law requires the displacement-current term in a time-dependent situation.",
+      "steps":[
+        "Start with the magnetostatic form ∇×B = μ₀J.",
+        "Take divergence of both sides: ∇·(∇×B)=0, so μ₀∇·J=0.",
+        "Charge conservation instead requires ∇·J = −∂ρ/∂t.",
+        "Using Gauss's law, ρ=ε₀∇·E, gives ∇·J = −ε₀∂(∇·E)/∂t.",
+        "Therefore the combination J+ε₀∂E/∂t has zero divergence.",
+        "The consistent local law is ∇×B=μ₀J+μ₀ε₀∂E/∂t.",
+        "The added term corresponds to displacement current density J_d=ε₀∂E/∂t."
+      ],
+      "result":"∇×B = μ₀J + μ₀ε₀∂E/∂t, with ∇·(J+J_d)=0.",
+      "exam_trap":"Displacement current is not ordinary charge transport through the dielectric gap; it is the field term required by local charge conservation and produces magnetic circulation."
+    },
+    {
+      "title":"Electromagnetic wave equation in vacuum",
+      "goal":"Derive the wave equation and propagation speed from the source-free Maxwell equations.",
+      "steps":[
+        "In vacuum with ρ=0 and J=0, Gauss laws give ∇·E=0 and ∇·B=0.",
+        "Faraday's law gives ∇×E=−∂B/∂t.",
+        "Ampere-Maxwell law gives ∇×B=μ₀ε₀∂E/∂t.",
+        "Take curl of Faraday's law: ∇×(∇×E)=−∂(∇×B)/∂t.",
+        "Use ∇×(∇×E)=∇(∇·E)−∇²E and ∇·E=0.",
+        "Substitute the Ampere-Maxwell relation to obtain ∇²E=μ₀ε₀∂²E/∂t².",
+        "Similarly, ∇²B=μ₀ε₀∂²B/∂t².",
+        "Compare with the standard wave equation to obtain c=1/√(μ₀ε₀)."
+      ],
+      "result":"∇²E−(1/c²)∂²E/∂t²=0 and ∇²B−(1/c²)∂²B/∂t²=0, where c=1/√(μ₀ε₀).",
+      "exam_trap":"Do not insert ∇·E=0 in a material medium without checking whether free/bound charge and constitutive relations have been specified."
+    },
+    {
+      "title":"Poynting theorem and electromagnetic energy flow",
+      "goal":"Derive the local electromagnetic energy balance from Maxwell's equations.",
+      "steps":[
+        "Take E·(∇×H) and H·(∇×E) using ∇×H=J+∂D/∂t and ∇×E=−∂B/∂t.",
+        "Use the vector identity ∇·(E×H)=H·(∇×E)−E·(∇×H).",
+        "For a linear nondispersive medium with u=(E·D+B·H)/2, identify the time-derivative terms as ∂u/∂t.",
+        "Rearrange to obtain ∂u/∂t + ∇·S = −J·E.",
+        "Identify S=E×H as the Poynting vector and J·E as power delivered to charges per unit volume."
+      ],
+      "result":"∂u/∂t + ∇·S = −J·E, with S=E×H and u=(E·D+B·H)/2 for a linear nondispersive medium.",
+      "exam_trap":"The Poynting vector gives energy flux density; its direction is not automatically the same as either E or B."
+    }
+  ],
+  "boundary_conditions": [
+    "Normal D discontinuity: n·(D₂−D₁)=σ_f.",
+    "Normal B continuity: n·(B₂−B₁)=0.",
+    "Tangential E continuity in the absence of singular time-varying magnetic flux: n×(E₂−E₁)=0.",
+    "Tangential H jump: n×(H₂−H₁)=K_f.",
+    "Always define the interface normal and the direction of the cross product before applying signs."
+  ],
+  "electromagnetic_waves": {
+    "plane_wave": "For a uniform plane wave in a homogeneous source-free medium, E, B and the propagation direction k are mutually perpendicular.",
+    "relations": ["B=(1/ω)k×E","H=B/μ in a simple isotropic medium","E/H=η, where η=√(μ/ε)","k=ω√(με)"],
+    "polarization":"The polarization is set by the direction and time dependence of E transverse to k; B follows from k×E/ω."
+  },
+  "poynting": {
+    "vector":"S=E×H",
+    "instantaneous_power":"P=∫_A S·dA",
+    "vacuum_energy_density":"u=½ε₀E²+B²/(2μ₀)",
+    "plane_wave":"For a sinusoidal plane wave, the time-averaged intensity is ⟨S⟩=E₀²/(2η) for peak electric-field amplitude E₀."
+  },
+  "worked_examples": [
+    {"title":"Infinite line charge","problem":"Find E at distance r from an infinite line charge density λ.","solution":["Choose a coaxial cylindrical Gaussian surface of radius r and length L.","Symmetry gives constant radial E on the curved surface and zero flux through the end caps.","E(2πrL)=λL/ε₀.","Therefore E=λ/(2πε₀r) radial outward for λ>0."],"answer":"E=λ/(2πε₀r) r̂.","trap":"Do not use a spherical Gaussian surface for cylindrical symmetry."},
+    {"title":"Charging capacitor and displacement current","problem":"A parallel-plate capacitor is charging with conduction current I. What displacement current crosses the gap in the ideal quasistatic limit?","solution":["Ampere-Maxwell law must give the same magnetic circulation for a surface cutting the wire and a surface spanning the capacitor gap.","The changing electric flux satisfies ε₀ dΦ_E/dt=I for the ideal capacitor circuit.","Thus I_d=ε₀ dΦ_E/dt=I."],"answer":"I_d=I.","trap":"The equality is a circuit-level result for the ideal charging capacitor; it does not mean charge carriers cross the dielectric gap."},
+    {"title":"Vacuum wave speed","problem":"Use μ₀ and ε₀ to determine the propagation speed of an electromagnetic wave in vacuum.","solution":["The source-free wave equation has coefficient μ₀ε₀ multiplying the second time derivative.","Comparison with ∇²F=(1/v²)∂²F/∂t² gives v=1/√(μ₀ε₀).","This equals the vacuum speed of light c."],"answer":"c=1/√(μ₀ε₀).","trap":"The speed follows from the field equations; do not confuse it with material phase velocity 1/√(με)."},
+    {"title":"Plane-wave energy flux","problem":"A vacuum plane wave has peak electric-field amplitude E₀. Find its time-averaged Poynting magnitude.","solution":["For a vacuum plane wave B₀=E₀/c and H₀=E₀/η₀.","The instantaneous flux is S=EH, and averaging sin² over a cycle gives 1/2.","Hence ⟨S⟩=E₀²/(2η₀)=½ε₀cE₀²."],"answer":"⟨S⟩=E₀²/(2η₀)=½ε₀cE₀².","trap":"If E₀ is a peak amplitude, retain the factor 1/2; for RMS fields the expression changes accordingly."}
+  ],
+  "practice_problems": [
+    {"id":"M1","tier":"Part B","level":"Easy","question":"Which Maxwell equation states that the net electric flux through a closed surface is proportional to enclosed charge?","options":["Gauss electric","Gauss magnetic","Faraday","Ampere-Maxwell"],"answer":0,"explanation":"Gauss's electric law relates closed-surface electric flux to enclosed charge."},
+    {"id":"M2","tier":"Part B","level":"Easy","question":"What is ∇·B in classical Maxwell theory?","options":["ρ/ε₀","0","−∂B/∂t","μ₀J"],"answer":1,"explanation":"Gauss's law for magnetism gives ∇·B=0."},
+    {"id":"M3","tier":"Part B","level":"Easy","question":"A time-varying magnetic field produces which local electric-field property?","options":["Nonzero divergence only","Nonzero curl","Zero curl always","Zero electric field"],"answer":1,"explanation":"Faraday's law gives ∇×E=−∂B/∂t."},
+    {"id":"M4","tier":"Part B","level":"Easy","question":"The displacement-current density in vacuum is:","options":["ε₀∂E/∂t","μ₀∂B/∂t","ρv","σE"],"answer":0,"explanation":"J_d=ε₀∂E/∂t."},
+    {"id":"M5","tier":"Part B","level":"Moderate","question":"Which theorem converts electric flux through a closed surface into a volume integral?","options":["Stokes theorem","Divergence theorem","Green's theorem only","Gauss's law"],"answer":1,"explanation":"The divergence theorem converts ∮E·dA into ∫∇·E dV."},
+    {"id":"M6","tier":"Part B","level":"Moderate","question":"In vacuum with no sources, the electric field satisfies:","options":["∇²E−(1/c²)∂²E/∂t²=0","∇²E+c²∂²E/∂t²=0","∇·E=ρ/ε₀ with ρ≠0","∇×E=0 always"],"answer":0,"explanation":"Combining Faraday and Ampere-Maxwell laws gives the vacuum wave equation."},
+    {"id":"M7","tier":"Part B","level":"Moderate","question":"For a plane EM wave in vacuum, E and B are:","options":["Parallel","Perpendicular and both transverse to k","Antiparallel","Both parallel to k"],"answer":1,"explanation":"E, B and k form a mutually perpendicular triad."},
+    {"id":"M8","tier":"Part B","level":"Moderate","question":"The Poynting vector in a simple medium is:","options":["E+B","E×H","D×B only","ρE"],"answer":1,"explanation":"Electromagnetic energy flux density is S=E×H."},
+    {"id":"M9","tier":"Part C","level":"Moderate","question":"A spherical Gaussian surface surrounds an isolated point charge q. If the radius doubles, the total electric flux through the surface:","options":["Doubles","Halves","Remains q/ε₀","Becomes zero"],"answer":2,"explanation":"Total flux depends only on enclosed charge, not Gaussian-surface radius."},
+    {"id":"M10","tier":"Part C","level":"Moderate","question":"For an ideal charging capacitor, the displacement current through the gap equals:","options":["0","I","2I","I/2"],"answer":1,"explanation":"The displacement current matches the conduction current in the ideal charging circuit."},
+    {"id":"M11","tier":"Part C","level":"Hard","question":"At an interface carrying free surface current K, the tangential magnetic field obeys:","options":["n×(H₂−H₁)=K","n·(H₂−H₁)=K","n×(E₂−E₁)=K","n·(B₂−B₁)=K"],"answer":0,"explanation":"The boundary condition from Ampere's law is n×(H₂−H₁)=K_f."},
+    {"id":"M12","tier":"Part C","level":"Hard","question":"For a lossless homogeneous medium, the phase speed of a plane EM wave is:","options":["√(με)","1/√(με)","μ/ε","ε/μ"],"answer":1,"explanation":"k=ω√(με), so v=ω/k=1/√(με)."},
+    {"id":"M13","tier":"Part C","level":"Hard","question":"Which statement best explains why the displacement-current term is required?","options":["It increases charge density","It restores consistency with charge conservation","It eliminates Faraday induction","It makes B divergence nonzero"],"answer":1,"explanation":"Taking divergence of Ampere-Maxwell law is compatible with the continuity equation only when the displacement term is present."},
+    {"id":"M14","tier":"Part C","level":"Hard","question":"A sinusoidal vacuum wave has peak electric field E₀. Its average intensity is:","options":["E₀²/η₀","E₀²/(2η₀)","2E₀²/η₀","η₀E₀²/2"],"answer":1,"explanation":"Time averaging sin² gives 1/2, so ⟨S⟩=E₀²/(2η₀)."},
+    {"id":"M15","tier":"Part C","level":"Hard","question":"Which Maxwell equation implies that a closed-surface magnetic flux is always zero?","options":["Gauss electric","Gauss magnetic","Faraday","Ampere-Maxwell"],"answer":1,"explanation":"∮B·dA=0 follows from ∇·B=0."}
+  ],
+  "common_mistakes": [
+    {"mistake":"Using Gauss's law without sufficient symmetry.","right":"Use it for flux-source relations generally, but exploit constant-field simplifications only when symmetry justifies them.","why":"The integral law is always valid; the shortcut E A is not always valid."},
+    {"mistake":"Forgetting the minus sign in Faraday's law.","right":"Keep −dΦ_B/dt and interpret it with Lenz's law.","why":"The sign encodes opposition to the change in magnetic flux."},
+    {"mistake":"Treating displacement current as literal charge crossing the capacitor dielectric.","right":"It is ε₀∂E/∂t in vacuum and represents the field contribution to magnetic circulation.","why":"The term is required by continuity and produces the same Ampere circulation consistently."},
+    {"mistake":"Writing ∇·B=constant rather than zero.","right":"∇·B=0 in classical Maxwell theory.","why":"There are no isolated magnetic monopoles in the theory."},
+    {"mistake":"Dropping μ or ε in material-wave problems.","right":"Use v=1/√(με) and η=√(μ/ε) for a simple isotropic medium.","why":"Vacuum formulas are special cases."},
+    {"mistake":"Confusing E×H with E×B in a general medium.","right":"The Poynting vector is S=E×H.","why":"Energy flux is naturally expressed using E and H."},
+    {"mistake":"Applying boundary conditions without defining the interface normal.","right":"State n from region 1 to region 2 before evaluating cross products.","why":"Most sign errors are orientation errors."},
+    {"mistake":"Assuming E, B and k are parallel in an EM wave.","right":"For a plane wave in a simple homogeneous source-free medium they are mutually perpendicular.","why":"The curl equations enforce transverse fields."},
+    {"mistake":"Using peak amplitude in an RMS intensity formula or vice versa.","right":"For peak E₀, ⟨S⟩=E₀²/(2η).",
+      "why":"The factor 1/2 comes from time averaging a squared sinusoid."},
+    {"mistake":"Assuming ∇×E=0 for all electrostatic-looking situations.","right":"It is zero only when ∂B/∂t=0.","why":"Time-varying magnetic fields generate nonconservative electric fields."}
+  ],
+  "connections": [
+    "Electrostatics is recovered when ∂B/∂t=0 and charges are stationary.",
+    "Magnetostatics is recovered when ∂E/∂t=0 and currents are steady.",
+    "Electromagnetic waves emerge in source-free regions from the displacement-current term.",
+    "Boundary conditions connect Maxwell's local equations to interface problems.",
+    "Poynting's theorem turns Maxwell dynamics into an energy-conservation statement."
+  ],
+  "visual_aids": [
+    {"id":"MAX-01","title":"Gauss's Law — Electric Flux","file":"data/visuals/maxwell-gauss-electric.svg","description":"Gaussian surface around enclosed charge showing radial electric field and electric flux."},
+    {"id":"MAX-02","title":"Faraday's Law — Electromagnetic Induction","file":"data/visuals/maxwell-faraday-induction.svg","description":"Changing magnetic flux through a loop producing circulating induced electric field."},
+    {"id":"MAX-03","title":"Electromagnetic Plane Wave","file":"data/visuals/maxwell-em-wave.svg","description":"Mutually perpendicular E, B and propagation vector k in a vacuum plane wave."},
+    {"id":"MAX-04","title":"Poynting Vector — Energy Flow","file":"data/visuals/maxwell-poynting.svg","description":"E×H energy-flow direction and power crossing a surface."}
+  ],
+  "revision_deck": [
+    {"front":"Gauss electric law","back":"∮E·dA=Q/ε₀; ∇·E=ρ/ε₀."},
+    {"front":"Gauss magnetic law","back":"∮B·dA=0; ∇·B=0."},
+    {"front":"Faraday law","back":"∮E·dl=−dΦ_B/dt; ∇×E=−∂B/∂t."},
+    {"front":"Ampere-Maxwell law","back":"∮B·dl=μ₀I+μ₀ε₀dΦ_E/dt; ∇×B=μ₀J+μ₀ε₀∂E/∂t."},
+    {"front":"Vacuum wave speed","back":"c=1/√(μ₀ε₀)."},
+    {"front":"Poynting vector","back":"S=E×H; it is electromagnetic energy flux density."},
+    {"front":"Plane-wave geometry","back":"E ⟂ B ⟂ k and E×H points in the propagation direction for a forward wave."},
+    {"front":"Boundary conditions","back":"n·(D₂−D₁)=σ_f; n·(B₂−B₁)=0; n×(E₂−E₁)=0; n×(H₂−H₁)=K_f."}
+  ],
+  "exam_patterns": [
+    "Select the correct Maxwell equation from divergence/curl wording.",
+    "Use symmetry before evaluating a Gaussian flux or Ampere circulation.",
+    "Compare two Ampere surfaces in a charging capacitor.",
+    "Derive or identify the vacuum wave equation and speed.",
+    "Use interface boundary conditions with careful orientation.",
+    "Compute average Poynting flux from peak or RMS field amplitudes.",
+    "Check units, signs, source-free limits and static limits."
+  ],
+  "references": [
+    "David J. Griffiths, Introduction to Electrodynamics, Maxwell equations and electromagnetic waves chapters.",
+    "J. D. Jackson, Classical Electrodynamics, field equations and radiation chapters.",
+    "CSIR-HRDG/NTA official syllabus and previous-question archives for authentic exam mapping."
+  ]
+}
