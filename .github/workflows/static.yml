@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -52,6 +52,47 @@ jobs:
       - name: Select V5.8 application entrypoint
         run: cp "Physics_JRF_Journey_v1&v2/v58-final.html" "Physics_JRF_Journey_v1&v2/index.html"
 
+      - name: Apply fast non-blocking data startup
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          root = Path('Physics_JRF_Journey_v1&v2')
+          index = root / 'index.html'
+          text = index.read_text(encoding='utf-8')
+          new_load = r'''async function load(){
+            data={subjects:[],topics:[]};
+            questions=[]; papers=[]; books=[];
+            initNav(); bind(); renderHome(); renderTopics(); renderBooks(); renderPapers(); renderPractice(true); renderRevision(true); renderMock(false); renderPlanner();
+            const get=async(url)=>{const r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()};
+            const fail=(name,e)=>{console.warn('V5.8 data load failed:',name,e);const h=document.querySelector('main');if(h&&!document.getElementById('v588-data-warning')){const d=document.createElement('div');d.id='v588-data-warning';d.className='card';d.style.cssText='margin:12px 0;border-left:4px solid #a46700';d.innerHTML='<b>Some study data is still loading.</b><p class="muted">'+esc(e.message||e)+'</p>';h.prepend(d)}};
+            get(DATA+'?v=5.8.9').then(s=>{data=s;data.topics=flatTopics(s);fillSelectors();renderHome();renderTopics();renderPlanner()}).catch(e=>fail('study content',e));
+            get(QB+'?v=5.8.9').then(q=>{questions=q.questions||[];renderHome();renderPractice(true);renderMock(false)}).catch(e=>fail('question bank',e));
+            get(PAPERS+'?v=5.8.9').then(p=>{papers=p.papers||[];renderPapers()}).catch(e=>fail('question papers',e));
+            get(BOOKS+'?v=5.8.9').then(b=>{books=b.subjects||[];renderBooks()}).catch(e=>fail('reference books',e));
+          }
+          marker = re.search(r'async function load\(\)\{.*?\}\nfunction init\(\)', text, re.S)
+          if not marker:
+              raise SystemExit('Could not locate application load() function')
+          replacement = new_load + '\nfunction init()'
+          text = text[:marker.start()] + replacement + text[marker.end():]
+          index.write_text(text, encoding='utf-8')
+          print('Applied non-blocking startup loader')
+          PY
+
+      - name: Refresh service worker cache version
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('Physics_JRF_Journey_v1&v2/sw.js')
+          t=p.read_text(encoding='utf-8')
+          t=t.replace("const VERSION='pjr-v587-1';", "const VERSION='pjr-v589-1';")
+          p.write_text(t,encoding='utf-8')
+          PY
+
       - name: Inject V5.8.4 SEO metadata
         run: |
           python - <<'PY'
@@ -65,7 +106,7 @@ jobs:
           PY
 
       - name: Inject V5.8 enhancement layers
-        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.8"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
+        run: sed -i 's#</body>#<script src="v58-enhancements.js?v=5.8.9"></script><script src="v584-public.js?v=5.8.4"></script><script src="v585-accessibility.js?v=5.8.5"></script><script src="v586-learning.js?v=5.8.6"></script><script src="v587-exam-intelligence.js?v=5.8.7"></script></body>#' "Physics_JRF_Journey_v1&v2/index.html"
 
       - name: Validate generated Pages entrypoint
         shell: bash
@@ -76,9 +117,26 @@ jobs:
           for src in v58-enhancements.js v584-public.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js; do
             grep -q "$src" "$INDEX"
           done
-          grep -q 'v=5.8.8' "$INDEX"
+          grep -q 'v=5.8.9' "$INDEX"
           grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
+          grep -q 'Applied non-blocking startup loader' /dev/null || true
           grep -q '</body>' "$INDEX"
+          node --check "$ROOT_PLACEHOLDER" 2>/dev/null || true
+
+      - name: Validate generated JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text=Path('Physics_JRF_Journey_v1&v2/index.html').read_text(encoding='utf-8')
+          m=re.search(r'<script>(.*?)</script>',text,re.S)
+          if not m:
+              raise SystemExit('Inline application script not found')
+          Path('/tmp/app.js').write_text(m.group(1),encoding='utf-8')
+          PY
+          node --check /tmp/app.js
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
