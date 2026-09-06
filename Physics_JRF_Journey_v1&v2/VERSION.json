@@ -1,7 +1,7 @@
 {
-  "version": "5.8.1",
+  "version": "5.8.3",
   "title": "Physics JRF Journey",
-  "release": "V5.8.1 Deep Study & Practice Fix",
+  "release": "V5.8.3 Performance, Reliability & Offline Foundation",
   "changes": [
     "Dashboard welcome message updated to Welcome Dear CSIR Aspirant",
     "Rebuilt Study Content reader as a deeper structured study route",
@@ -14,6 +14,9 @@
     "Added live matching-question counts and filter guidance",
     "Reset practice answer state for each new randomized set",
     "Preserved existing 1,215-question bank and local progress tracking",
-    "GitHub Pages workflow now deploys the V5.8.1 entrypoint"
+    "Added V5.8.2 loading, onboarding, quick resume, recent activity and retry layer",
+    "Added V5.8.3 service worker with network-first data caching and offline fallback",
+    "Added installable PWA manifest foundation",
+    "GitHub Pages deployment uses the V5.8 application entrypoint and enhancement injection layer"
   ]
 }
