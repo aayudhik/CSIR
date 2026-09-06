@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in v58-final.html v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js v591-spaced-review.js v592-review.js v592-ui-cleanup.js v584-head.html tools/build-v591-expansion.js tools/build-v591-pages.js tools/content-audit-v59.js tools/content-audit-v510.js tools/schrodinger-audit-v510.js sw.js manifest.webmanifest landing.html sitemap.xml robots.txt assets/og-image.svg data/deep-content-v5.10-schrodinger.json; do
+          for f in v58-final.html v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js v591-spaced-review.js v592-review.js v592-ui-cleanup.js v584-head.html tools/build-v591-expansion.js tools/build-v591-pages.js tools/content-audit-v59.js tools/content-audit-v510.js tools/schrodinger-audit-v510.js tools/maxwell-audit-v511.js maxwell-visuals-v511.js sw.js manifest.webmanifest landing.html sitemap.xml robots.txt assets/og-image.svg data/deep-content-v5.10-schrodinger.json data/deep-content-v5.11-maxwell.json data/visuals/maxwell-gauss-electric.svg data/visuals/maxwell-faraday-induction.svg data/visuals/maxwell-em-wave.svg data/visuals/maxwell-poynting.svg; do
             test -s "$ROOT/$f"
           done
           for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
@@ -46,13 +46,20 @@ jobs:
             console.log('JSON OK:',f);
           }
           JSON.parse(fs.readFileSync(`${root}/manifest.webmanifest`,'utf8'));
-          const d=JSON.parse(fs.readFileSync(`${root}/data/deep-content-v5.10-schrodinger.json`,'utf8'));
-          if(d.version!=='V5.10'||d.topic!=='Schrödinger Equation') throw new Error('V5.10 Schrödinger identity check failed');
-          if(!Array.isArray(d.worked_examples)||d.worked_examples.length<4) throw new Error('Schrödinger worked-example coverage incomplete');
-          if(!Array.isArray(d.practice_problems)||d.practice_problems.length!==15) throw new Error('Schrödinger practice coverage must contain 15 problems');
-          if(!Array.isArray(d.common_mistakes)||d.common_mistakes.length<8) throw new Error('Schrödinger common-mistake coverage incomplete');
-          if(!Array.isArray(d.visual_aids)||d.visual_aids.length!==4) throw new Error('Schrödinger visual-aid coverage incomplete');
-          console.log('V5.10 Schrödinger content validation OK');
+          const s=JSON.parse(fs.readFileSync(`${root}/data/deep-content-v5.10-schrodinger.json`,'utf8'));
+          if(s.version!=='V5.10'||s.topic!=='Schrödinger Equation') throw new Error('V5.10 Schrödinger identity check failed');
+          if(!Array.isArray(s.worked_examples)||s.worked_examples.length<4) throw new Error('Schrödinger worked-example coverage incomplete');
+          if(!Array.isArray(s.practice_problems)||s.practice_problems.length!==15) throw new Error('Schrödinger practice coverage must contain 15 problems');
+          if(!Array.isArray(s.common_mistakes)||s.common_mistakes.length<8) throw new Error('Schrödinger common-mistake coverage incomplete');
+          if(!Array.isArray(s.visual_aids)||s.visual_aids.length!==4) throw new Error('Schrödinger visual-aid coverage incomplete');
+          const m=JSON.parse(fs.readFileSync(`${root}/data/deep-content-v5.11-maxwell.json`,'utf8'));
+          if(m.version!=='V5.11'||m.topic_id!=='EM-MAXWELL-V511'||m.topic!=="Maxwell's Equations") throw new Error('V5.11 Maxwell identity check failed');
+          if(!m.equations||Object.keys(m.equations).length!==4) throw new Error('Maxwell four-equation coverage incomplete');
+          if(!Array.isArray(m.derivations)||m.derivations.length<3) throw new Error('Maxwell derivation coverage incomplete');
+          if(!Array.isArray(m.worked_examples)||m.worked_examples.length<4) throw new Error('Maxwell worked-example coverage incomplete');
+          if(!Array.isArray(m.practice_problems)||m.practice_problems.length!==15) throw new Error('Maxwell practice coverage must contain 15 problems');
+          if(!Array.isArray(m.visual_aids)||m.visual_aids.length!==4) throw new Error('Maxwell visual-aid coverage incomplete');
+          console.log('V5.10 Schrödinger and V5.11 Maxwell content validation OK');
           NODE
 
       - name: Generate and validate V5.9.1 expansion source
@@ -87,6 +94,14 @@ jobs:
           test -s "$ROOT/data/audits/schrodinger-v5.10-audit.json"
           test -s "$ROOT/data/audits/schrodinger-v5.10-audit.md"
 
+      - name: Run Maxwell V5.11 audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          node "$ROOT/tools/maxwell-audit-v511.js"
+          test -s "$ROOT/data/audits/maxwell-v5.11-audit.json"
+          test -s "$ROOT/data/audits/maxwell-v5.11-audit.md"
+
       - name: Build deterministic V5 Pages entrypoint
         shell: bash
         run: |
@@ -106,7 +121,9 @@ jobs:
           ! grep -qE 'supabase|auth\.html|PJRJ_AUTH|PJRJ_SUPABASE' "$INDEX"
           test "$(grep -oi '<html\b' "$INDEX" | wc -l)" -eq 1
           test "$(grep -oi '<body\b' "$INDEX" | wc -l)" -eq 1
-          echo 'Public V5 entrypoint validation OK'
+          grep -q 'deep-content-v5.11-maxwell.json?v=5.11' "$INDEX"
+          grep -q 'maxwell-visuals-v511.js?v=5.11.1' "$INDEX"
+          echo 'Public V5.11 entrypoint validation OK'
 
       - name: Run merged-content audit
         shell: bash
@@ -119,7 +136,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html landing.html study-guide.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json data/audits/schrodinger-v5.10-audit.json data/audits/schrodinger-v5.10-audit.md; do
+          for f in index.html landing.html study-guide.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json data/deep-content-v5.11-maxwell.json data/audits/schrodinger-v5.10-audit.json data/audits/schrodinger-v5.10-audit.md data/audits/maxwell-v5.11-audit.json data/audits/maxwell-v5.11-audit.md data/visuals/maxwell-gauss-electric.svg data/visuals/maxwell-faraday-induction.svg data/visuals/maxwell-em-wave.svg data/visuals/maxwell-poynting.svg; do
             test -f "$ROOT/$f"
           done
           echo 'Pages payload verified'
@@ -143,8 +160,8 @@ jobs:
           echo "GitHub Pages deployment completed: $PAGE_URL"
           for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
             RESPONSE="$(curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$PAGE_URL?verify=$GITHUB_SHA-$attempt" || true)"
-            if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE" && ! grep -qE 'supabase|auth\.html|PJRJ_AUTH|PJRJ_SUPABASE' <<< "$RESPONSE"; then
-              echo "Public V5 deployment response verified: $PAGE_URL"
+            if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE" && grep -q 'deep-content-v5.11-maxwell.json?v=5.11' <<< "$RESPONSE" && ! grep -qE 'supabase|auth\.html|PJRJ_AUTH|PJRJ_SUPABASE' <<< "$RESPONSE"; then
+              echo "Public V5.11 deployment response verified: $PAGE_URL"
               exit 0
             fi
             echo "Verification attempt $attempt: Pages response not ready."
