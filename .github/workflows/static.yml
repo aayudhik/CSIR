@@ -46,6 +46,7 @@ jobs:
           test -s "$ROOT/tools/build-v591-expansion.js"
           test -s "$ROOT/tools/build-v591-pages.js"
           test -s "$ROOT/tools/content-audit-v59.js"
+          test -s "$ROOT/tools/content-audit-v510.js"
           test -s "$ROOT/sw.js"
           test -s "$ROOT/manifest.webmanifest"
           test -s "$ROOT/landing.html"
@@ -78,6 +79,32 @@ jobs:
           if(baseCount+expansionCount<1500) throw new Error(`Merged question target not met: ${baseCount}+${expansionCount}=${baseCount+expansionCount}`);
           console.log(`Expansion source OK: ${r.topics.length} topics, ${expansionCount} expansion questions, ${baseCount+expansionCount} total questions`);
           NODE
+      - name: Run V5.10 automated 123-topic content-depth audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          node "$ROOT/tools/content-audit-v510.js"
+          test -s "$ROOT/data/content-depth-audit-v5.10.json"
+          test -s "$ROOT/data/content-depth-audit-v5.10.md"
+          node - <<'NODE'
+          const fs=require('fs');
+          const root=process.env.ROOT;
+          const r=JSON.parse(fs.readFileSync(`${root}/data/content-depth-audit-v5.10.json`,'utf8'));
+          const s=r.summary;
+          if(!s || s.topic_count<120) throw new Error(`V5.10 audit topic coverage too low: ${s?.topic_count}`);
+          if(!Array.isArray(r.topics) || r.topics.length!==s.topic_count) throw new Error('V5.10 audit topic array mismatch');
+          if(!Array.isArray(r.critical_topics) || r.critical_topics.length<10) throw new Error('V5.10 critical-topic audit incomplete');
+          console.log('V5.10 baseline:', JSON.stringify(s));
+          console.log('V5.10 priority:', r.priority_topics.slice(0,10).map(t=>`${t.subject_id}:${t.topic}=${t.depth_score_10}`).join(' | '));
+          NODE
+      - name: Publish V5.10 audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: v5.10-content-depth-audit
+          path: |
+            ${{ env.ROOT }}/data/content-depth-audit-v5.10.json
+            ${{ env.ROOT }}/data/content-depth-audit-v5.10.md
+          if-no-files-found: error
       - name: Build deterministic Pages entrypoint from V5.8 base
         shell: bash
         run: |
@@ -114,8 +141,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json; do test -f "$ROOT/$f"; done
-          find "$ROOT" -maxdepth 2 -type f | sort | head -220
+          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md; do test -f "$ROOT/$f"; done
+          find "$ROOT" -maxdepth 2 -type f | sort | head -240
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
