@@ -190,14 +190,17 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$PAGE_URL"
-          for attempt in 1 2 3 4 5; do
-            RESPONSE="$(curl -fsSL --max-time 20 "$PAGE_URL")"
+          VERIFY_URL="${PAGE_URL}?deploy=${GITHUB_SHA}"
+          for attempt in $(seq 1 12); do
+            RESPONSE="$(curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$VERIFY_URL")"
+            TITLE="$(grep -oi '<title>[^<]*</title>' <<< "$RESPONSE" | head -n 1 || true)"
             if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE" && ! grep -qE '\$\{[^}]+\}|<<<<<<<|=======|>>>>>>>' <<< "$RESPONSE"; then
               echo "V5 final deployment verified: $PAGE_URL"
+              echo "Live title: $TITLE"
               exit 0
             fi
-            echo "Verification attempt $attempt: generated application not ready or contains invalid template markers"
+            echo "Verification attempt $attempt: live response not yet matching generated V5 entrypoint; title=$TITLE bytes=${#RESPONSE}"
             sleep 10
           done
-          echo "V5 deployment verification failed: $PAGE_URL"
+          echo "V5 deployment verification failed after 120 seconds: $PAGE_URL"
           exit 1
