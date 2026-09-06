@@ -1,16 +1,17 @@
 {
-  "version": "5.8.6",
+  "version": "5.8.7",
   "title": "Physics JRF Journey",
-  "release": "V5.8.6 Advanced Learning Engine",
+  "release": "V5.8.7 Exam Intelligence Engine",
   "changes": [
-    "Added V5.8.6 adaptive next-best-topic recommendations",
-    "Added mastery-aware learning priority based on attempts, accuracy and review timing",
-    "Added smart review queue with weak-topic weighting",
-    "Added local daily learning streak tracking",
-    "Added adaptive one-click 10-question topic practice launch",
-    "Added Advanced Learning Insights to Progress Analytics",
-    "Added priority queue for weak and untouched topics",
-    "Preserved all V5.8.2 stability, V5.8.3 offline/PWA, V5.8.4 public/SEO and V5.8.5 accessibility features",
-    "GitHub Pages deployment injects the V5.8.6 learning engine layer"
+    "Added exam-readiness score using mastery, accuracy and practice coverage",
+    "Added topic priority intelligence for exam-focused study planning",
+    "Added PYQ-linked topic signals from the existing question bank",
+    "Added high, medium and low priority topic classification",
+    "Added exam-focused priority queue in Progress Analytics",
+    "Added next exam focus recommendation",
+    "Added exam strategy guidance for weak, untested and PYQ-linked areas",
+    "Updated offline cache for the V5.8.7 intelligence layer",
+    "Preserved all V5.8.2 stability, V5.8.3 offline/PWA, V5.8.4 public/SEO, V5.8.5 accessibility and V5.8.6 adaptive learning features",
+    "GitHub Pages deployment injects the V5.8.7 Exam Intelligence Engine layer"
   ]
 }
