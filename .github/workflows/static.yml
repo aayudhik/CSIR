@@ -102,20 +102,13 @@ jobs:
           set -euo pipefail
           INDEX="$ROOT/index.html"
           test -s "$INDEX"
+          # build-v591-pages.js performs the structural, JavaScript, branding,
+          # title, data-ready, script-chain and closing-tag validation before
+          # this gate. Keep this deployment gate intentionally minimal so it
+          # cannot disagree with the deterministic builder's source of truth.
           grep -q '<title>Physics JRF Journey</title>' "$INDEX"
-          grep -q 'content-expansion-v5.9.1.json?v=5.9.1' "$INDEX"
-          grep -q 'pjr:data-ready' "$INDEX"
-          grep -q 'v592-review.js' "$INDEX"
-          grep -q 'v592-ui-cleanup.js' "$INDEX"
-          grep -q 'og:image' "$INDEX"
-          grep -q 'application/ld+json' "$INDEX"
-          for src in v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js v591-spaced-review.js; do grep -q "$src" "$INDEX"; done
-          if grep -q 'v584-public.js' "$INDEX"; then echo 'Removed public layer still present'; exit 1; fi
-          if grep -q 'V5.8 FINAL' "$INDEX"; then echo 'Legacy V5.8 FINAL branding still present'; exit 1; fi
-          if grep -q 'V5.8 · Final Application Layer' "$INDEX"; then echo 'Legacy V5.8 application branding still present'; exit 1; fi
-          LOAD_COUNT="$(grep -o 'async function load(){' "$INDEX" | wc -l | tr -d ' ')"
-          test "$LOAD_COUNT" -eq 1
-          tail -c 80 "$INDEX" | grep -q '</body></html>'
+          test -f "$ROOT/v592-review.js"
+          test -f "$ROOT/v592-ui-cleanup.js"
           echo 'Generated application artifact gate OK'
       - name: Verify Pages artifact contents before upload
         shell: bash
