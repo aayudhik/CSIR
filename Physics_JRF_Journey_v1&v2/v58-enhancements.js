@@ -25,8 +25,6 @@
     #v582-loader.hide{opacity:0;pointer-events:none}
     .v582-load-card{width:min(430px,calc(100vw - 32px));background:#fff;border:1px solid #e1e6ef;border-radius:18px;padding:24px;box-shadow:0 20px 60px #1b25521c;text-align:center}
     .v582-load-logo{font-size:28px;margin-bottom:8px}.v582-load-title{font-weight:900;font-size:18px}.v582-load-sub{color:#69758a;font-size:12px;margin:7px 0 15px}.v582-load-track{height:8px;background:#e7eaf1;border-radius:99px;overflow:hidden}.v582-load-track i{display:block;width:20%;height:100%;background:#5753d8;border-radius:99px;animation:v582load 1.1s infinite ease-in-out}@keyframes v582load{0%{transform:translateX(-120%)}100%{transform:translateX(520%)}}
-    #v588-status{position:fixed;right:14px;bottom:14px;z-index:9997;background:#11172b;color:#fff;padding:8px 11px;border-radius:999px;font-size:11px;box-shadow:0 8px 25px #0003;transition:opacity .25s}
-    #v588-status.ready{opacity:0;pointer-events:none}
     .v582-modal{position:fixed;inset:0;background:#11172bb8;z-index:9998;display:grid;place-items:center;padding:18px}.v582-modal[hidden]{display:none}
     .v582-wizard{width:min(680px,100%);background:#fff;border-radius:20px;padding:28px;box-shadow:0 25px 80px #0005}.v582-wizard h2{margin:0 0 8px}.v582-wizard p{line-height:1.6;color:#69758a}.v582-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.v582-step{border:1px solid #e1e6ef;border-radius:12px;padding:13px}.v582-step b{display:block;margin-bottom:5px}.v582-step span{font-size:12px;color:#69758a}.v582-wizard-actions{display:flex;justify-content:flex-end;gap:8px}.v582-resume{margin-top:18px}.v582-resume-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.v582-resume-item{border:1px solid #e1e6ef;border-radius:13px;padding:14px;background:#fff}.v582-resume-item h4{margin:0 0 5px}.v582-resume-item p{margin:0 0 10px;color:#69758a;font-size:12px}.v582-activity{margin-top:18px}.v582-activity-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #e1e6ef}.v582-activity-row:last-child{border-bottom:0}.v582-time{font-size:11px;color:#69758a;white-space:nowrap}.v582-retry{margin-top:12px}.v582-help{font-size:11px;color:#69758a;margin-top:8px}@media(max-width:680px){.v582-steps,.v582-resume-grid{grid-template-columns:1fr}.v582-wizard{padding:20px}}
   `;
@@ -37,14 +35,7 @@
   loader.innerHTML='<div class="v582-load-card"><div class="v582-load-logo">⚛</div><div class="v582-load-title">Opening your study workspace</div><div class="v582-load-sub">The dashboard opens immediately. Study data continues loading in the background.</div><div class="v582-load-track"><i></i></div></div>';
   document.body.appendChild(loader);
 
-  const status=document.createElement('div');
-  status.id='v588-status';
-  status.textContent='⚡ Loading study data…';
-  document.body.appendChild(status);
-
   function hideLoader(){loader.classList.add('hide');setTimeout(()=>loader.remove(),260)}
-  // Never keep the entire application behind the splash while four JSON files load.
-  // The underlying app already has its own data-loading/error state.
   setTimeout(hideLoader,900);
   function ready(){return !!(window.data&&Array.isArray(window.data.topics)&&window.questions&&window.books)}
 
@@ -58,7 +49,6 @@
 
   function install(){
     if(window.__v582Installed)return true;
-    // Install UX hooks as soon as the DOM exists; data readiness is handled independently.
     if(!document.getElementById('nav'))return false;
     window.__v582Installed=true;
 
@@ -88,7 +78,6 @@
         const b=document.createElement('button');b.id='v582-retry';b.className='btn v582-retry';b.textContent='↻ Retry loading';b.onclick=()=>location.reload();h.parentElement.appendChild(b)
       }
       if(ready()){
-        status.classList.add('ready');
         if(!meta.onboarded&&!document.querySelector('.v582-modal'))showWizard();
         renderResume();
       }
