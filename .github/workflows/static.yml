@@ -126,7 +126,12 @@ jobs:
           set -euo pipefail
           test -n "$PAGE_URL"
           for attempt in 1 2 3 4 5; do
-            if curl -fsSL --max-time 20 "$PAGE_URL" | grep -q 'Welcome Dear CSIR Aspirant'; then echo "Pages deployment verified: $PAGE_URL"; exit 0; fi
+            RESPONSE="$(curl -fsSL --max-time 20 "$PAGE_URL")"
+            if grep -q 'Welcome Dear CSIR Aspirant' <<< "$RESPONSE"; then
+              echo "Pages deployment verified: $PAGE_URL"
+              exit 0
+            fi
+            echo "Verification attempt $attempt: application marker not found yet"
             sleep 10
           done
           echo "Pages deployment did not return the expected application marker: $PAGE_URL"
