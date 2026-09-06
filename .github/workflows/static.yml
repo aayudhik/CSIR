@@ -58,25 +58,27 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
-          import re
           root = Path('Physics_JRF_Journey_v1&v2')
           index = root / 'index.html'
           text = index.read_text(encoding='utf-8')
-          new_load = r'''async function load(){
-            data={subjects:[],topics:[]};
-            questions=[]; papers=[]; books=[];
-            initNav(); bind(); renderHome(); renderTopics(); renderBooks(); renderPapers(); renderPractice(true); renderRevision(true); renderMock(false); renderPlanner();
-            const get=async(url)=>{const r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()};
-            const fail=(name,e)=>{console.warn('V5.8 data load failed:',name,e);const h=document.querySelector('main');if(h&&!document.getElementById('v588-data-warning')){const d=document.createElement('div');d.id='v588-data-warning';d.className='card';d.style.cssText='margin:12px 0;border-left:4px solid #a46700';d.innerHTML='<b>Some study data is still loading.</b><p class="muted">'+esc(e.message||e)+'</p>';h.prepend(d)}};
-            get(DATA+'?v=5.8.9').then(s=>{data=s;data.topics=flatTopics(s);fillSelectors();renderHome();renderTopics();renderPlanner()}).catch(e=>fail('study content',e));
-            get(QB+'?v=5.8.9').then(q=>{questions=q.questions||[];renderHome();renderPractice(true);renderMock(false)}).catch(e=>fail('question bank',e));
-            get(PAPERS+'?v=5.8.9').then(p=>{papers=p.papers||[];renderPapers()}).catch(e=>fail('question papers',e));
-            get(BOOKS+'?v=5.8.9').then(b=>{books=b.subjects||[];renderBooks()}).catch(e=>fail('reference books',e));
-          }
-          marker = re.search(r'async function load\(\)\{.*?\}\nfunction init\(\)', text, re.S)
-          if not marker:
+          new_load = "\n".join([
+              "async function load(){",
+              "  data={subjects:[],topics:[]};",
+              "  questions=[]; papers=[]; books=[];",
+              "  initNav(); bind(); renderHome(); renderTopics(); renderBooks(); renderPapers(); renderPractice(true); renderRevision(true); renderMock(false); renderPlanner();",
+              "  const get=async(url)=>{const r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()};",
+              "  const fail=(name,e)=>{console.warn('V5.8 data load failed:',name,e);};",
+              "  get(DATA+'?v=5.8.9').then(s=>{data=s;data.topics=flatTopics(s);fillSelectors();renderHome();renderTopics();renderPlanner()}).catch(e=>fail('study content',e));",
+              "  get(QB+'?v=5.8.9').then(q=>{questions=q.questions||[];renderHome();renderPractice(true);renderMock(false)}).catch(e=>fail('question bank',e));",
+              "  get(PAPERS+'?v=5.8.9').then(p=>{papers=p.papers||[];renderPapers()}).catch(e=>fail('question papers',e));",
+              "  get(BOOKS+'?v=5.8.9').then(b=>{books=b.subjects||[];renderBooks()}).catch(e=>fail('reference books',e));",
+              "}"
+          ])
+          start = text.find('async function load(){')
+          end = text.find('\nfunction init()', start)
+          if start < 0 or end < 0:
               raise SystemExit('Could not locate application load() function')
-          text = text[:marker.start()] + new_load + '\nfunction init()' + text[marker.end():]
+          text = text[:start] + new_load + '\nfunction init()' + text[end + len('\nfunction init()'):]
           index.write_text(text, encoding='utf-8')
           print('Applied non-blocking startup loader')
           PY
@@ -113,9 +115,7 @@ jobs:
           set -euo pipefail
           INDEX="Physics_JRF_Journey_v1&v2/index.html"
           test -s "$INDEX"
-          for src in v58-enhancements.js v584-public.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js; do
-            grep -q "$src" "$INDEX"
-          done
+          for src in v58-enhancements.js v584-public.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js; do grep -q "$src" "$INDEX"; done
           grep -q 'v=5.8.9' "$INDEX"
           grep -q 'Welcome Dear CSIR Aspirant' "$INDEX"
           grep -q '</body>' "$INDEX"
@@ -128,7 +128,7 @@ jobs:
           from pathlib import Path
           import re
           text=Path('Physics_JRF_Journey_v1&v2/index.html').read_text(encoding='utf-8')
-          scripts=re.findall(r'<script(?![^>]*application/ld\\+json)[^>]*>(.*?)</script>',text,re.S|re.I)
+          scripts=re.findall(r'<script(?![^>]*application/ld\+json)[^>]*>(.*?)</script>',text,re.S|re.I)
           if not scripts:
               raise SystemExit('Inline application script not found')
           Path('/tmp/app.js').write_text(scripts[0],encoding='utf-8')
