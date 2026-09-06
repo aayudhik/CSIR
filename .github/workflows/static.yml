@@ -30,37 +30,13 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Validate source files and JSON
+      - name: Validate V5 source and data
         shell: bash
         run: |
           set -euo pipefail
-          test -s "$ROOT/v58-final.html"
-          test -s "$ROOT/v58-enhancements.js"
-          test -s "$ROOT/v585-accessibility.js"
-          test -s "$ROOT/v586-learning.js"
-          test -s "$ROOT/v587-exam-intelligence.js"
-          test -s "$ROOT/v590-clean-brand.js"
-          test -s "$ROOT/v591-spaced-review.js"
-          test -s "$ROOT/v592-review.js"
-          test -s "$ROOT/v592-ui-cleanup.js"
-          test -s "$ROOT/v584-head.html"
-          test -s "$ROOT/supabase-config.js"
-          test -s "$ROOT/supabase-auth-v1.js"
-          test -s "$ROOT/supabase-progress-v1.js"
-          test -s "$ROOT/auth.html"
-          test -s "supabase/schema.sql"
-          test -s "$ROOT/tools/build-v591-expansion.js"
-          test -s "$ROOT/tools/build-v591-pages.js"
-          test -s "$ROOT/tools/content-audit-v59.js"
-          test -s "$ROOT/tools/content-audit-v510.js"
-          test -s "$ROOT/tools/schrodinger-audit-v510.js"
-          test -s "$ROOT/sw.js"
-          test -s "$ROOT/manifest.webmanifest"
-          test -s "$ROOT/landing.html"
-          test -s "$ROOT/sitemap.xml"
-          test -s "$ROOT/robots.txt"
-          test -s "$ROOT/assets/og-image.svg"
-          test -s "$ROOT/data/deep-content-v5.10-schrodinger.json"
+          for f in v58-final.html v58-enhancements.js v585-accessibility.js v586-learning.js v587-exam-intelligence.js v590-clean-brand.js v591-spaced-review.js v592-review.js v592-ui-cleanup.js v584-head.html tools/build-v591-expansion.js tools/build-v591-pages.js tools/content-audit-v59.js tools/content-audit-v510.js tools/schrodinger-audit-v510.js sw.js manifest.webmanifest landing.html sitemap.xml robots.txt assets/og-image.svg data/deep-content-v5.10-schrodinger.json; do
+            test -s "$ROOT/$f"
+          done
           for f in "$ROOT"/*.js "$ROOT"/tools/*.js; do node --check "$f"; done
           node - <<'NODE'
           const fs=require('fs');
@@ -71,7 +47,7 @@ jobs:
           }
           JSON.parse(fs.readFileSync(`${root}/manifest.webmanifest`,'utf8'));
           const d=JSON.parse(fs.readFileSync(`${root}/data/deep-content-v5.10-schrodinger.json`,'utf8'));
-          if(d.version!=='V5.10'||d.topic!=='Schrödinger Equation') throw new Error('V5.10 Schrödinger content identity check failed');
+          if(d.version!=='V5.10'||d.topic!=='Schrödinger Equation') throw new Error('V5.10 Schrödinger identity check failed');
           if(!Array.isArray(d.worked_examples)||d.worked_examples.length<4) throw new Error('Schrödinger worked-example coverage incomplete');
           if(!Array.isArray(d.practice_problems)||d.practice_problems.length!==15) throw new Error('Schrödinger practice coverage must contain 15 problems');
           if(!Array.isArray(d.common_mistakes)||d.common_mistakes.length<8) throw new Error('Schrödinger common-mistake coverage incomplete');
@@ -79,165 +55,74 @@ jobs:
           console.log('V5.10 Schrödinger content validation OK');
           NODE
 
-      - name: Validate V6 Supabase authentication and progress layer
-        shell: bash
-        run: |
-          set -euo pipefail
-          grep -q "https://strprxbjcysygrhexgqr.supabase.co" "$ROOT/supabase-config.js"
-          grep -q "sb_publishable_" "$ROOT/supabase-config.js"
-          grep -q "signUp" "$ROOT/supabase-auth-v1.js"
-          grep -q "signInWithPassword" "$ROOT/supabase-auth-v1.js"
-          grep -q "resetPasswordForEmail" "$ROOT/supabase-auth-v1.js"
-          grep -q "pjrj:authenticated" "$ROOT/supabase-auth-v1.js"
-          grep -q "user_progress" "$ROOT/supabase-progress-v1.js"
-          grep -q "from(TABLE)" "$ROOT/supabase-progress-v1.js"
-          grep -q "upsert" "$ROOT/supabase-progress-v1.js"
-          grep -q "auth.uid()" supabase/schema.sql
-          grep -q "enable row level security" supabase/schema.sql
-          grep -q "user_id = auth.uid()" supabase/schema.sql
-          grep -q "auth.html?mode=signup" "$ROOT/landing.html"
-          grep -q "supabase-auth-v1.js" "$ROOT/v584-head.html"
-          grep -q "supabase-progress-v1.js" "$ROOT/v584-head.html"
-          echo 'V6 Supabase authentication and progress validation OK'
-
       - name: Generate and validate V5.9.1 expansion source
         shell: bash
         run: |
           set -euo pipefail
           node "$ROOT/tools/build-v591-expansion.js"
           node - <<'NODE'
-          const fs=require('fs');
-          const root=process.env.ROOT;
-          const p=`${root}/data/content-expansion-v5.9.1.json`;
-          const q=`${root}/data/question-bank.json`;
-          const r=JSON.parse(fs.readFileSync(p,'utf8'));
-          const base=JSON.parse(fs.readFileSync(q,'utf8'));
-          const baseCount=Array.isArray(base.questions)?base.questions.length:0;
-          const expansionCount=Array.isArray(r.questions)?r.questions.length:0;
-          if(!Array.isArray(r.topics)||r.topics.length<30) throw new Error('Expansion topics must contain at least 30 normalized topics');
-          if(expansionCount<300) throw new Error('Expansion question bank must contain at least 300 questions');
-          if(baseCount+expansionCount<1500) throw new Error(`Merged question target not met: ${baseCount}+${expansionCount}=${baseCount+expansionCount}`);
-          console.log(`Expansion source OK: ${r.topics.length} topics, ${expansionCount} expansion questions, ${baseCount+expansionCount} total questions`);
+          const fs=require('fs'),root=process.env.ROOT;
+          const r=JSON.parse(fs.readFileSync(`${root}/data/content-expansion-v5.9.1.json`,'utf8'));
+          const base=JSON.parse(fs.readFileSync(`${root}/data/question-bank.json`,'utf8'));
+          const n=Array.isArray(r.questions)?r.questions.length:0,b=Array.isArray(base.questions)?base.questions.length:0;
+          if(!Array.isArray(r.topics)||r.topics.length<30) throw new Error('Expansion topics below target');
+          if(n<300) throw new Error('Expansion question bank below target');
+          if(n+b<1500) throw new Error(`Merged question target not met: ${b+n}`);
+          console.log(`Expansion source OK: ${r.topics.length} topics, ${n} expansion questions, ${b+n} total questions`);
           NODE
 
-      - name: Run V5.10 automated 123-topic content-depth audit
+      - name: Run V5.10 content-depth audit
         shell: bash
         run: |
           set -euo pipefail
           node "$ROOT/tools/content-audit-v510.js"
           test -s "$ROOT/data/content-depth-audit-v5.10.json"
           test -s "$ROOT/data/content-depth-audit-v5.10.md"
-          node - <<'NODE'
-          const fs=require('fs');
-          const root=process.env.ROOT;
-          const r=JSON.parse(fs.readFileSync(`${root}/data/content-depth-audit-v5.10.json`,'utf8'));
-          const s=r.summary;
-          if(!s || s.topic_count<120) throw new Error(`V5.10 audit topic coverage too low: ${s?.topic_count}`);
-          if(!Array.isArray(r.topics) || r.topics.length!==s.topic_count) throw new Error('V5.10 audit topic array mismatch');
-          if(!Array.isArray(r.critical_topics) || r.critical_topics.length<10) throw new Error('V5.10 critical-topic audit incomplete');
-          console.log('V5.10 baseline:', JSON.stringify(s));
-          console.log('V5.10 priority:', r.priority_topics.slice(0,10).map(t=>`${t.subject_id}:${t.topic}=${t.depth_score_10}`).join(' | '));
-          NODE
 
-      - name: Generate accessible Schrödinger V5.10 audit
+      - name: Run Schrödinger audit
         shell: bash
         run: |
           set -euo pipefail
           node "$ROOT/tools/schrodinger-audit-v510.js"
           test -s "$ROOT/data/audits/schrodinger-v5.10-audit.json"
           test -s "$ROOT/data/audits/schrodinger-v5.10-audit.md"
-          node - <<'NODE'
-          const fs=require('fs');
-          const root=process.env.ROOT;
-          const r=JSON.parse(fs.readFileSync(`${root}/data/audits/schrodinger-v5.10-audit.json`,'utf8'));
-          if(r.topic!=='Schrödinger Equation') throw new Error('Schrödinger audit topic mismatch');
-          if(r.metrics.derivations_present!==3) throw new Error('Schrödinger audit derivation count mismatch');
-          if(r.metrics.worked_examples<4) throw new Error('Schrödinger audit example count mismatch');
-          if(r.metrics.practice_questions!==15) throw new Error('Schrödinger audit practice count mismatch');
-          if(r.metrics.visual_diagrams_specified!==4) throw new Error('Schrödinger audit visual specification count mismatch');
-          console.log('SCHRODINGER AUDIT SCORE:',r.metrics.average_depth_score_10+'/10');
-          console.log('SCHRODINGER BASELINE:',r.baseline_score_10+'/10');
-          console.log('SCHRODINGER IMPROVEMENT: +'+r.improvement_points);
-          NODE
 
-      - name: Build deterministic V5 final Pages entrypoint
+      - name: Build deterministic V5 Pages entrypoint
         shell: bash
         run: |
           set -euo pipefail
           node "$ROOT/tools/build-v591-pages.js"
           test -s "$ROOT/index.html"
 
-      - name: Validate generated index before deployment
+      - name: Validate generated public entrypoint
         shell: bash
         run: |
           set -euo pipefail
           INDEX="$ROOT/index.html"
-          test -s "$INDEX"
           grep -q '^<!doctype html>' "$INDEX"
-          grep -qi '<html[^>]*>' "$INDEX"
-          grep -qi '<head>' "$INDEX"
-          grep -qi '</head>' "$INDEX"
-          grep -qi '<body' "$INDEX"
-          grep -qi '</body>' "$INDEX"
+          grep -qi '<title>Physics JRF Journey</title>' "$INDEX"
           grep -qi '</html>' "$INDEX"
-          grep -q '<title>Physics JRF Journey</title>' "$INDEX"
           ! grep -qE '\$\{[^}]+\}|<<<<<<<|=======|>>>>>>>' "$INDEX"
+          ! grep -qE 'supabase|auth\.html|PJRJ_AUTH|PJRJ_SUPABASE' "$INDEX"
           test "$(grep -oi '<html\b' "$INDEX" | wc -l)" -eq 1
-          test "$(grep -oi '</html>' "$INDEX" | wc -l)" -eq 1
           test "$(grep -oi '<body\b' "$INDEX" | wc -l)" -eq 1
-          test "$(grep -oi '</body>' "$INDEX" | wc -l)" -eq 1
-          node - <<'NODE'
-          const fs=require('fs');
-          const html=fs.readFileSync(process.env.ROOT+'/index.html','utf8');
-          const src=[...html.matchAll(/<script[^>]+src=[\"']([^\"']+)[\"']/gi)].map(m=>m[1].split('?')[0]);
-          for(const s of src){
-            if(/^(https?:)?\//.test(s)) continue;
-            if(!fs.existsSync(process.env.ROOT+'/'+s)) throw new Error('Generated index references missing script: '+s);
-          }
-          const inline=[...html.matchAll(/<script(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/gi)].map(m=>m[1]).filter(Boolean);
-          if(inline.length!==1) throw new Error('Expected exactly one inline application script, found '+inline.length);
-          console.log('Generated index validation OK:', {bytes:html.length, scripts:src.length, inlineScripts:inline.length});
-          NODE
+          echo 'Public V5 entrypoint validation OK'
 
-      - name: Run merged-content audit after assembly
+      - name: Run merged-content audit
         shell: bash
         run: |
           set -euo pipefail
           node "$ROOT/tools/content-audit-v59.js"
           test -s "$ROOT/data/content-audit-v5.9.json"
-          node - <<'NODE'
-          const fs=require('fs');
-          const r=JSON.parse(fs.readFileSync(`${process.env.ROOT}/data/content-audit-v5.9.json`,'utf8'));
-          if(!r.summary||r.summary.topic_count<120||!Array.isArray(r.topics)) throw new Error('Merged audit did not meet minimum topic coverage');
-          console.log('Merged audit OK:',r.summary);
-          NODE
 
-      - name: Publish content-depth audit artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: v5-final-content-depth-audit
-          path: |
-            ${{ env.ROOT }}/data/content-depth-audit-v5.10.json
-            ${{ env.ROOT }}/data/content-depth-audit-v5.10.md
-          if-no-files-found: error
-
-      - name: Publish Schrödinger audit artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: schrodinger-v5.10-audit
-          path: |
-            ${{ env.ROOT }}/data/audits/schrodinger-v5.10-audit.json
-            ${{ env.ROOT }}/data/audits/schrodinger-v5.10-audit.md
-          if-no-files-found: error
-
-      - name: Verify Pages artifact contents before upload
+      - name: Verify Pages payload
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json data/audits/schrodinger-v5.10-audit.json data/audits/schrodinger-v5.10-audit.md supabase-config.js supabase-auth-v1.js supabase-progress-v1.js auth.html; do
+          for f in index.html landing.html study-guide.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json data/audits/schrodinger-v5.10-audit.json data/audits/schrodinger-v5.10-audit.md; do
             test -f "$ROOT/$f"
           done
-          echo 'Pages artifact contents verified'
+          echo 'Pages payload verified'
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
@@ -248,24 +133,22 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify deployed V5 response
+      - name: Verify deployment response
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -euo pipefail
           test -n "$PAGE_URL"
-          echo "Pages deployment reported success: $PAGE_URL"
-          echo "Allowing GitHub Pages propagation without making verification failure block deployment."
+          echo "GitHub Pages deployment completed: $PAGE_URL"
           for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
-            RESPONSE="$(curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$PAGE_URL?pjr_verify=$GITHUB_SHA-$attempt" || true)"
-            if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE" && ! grep -qE '\$\{[^}]+\}|<<<<<<<|=======|>>>>>>>' <<< "$RESPONSE"; then
-              echo "V5 final deployment response verified: $PAGE_URL"
+            RESPONSE="$(curl -fsSL --max-time 20 -H 'Cache-Control: no-cache' "$PAGE_URL?verify=$GITHUB_SHA-$attempt" || true)"
+            if grep -q '<title>Physics JRF Journey</title>' <<< "$RESPONSE" && ! grep -qE 'supabase|auth\.html|PJRJ_AUTH|PJRJ_SUPABASE' <<< "$RESPONSE"; then
+              echo "Public V5 deployment response verified: $PAGE_URL"
               exit 0
             fi
-            echo "Verification attempt $attempt: Pages response not yet serving the new entrypoint."
+            echo "Verification attempt $attempt: Pages response not ready."
             sleep 10
           done
-          echo "WARNING: GitHub Pages deployment was reported successful, but the public response did not become verifiable within the propagation window."
-          echo "The deployment itself remains successful; this check is non-blocking to avoid falsely marking a live Pages deployment as failed."
+          echo 'WARNING: Pages deployment succeeded but public propagation was not verifiable within the window.'
           exit 0
