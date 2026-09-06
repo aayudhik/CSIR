@@ -46,6 +46,7 @@ jobs:
           test -s "$ROOT/v584-head.html"
           test -s "$ROOT/supabase-config.js"
           test -s "$ROOT/supabase-auth-v1.js"
+          test -s "$ROOT/supabase-progress-v1.js"
           test -s "$ROOT/auth.html"
           test -s "supabase/schema.sql"
           test -s "$ROOT/tools/build-v591-expansion.js"
@@ -78,7 +79,7 @@ jobs:
           console.log('V5.10 Schrödinger content validation OK');
           NODE
 
-      - name: Validate V6 Supabase authentication layer
+      - name: Validate V6 Supabase authentication and progress layer
         shell: bash
         run: |
           set -euo pipefail
@@ -87,12 +88,17 @@ jobs:
           grep -q "signUp" "$ROOT/supabase-auth-v1.js"
           grep -q "signInWithPassword" "$ROOT/supabase-auth-v1.js"
           grep -q "resetPasswordForEmail" "$ROOT/supabase-auth-v1.js"
+          grep -q "pjrj:authenticated" "$ROOT/supabase-auth-v1.js"
+          grep -q "user_progress" "$ROOT/supabase-progress-v1.js"
+          grep -q "from(TABLE)" "$ROOT/supabase-progress-v1.js"
+          grep -q "upsert" "$ROOT/supabase-progress-v1.js"
           grep -q "auth.uid()" supabase/schema.sql
           grep -q "enable row level security" supabase/schema.sql
           grep -q "user_id = auth.uid()" supabase/schema.sql
           grep -q "auth.html?mode=signup" "$ROOT/landing.html"
           grep -q "supabase-auth-v1.js" "$ROOT/v584-head.html"
-          echo 'V6 Supabase authentication layer validation OK'
+          grep -q "supabase-progress-v1.js" "$ROOT/v584-head.html"
+          echo 'V6 Supabase authentication and progress validation OK'
 
       - name: Generate and validate V5.9.1 expansion source
         shell: bash
@@ -228,7 +234,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json data/audits/schrodinger-v5.10-audit.json data/audits/schrodinger-v5.10-audit.md supabase-config.js supabase-auth-v1.js auth.html; do
+          for f in index.html landing.html sitemap.xml robots.txt assets/og-image.svg data/study-content.json data/question-bank.json data/content-expansion-v5.9.1.json data/content-audit-v5.9.json data/content-depth-audit-v5.10.json data/content-depth-audit-v5.10.md data/deep-content-v5.10-schrodinger.json data/audits/schrodinger-v5.10-audit.json data/audits/schrodinger-v5.10-audit.md supabase-config.js supabase-auth-v1.js supabase-progress-v1.js auth.html; do
             test -f "$ROOT/$f"
           done
           echo 'Pages artifact contents verified'
