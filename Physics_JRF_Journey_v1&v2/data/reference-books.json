@@ -1,94 +1,138 @@
 {
-  "version":"V5.13",
-  "title":"CSIR-NET Physical Sciences Reference Library",
-  "note":"Reference links open publisher/eBook records, legal previews, or public-domain full text. Copyrighted books are not redistributed by the portal.",
-  "subjects":[
-    {"id":"PA","name":"Part A — General Aptitude","books":[
-      {"title":"How to Solve It","author":"G. Polya","use":"Problem-solving method and reasoning discipline","read":"https://books.google.com/books/about/How_to_Solve_it.html?id=2TM4AAAAMAAJ"},
-      {"title":"Mathematical Circles","author":"D. Fomin, S. Genkin, I. Itenberg","use":"Creative problem solving and olympiad-style reasoning","read":"https://bookstore.ams.org/MAWRLD/7"},
-      {"title":"Problem-Solving Strategies","author":"Arthur Engel","use":"Advanced mathematical problem-solving techniques useful for Part A reasoning","read":"https://link.springer.com/book/10.1007/978-0-387-21598-8"},
-      {"title":"Mathematical Olympiad Challenges","author":"Titu Andreescu & Razvan Gelca","use":"Pattern recognition, combinatorics and disciplined problem solving","read":"https://link.springer.com/book/10.1007/978-0-8176-8253-2"}
-    ]},
-    {"id":"MP","name":"Mathematical Physics","books":[
-      {"title":"Mathematical Methods for Physicists","author":"Arfken, Weber & Harris","use":"Vector calculus, differential equations, special functions, transforms and complex analysis","read":"https://shop.elsevier.com/books/mathematical-methods-for-physicists/arfken/978-0-12-384654-9"},
-      {"title":"Mathematical Methods in the Physical Sciences","author":"Mary L. Boas","use":"Core methods with worked mathematical techniques","read":"https://www.wileyindia.com/mathematical-methods-in-the-physical-sciences-3ed-an-indian-adaptation.html"},
-      {"title":"Advanced Engineering Mathematics","author":"Erwin Kreyszig","use":"Differential equations, Fourier methods, complex variables and linear algebra practice","read":"https://www.wileyindia.com/advanced-engineering-mathematics-11ed-an-indian-adaptation.html"},
-      {"title":"Mathematical Physics","author":"H. K. Dass","use":"Exam-oriented mathematical physics methods and worked problems","read":"https://books.google.com/books?q=H.K.+Dass+Mathematical+Physics"},
-      {"title":"Mathematical Physics","author":"P. K. Chattopadhyay","use":"Methods, transforms, special functions and mathematical techniques for physics examinations","read":"https://books.google.com/books?q=P.K.+Chattopadhyay+Mathematical+Physics"}
-    ]},
-    {"id":"CM","name":"Classical Mechanics","books":[
-      {"title":"Classical Mechanics","author":"H. Goldstein, C. Poole & J. Safko","use":"Lagrangian/Hamiltonian mechanics, canonical transformations and rigid-body dynamics","read":"https://www.pearsoned.co.in/web/books/9788131758915_Classical-Mechanics_Herbert-Goldstein.aspx"},
-      {"title":"Classical Mechanics","author":"John R. Taylor","use":"Clear undergraduate-to-intermediate treatment of mechanics, oscillations, Lagrangian/Hamiltonian methods and problem solving","read":"https://uscibooks.aip.org/books/classical-mechanics/"},
-      {"title":"Classical Dynamics of Particles and Systems","author":"Thornton & Marion","use":"Problem-solving and standard mechanics applications","read":"https://www.cengage.com/c/classical-dynamics-of-particles-and-systems-5e-thornton/9780534408961PF/"},
-      {"title":"Mathematical Methods of Classical Mechanics","author":"V. I. Arnold","use":"Advanced mechanics and geometric viewpoint","read":"https://link.springer.com/book/10.1007/978-1-4757-2063-1"},
-      {"title":"Mechanics","author":"L. D. Landau & E. M. Lifshitz","use":"Advanced analytical mechanics, variational principles and relativistic dynamics","read":"https://link.springer.com/book/10.1007/978-3-642-47224-8"},
-      {"title":"Introduction to Classical Mechanics","author":"David Morin","use":"Rigorous mechanics problem solving, oscillations, central forces and dynamics","read":"https://www.cambridge.org/highereducation/books/introduction-to-classical-mechanics/"}
-    ]},
-    {"id":"EM","name":"Electromagnetic Theory","books":[
-      {"title":"Introduction to Electrodynamics","author":"David J. Griffiths","use":"Electrostatics, magnetostatics, Maxwell equations, waves and radiation","read":"https://www.cambridge.org/highereducation/books/introduction-to-electrodynamics/3AB220820DBB628E5A43D52C4B011ED4"},
-      {"title":"Classical Electrodynamics","author":"J. D. Jackson","use":"Advanced field theory, boundary-value problems and radiation","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/physics-11ph/electricity-11pha/classical-electrodynamics-978-1-119-77076-3"},
-      {"title":"Electricity and Magnetism","author":"Purcell & Morin","use":"Physical intuition and standard E&M problem solving","read":"https://www.cambridge.org/gb/titles/electricity-and-magnetism-3rd-edition"},
-      {"title":"Classical Electromagnetic Radiation","author":"J. B. Marion & M. A. Heald","use":"Radiation, multipoles, electromagnetic waves and field applications","read":"https://books.google.com/books?q=Marion+Heald+Classical+Electromagnetic+Radiation"},
-      {"title":"Optics","author":"Eugene Hecht","use":"Geometrical optics, interference, diffraction, polarization and wave optics","read":"https://www.pearson.com/en-us/subject-catalog/p/optics/P200000006159"},
-      {"title":"Introduction to Modern Optics","author":"Grant R. Fowles","use":"Interference, diffraction, polarization, coherence and optical phenomena","read":"https://books.google.com/books?q=Grant+Fowles+Introduction+to+Modern+Optics"}
-    ]},
-    {"id":"QM","name":"Quantum Mechanics","books":[
-      {"title":"Introduction to Quantum Mechanics","author":"David J. Griffiths & Darrell Schroeter","use":"Foundations, operators, 1-D systems, angular momentum and approximation methods","read":"https://www.cambridge.org/highereducation/books/introduction-to-quantum-mechanics/990799CA07A83FC5312402AF6860311E"},
-      {"title":"Quantum Mechanics: Concepts and Applications","author":"Nouredine Zettili","use":"Problem-heavy quantum mechanics reference with extensive solved examples and exercises","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/quantum-mechanics-978-1-118-30789-2"},
-      {"title":"Principles of Quantum Mechanics","author":"R. Shankar","use":"Rigorous mathematical formulation, harmonic oscillator, angular momentum and perturbation theory","read":"https://link.springer.com/book/10.1007/978-1-4757-0576-8"},
-      {"title":"Modern Quantum Mechanics","author":"J. J. Sakurai & Jim Napolitano","use":"Graduate-level operator methods and modern quantum mechanics","read":"https://www.cambridge.org/highereducation/books/modern-quantum-mechanics/DF43277E8AEDF83CC12EA62887C277DC"},
-      {"title":"Quantum Mechanics","author":"Eugen Merzbacher","use":"Advanced quantum theory, angular momentum, approximation methods and scattering","read":"https://www.wiley.com/en-us/Quantum+Mechanics%2C+3rd+Edition-p-9780471880181"},
-      {"title":"Quantum Mechanics","author":"Leonard I. Schiff","use":"Classical graduate reference for formalism, approximation theory and scattering","read":"https://www.mheducation.com/highered/product/quantum-mechanics-schiff.html"}
-    ]},
-    {"id":"TH","name":"Thermodynamics & Statistical Physics","books":[
-      {"title":"An Introduction to Thermal Physics","author":"Daniel V. Schroeder","use":"Thermodynamics, ensembles, entropy and statistical reasoning","read":"https://books.google.com/books/about/An_Introduction_to_Thermal_Physics.html"},
-      {"title":"Fundamentals of Statistical and Thermal Physics","author":"Frederick Reif","use":"Detailed statistical mechanics and kinetic theory","read":"https://books.google.com/books?id=KUQ-mgEACAAJ"},
-      {"title":"Statistical Physics","author":"F. Mandl","use":"Compact graduate-level statistical physics reference","read":"https://uat.store.wiley.com/en-us/statistical-physics-2nd-edition-p-9781118723432"},
-      {"title":"Thermal Physics","author":"Charles Kittel & Herbert Kroemer","use":"Thermodynamic laws, ensembles, quantum statistics and phase transitions","read":"https://www.wiley.com/en-us/Thermal+Physics%2C+2nd+Edition-p-9780716710882"},
-      {"title":"Statistical Mechanics","author":"R. K. Pathria & Paul D. Beale","use":"Graduate statistical mechanics, ensembles, quantum gases and phase transitions","read":"https://www.elsevier.com/books/statistical-mechanics/pathria/978-0-12-382188-1"},
-      {"title":"Statistical Physics","author":"L. D. Landau & E. M. Lifshitz","use":"Advanced statistical physics, thermodynamics and quantum statistical theory","read":"https://www.elsevier.com/books/statistical-physics/landau/978-0-08-057046-4"}
-    ]},
-    {"id":"EE","name":"Electronics & Experimental Methods","books":[
-      {"title":"Microelectronic Circuits","author":"Sedra & Smith","use":"Diodes, transistors, amplifiers and analog circuit analysis","read":"https://learninglink.oup.com/access/sedra8e/sedra8e"},
-      {"title":"The Art of Electronics","author":"Paul Horowitz & Winfield Hill","use":"Practical analog/digital electronics and instrumentation intuition","read":"https://artofelectronics.net/"},
-      {"title":"Radiation Detection and Measurement","author":"Glenn F. Knoll","use":"Detectors, counting statistics and experimental nuclear/particle techniques","read":"https://books.google.com/books/about/Radiation_Detection_and_Measurement.html"},
-      {"title":"Electronic Devices and Circuit Theory","author":"Robert L. Boylestad & Louis Nashelsky","use":"Diodes, BJTs, FETs, amplifiers and basic electronic circuits","read":"https://www.pearson.com/en-us/subject-catalog/p/electronic-devices-and-circuit-theory/P200000003157"},
-      {"title":"Experimental Methods in Modern Physics","author":"R. M. Eisberg & L. S. Levine","use":"Measurement principles, uncertainties, detectors and experimental analysis","read":"https://books.google.com/books?q=Experimental+Methods+in+Modern+Physics+Eisberg"},
-      {"title":"Data Reduction and Error Analysis for the Physical Sciences","author":"Philip R. Bevington & D. Keith Robinson","use":"Uncertainty propagation, least squares, fitting and statistical data analysis","read":"https://www.mheducation.com/highered/product/data-reduction-error-analysis-physical-sciences-bevington.html"}
-    ]},
-    {"id":"AM","name":"Atomic & Molecular Physics","books":[
-      {"title":"Atomic Physics","author":"C. J. Foot","use":"Atomic structure, angular momentum, spectra and modern atomic physics","read":"https://academic.oup.com/book/52827"},
-      {"title":"Introduction to Atomic Spectra","author":"H. E. White","use":"Spectroscopic structure and selection rules","read":"https://search.worldcat.org/title/1035713783"},
-      {"title":"Molecular Quantum Mechanics","author":"P. W. Atkins & R. S. Friedman","use":"Molecular rotation, vibration and electronic spectra","read":"https://learninglink.oup.com/access/atkins-friedman5e/atkins-friedman5e"},
-      {"title":"Atoms, Molecules and Photons","author":"W. Demtröder","use":"Atomic structure, molecular spectra, lasers and photon interactions","read":"https://link.springer.com/book/10.1007/978-3-642-10298-3"},
-      {"title":"Atomic and Molecular Spectroscopy","author":"S. N. Thakur & S. G. Nakhate","use":"Spectroscopy, selection rules and atomic/molecular transitions","read":"https://books.google.com/books?q=Atomic+and+Molecular+Spectroscopy+Thakur+Nakhate"},
-      {"title":"Introduction to Atomic and Molecular Spectroscopy","author":"V. K. Jain","use":"Exam-focused treatment of atomic and molecular spectra","read":"https://books.google.com/books?q=V.K.+Jain+Introduction+to+Atomic+and+Molecular+Spectroscopy"}
-    ]},
-    {"id":"CP","name":"Condensed Matter Physics","books":[
-      {"title":"Introduction to Solid State Physics","author":"Charles Kittel","use":"Crystal structure, reciprocal lattice, phonons, bands, magnetism and superconductivity","read":"https://www.wileyindia.com/kittel-s-introduction-to-solid-state-physics-wiley-india-edition.html"},
-      {"title":"Solid State Physics","author":"N. W. Ashcroft & N. D. Mermin","use":"Deeper treatment of electrons, phonons and response of solids","read":"https://www.cengage.com/c/solid-state-physics-1e-ashcroft/9780030839931/"},
-      {"title":"Fundamentals of Condensed Matter and Crystalline Physics","author":"David L. Sidebottom","use":"Accessible treatment of crystals, electrons and superconductivity","read":"https://www.cambridge.org/core/books/abs/fundamentals-of-condensed-matter-and-crystalline-physics"},
-      {"title":"Solid State Physics","author":"A. J. Dekker","use":"Crystals, lattice vibrations, electronic properties, semiconductors and magnetism","read":"https://books.google.com/books?q=A.J.+Dekker+Solid+State+Physics"},
-      {"title":"Elementary Solid State Physics","author":"M. Ali Omar","use":"Semiconductor physics, band theory, crystal structure and magnetic properties","read":"https://books.google.com/books?q=M.+Ali+Omar+Elementary+Solid+State+Physics"},
-      {"title":"Introduction to Solid State Physics","author":"H. P. Myers","use":"Accessible solid-state reference covering crystal, electronic and magnetic properties","read":"https://books.google.com/books?q=H.P.+Myers+Introduction+to+Solid+State+Physics"}
-    ]},
-    {"id":"NP","name":"Nuclear & Particle Physics","books":[
-      {"title":"Introductory Nuclear Physics","author":"Kenneth S. Krane","use":"Nuclear properties, models, decay, reactions and forces","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/physics-11ph/nuclear-high-energy-physics-11ph2/introductory-nuclear-physics-978-0-471-80553-3"},
-      {"title":"Introduction to Elementary Particles","author":"David J. Griffiths","use":"Particle physics foundations, symmetries, quarks and interactions","read":"https://www.cambridge.org/highereducation/books/introduction-to-elementary-particle-physics/9941F6C45FE55255F930BDD16665FEE0"},
-      {"title":"Nuclear Physics","author":"S. N. Ghoshal","use":"Indian exam-oriented nuclear physics reference","read":"https://books.google.com/books/about/Nuclear_Physics.html"},
-      {"title":"Nuclear Physics: Principles and Applications","author":"John Lilley","use":"Nuclear structure, decay, reactions, detectors and applications","read":"https://www.wiley.com/en-us/Nuclear+Physics%3A+Principles+and+Applications-p-9780470845228"},
-      {"title":"Quarks and Leptons","author":"Francis Halzen & Alan D. Martin","use":"Relativistic quantum mechanics, quarks, leptons and fundamental interactions","read":"https://www.wiley.com/en-us/Quarks+and+Leptons%3A+An+Introductory+Course+in+Modern+Particle+Physics-p-9780471887416"},
-      {"title":"Nuclear Physics","author":"S. S. M. Wong","use":"Advanced nuclear structure, reactions and nuclear models","read":"https://www.wiley.com/en-us/Introductory+Nuclear+Physics-p-9783527411764"}
-    ]},
-    {"id":"REL","name":"Relativity","books":[
-      {"title":"Spacetime and Geometry","author":"Sean Carroll","use":"Special relativity foundations and an introduction to general relativity","read":"https://www.cambridge.org/highereducation/books/spacetime-and-geometry/38EDABF9E2BADCE6FBCF2B22DC12BFFE"},
-      {"title":"A First Course in General Relativity","author":"Bernard Schutz","use":"Metric, geodesics, curvature and Einstein equation fundamentals","read":"https://www.cambridge.org/highereducation/books/a-first-course-in-general-relativity/933C1A8C84420EF1349B676F0D70A065"},
-      {"title":"Special Relativity","author":"A. P. French","use":"Lorentz transformations, four-vectors and relativistic dynamics","read":"https://www.routledge.com/Special-Relativity/French/p/book/9780748764228"},
-      {"title":"Introduction to Special Relativity","author":"Robert Resnick","use":"Four-vectors, relativistic dynamics, energy-momentum and spacetime","read":"https://books.google.com/books?q=Robert+Resnick+Introduction+to+Special+Relativity"},
-      {"title":"Gravitation","author":"Misner, Thorne & Wheeler","use":"Advanced spacetime geometry, gravitation and general relativity","read":"https://press.princeton.edu/books/hardcover/9780691177793/gravitation"}
-    ]}
+  "version": "V5.13",
+  "title": "CSIR-NET Physical Sciences Reference Library",
+  "note": "Reference links open publisher/eBook records, legal previews, or public-domain full text. Copyrighted books are not redistributed by the portal.",
+  "subjects": [
+    {
+      "id": "PA",
+      "name": "Part A — General Aptitude",
+      "books": [
+        {"title":"How to Solve It","author":"G. Polya","use":"Problem-solving method and reasoning discipline","read":"https://books.google.com/books/about/How_to_Solve_it.html?id=2TM4AAAAMAAJ"},
+        {"title":"Mathematical Circles","author":"D. Fomin, S. Genkin, I. Itenberg","use":"Creative problem solving and olympiad-style reasoning","read":"https://bookstore.ams.org/MAWRLD/7"},
+        {"title":"Problem-Solving Strategies","author":"Arthur Engel","use":"Advanced mathematical problem-solving techniques useful for Part A reasoning","read":"https://link.springer.com/book/10.1007/978-0-387-21598-8"},
+        {"title":"Mathematical Olympiad Challenges","author":"Titu Andreescu & Razvan Gelca","use":"Pattern recognition, combinatorics and disciplined problem solving","read":"https://link.springer.com/book/10.1007/978-0-8176-8253-2"}
+      ]
+    },
+    {
+      "id": "MP",
+      "name": "Mathematical Physics",
+      "books": [
+        {"title":"Mathematical Methods for Physicists","author":"Arfken, Weber & Harris","use":"Vector calculus, differential equations, special functions, transforms and complex analysis","read":"https://shop.elsevier.com/books/mathematical-methods-for-physicists/arfken/978-0-12-384654-9"},
+        {"title":"Mathematical Methods in the Physical Sciences","author":"Mary L. Boas","use":"Core methods with worked mathematical techniques","read":"https://www.wileyindia.com/mathematical-methods-in-the-physical-sciences-3ed-an-indian-adaptation.html"},
+        {"title":"Advanced Engineering Mathematics","author":"Erwin Kreyszig","use":"Differential equations, Fourier methods, complex variables and linear algebra practice","read":"https://www.wileyindia.com/advanced-engineering-mathematics-11ed-an-indian-adaptation.html"},
+        {"title":"Mathematical Physics","author":"H. K. Dass","use":"Exam-oriented mathematical physics methods and worked problems","read":"https://books.google.com/books?q=H.K.+Dass+Mathematical+Physics"},
+        {"title":"Mathematical Physics","author":"P. K. Chattopadhyay","use":"Methods, transforms, special functions and mathematical techniques for physics examinations","read":"https://books.google.com/books?q=P.K.+Chattopadhyay+Mathematical+Physics"}
+      ]
+    },
+    {
+      "id": "CM",
+      "name": "Classical Mechanics",
+      "books": [
+        {"title":"Classical Mechanics","author":"H. Goldstein, C. Poole & J. Safko","use":"Lagrangian/Hamiltonian mechanics, canonical transformations and rigid-body dynamics","read":"https://in.pearson.com/content/dam/region-growth/india/pearson-india/in-pdc/pdf/new-catalog-pdf/Catalogue-Math-Phys-Chem-Bio-2026.pdf"},
+        {"title":"Classical Mechanics","author":"John R. Taylor","use":"Clear undergraduate-to-intermediate treatment of mechanics, oscillations, Lagrangian/Hamiltonian methods and problem solving","read":"https://uscibooks.aip.org/books/classical-mechanics/"},
+        {"title":"Classical Dynamics of Particles and Systems","author":"Thornton & Marion","use":"Problem-solving and standard mechanics applications","read":"https://www.cengage.com/c/classical-dynamics-of-particles-and-systems-5e-thornton/9780534408961PF/"},
+        {"title":"Mathematical Methods of Classical Mechanics","author":"V. I. Arnold","use":"Advanced mechanics and geometric viewpoint","read":"https://link.springer.com/book/10.1007/978-1-4757-2063-1"},
+        {"title":"Mechanics","author":"L. D. Landau & E. M. Lifshitz","use":"Advanced analytical mechanics, variational principles and relativistic dynamics","read":"https://link.springer.com/book/10.1007/978-3-642-47224-8"},
+        {"title":"Introduction to Classical Mechanics","author":"David Morin","use":"Rigorous mechanics problem solving, oscillations, central forces and dynamics","read":"https://www.cambridge.org/highereducation/books/introduction-to-classical-mechanics/"}
+      ]
+    },
+    {
+      "id": "EM",
+      "name": "Electromagnetic Theory",
+      "books": [
+        {"title":"Introduction to Electrodynamics","author":"David J. Griffiths","use":"Electrostatics, magnetostatics, Maxwell equations, waves and radiation","read":"https://www.cambridge.org/highereducation/books/introduction-to-electrodynamics/3AB220820DBB628E5A43D52C4B011ED4"},
+        {"title":"Classical Electrodynamics","author":"J. D. Jackson","use":"Advanced field theory, boundary-value problems and radiation","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/physics-11ph/electricity-11pha/classical-electrodynamics-978-1-119-77076-3"},
+        {"title":"Electricity and Magnetism","author":"Purcell & Morin","use":"Physical intuition and standard E&M problem solving","read":"https://www.cambridge.org/gb/titles/electricity-and-magnetism-3rd-edition"},
+        {"title":"Classical Electromagnetic Radiation","author":"J. B. Marion & M. A. Heald","use":"Radiation, multipoles, electromagnetic waves and field applications","read":"https://books.google.com/books?q=Marion+Heald+Classical+Electromagnetic+Radiation"},
+        {"title":"Optics","author":"Eugene Hecht","use":"Geometrical optics, interference, diffraction, polarization and wave optics","read":"https://www.pearson.com/en-us/subject-catalog/p/optics/P200000006159"},
+        {"title":"Introduction to Modern Optics","author":"Grant R. Fowles","use":"Interference, diffraction, polarization, coherence and optical phenomena","read":"https://books.google.com/books?q=Grant+Fowles+Introduction+to+Modern+Optics"}
+      ]
+    },
+    {
+      "id": "QM",
+      "name": "Quantum Mechanics",
+      "books": [
+        {"title":"Introduction to Quantum Mechanics","author":"David J. Griffiths & Darrell Schroeter","use":"Foundations, operators, 1-D systems, angular momentum and approximation methods","read":"https://www.cambridge.org/highereducation/books/introduction-to-quantum-mechanics/990799CA07A83FC5312402AF6860311E"},
+        {"title":"Quantum Mechanics: Concepts and Applications","author":"Nouredine Zettili","use":"Problem-heavy quantum mechanics reference with extensive solved examples and exercises","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/quantum-mechanics-978-1-118-30789-2"},
+        {"title":"Principles of Quantum Mechanics","author":"R. Shankar","use":"Rigorous mathematical formulation, harmonic oscillator, angular momentum and perturbation theory","read":"https://link.springer.com/book/10.1007/978-1-4757-0576-8"},
+        {"title":"Modern Quantum Mechanics","author":"J. J. Sakurai & Jim Napolitano","use":"Graduate-level operator methods and modern quantum mechanics","read":"https://www.cambridge.org/highereducation/books/modern-quantum-mechanics/DF43277E8AEDF83CC12EA62887C277DC"},
+        {"title":"Quantum Mechanics","author":"Eugen Merzbacher","use":"Advanced quantum theory, angular momentum, approximation methods and scattering","read":"https://www.wiley.com/en-us/Quantum+Mechanics%2C+3rd+Edition-p-9780471880181"},
+        {"title":"Quantum Mechanics","author":"Leonard I. Schiff","use":"Classical graduate reference for formalism, approximation theory and scattering","read":"https://www.mheducation.com/highered/product/quantum-mechanics-schiff.html"}
+      ]
+    },
+    {
+      "id": "TH",
+      "name": "Thermodynamics & Statistical Physics",
+      "books": [
+        {"title":"An Introduction to Thermal Physics","author":"Daniel V. Schroeder","use":"Thermodynamics, ensembles, entropy and statistical reasoning","read":"https://books.google.com/books/about/An_Introduction_to_Thermal_Physics.html"},
+        {"title":"Fundamentals of Statistical and Thermal Physics","author":"Frederick Reif","use":"Detailed statistical mechanics and kinetic theory","read":"https://books.google.com/books?id=KUQ-mgEACAAJ"},
+        {"title":"Statistical Physics","author":"F. Mandl","use":"Compact graduate-level statistical physics reference","read":"https://uat.store.wiley.com/en-us/statistical-physics-2nd-edition-p-9781118723432"},
+        {"title":"Thermal Physics","author":"Charles Kittel & Herbert Kroemer","use":"Thermodynamic laws, ensembles, quantum statistics and phase transitions","read":"https://www.wiley.com/en-us/Thermal+Physics%2C+2nd+Edition-p-9780716710882"},
+        {"title":"Statistical Mechanics","author":"R. K. Pathria & Paul D. Beale","use":"Graduate statistical mechanics, ensembles, quantum gases and phase transitions","read":"https://www.elsevier.com/books/statistical-mechanics/pathria/978-0-12-382188-1"},
+        {"title":"Statistical Physics","author":"L. D. Landau & E. M. Lifshitz","use":"Advanced statistical physics, thermodynamics and quantum statistical theory","read":"https://www.elsevier.com/books/statistical-physics/landau/978-0-08-057046-4"}
+      ]
+    },
+    {
+      "id": "EE",
+      "name": "Electronics & Experimental Methods",
+      "books": [
+        {"title":"Microelectronic Circuits","author":"Sedra & Smith","use":"Diodes, transistors, amplifiers and analog circuit analysis","read":"https://learninglink.oup.com/access/sedra8e/sedra8e"},
+        {"title":"The Art of Electronics","author":"Paul Horowitz & Winfield Hill","use":"Practical analog/digital electronics and instrumentation intuition","read":"https://artofelectronics.net/"},
+        {"title":"Radiation Detection and Measurement","author":"Glenn F. Knoll","use":"Detectors, counting statistics and experimental nuclear/particle techniques","read":"https://books.google.com/books/about/Radiation_Detection_and_Measurement.html"},
+        {"title":"Electronic Devices and Circuit Theory","author":"Robert L. Boylestad & Louis Nashelsky","use":"Diodes, BJTs, FETs, amplifiers and basic electronic circuits","read":"https://www.pearson.com/en-us/subject-catalog/p/electronic-devices-and-circuit-theory/P200000003157"},
+        {"title":"Experimental Methods in Modern Physics","author":"R. M. Eisberg & L. S. Levine","use":"Measurement principles, uncertainties, detectors and experimental analysis","read":"https://books.google.com/books?q=Experimental+Methods+in+Modern+Physics+Eisberg"},
+        {"title":"Data Reduction and Error Analysis for the Physical Sciences","author":"Philip R. Bevington & D. Keith Robinson","use":"Uncertainty propagation, least squares, fitting and statistical data analysis","read":"https://www.mheducation.com/highered/product/data-reduction-error-analysis-physical-sciences-bevington.html"}
+      ]
+    },
+    {
+      "id": "AM",
+      "name": "Atomic & Molecular Physics",
+      "books": [
+        {"title":"Atomic Physics","author":"C. J. Foot","use":"Atomic structure, angular momentum, spectra and modern atomic physics","read":"https://academic.oup.com/book/52827"},
+        {"title":"Introduction to Atomic Spectra","author":"H. E. White","use":"Spectroscopic structure and selection rules","read":"https://search.worldcat.org/title/1035713783"},
+        {"title":"Molecular Quantum Mechanics","author":"P. W. Atkins & R. S. Friedman","use":"Molecular rotation, vibration and electronic spectra","read":"https://learninglink.oup.com/access/atkins-friedman5e/atkins-friedman5e"},
+        {"title":"Atoms, Molecules and Photons","author":"W. Demtröder","use":"Atomic structure, molecular spectra, lasers and photon interactions","read":"https://link.springer.com/book/10.1007/978-3-642-10298-3"},
+        {"title":"Atomic and Molecular Spectroscopy","author":"S. N. Thakur & S. G. Nakhate","use":"Spectroscopy, selection rules and atomic/molecular transitions","read":"https://books.google.com/books?q=Atomic+and+Molecular+Spectroscopy+Thakur+Nakhate"},
+        {"title":"Introduction to Atomic and Molecular Spectroscopy","author":"V. K. Jain","use":"Exam-focused treatment of atomic and molecular spectra","read":"https://books.google.com/books?q=V.K.+Jain+Introduction+to+Atomic+and+Molecular+Spectroscopy"}
+      ]
+    },
+    {
+      "id": "CP",
+      "name": "Condensed Matter Physics",
+      "books": [
+        {"title":"Introduction to Solid State Physics","author":"Charles Kittel","use":"Crystal structure, reciprocal lattice, phonons, bands, magnetism and superconductivity","read":"https://www.wileyindia.com/kittel-s-introduction-to-solid-state-physics-wiley-india-edition.html"},
+        {"title":"Solid State Physics","author":"N. W. Ashcroft & N. D. Mermin","use":"Deeper treatment of electrons, phonons and response of solids","read":"https://www.cengage.com/c/solid-state-physics-1e-ashcroft/9780030839931/"},
+        {"title":"Fundamentals of Condensed Matter and Crystalline Physics","author":"David L. Sidebottom","use":"Accessible treatment of crystals, electrons and superconductivity","read":"https://www.cambridge.org/core/books/abs/fundamentals-of-condensed-matter-and-crystalline-physics"},
+        {"title":"Solid State Physics","author":"A. J. Dekker","use":"Crystals, lattice vibrations, electronic properties, semiconductors and magnetism","read":"https://books.google.com/books?q=A.J.+Dekker+Solid+State+Physics"},
+        {"title":"Elementary Solid State Physics","author":"M. Ali Omar","use":"Semiconductor physics, band theory, crystal structure and magnetic properties","read":"https://books.google.com/books?q=M.+Ali+Omar+Elementary+Solid+State+Physics"},
+        {"title":"Introduction to Solid State Physics","author":"H. P. Myers","use":"Accessible solid-state reference covering crystal, electronic and magnetic properties","read":"https://books.google.com/books?q=H.P.+Myers+Introduction+to+Solid+State+Physics"}
+      ]
+    },
+    {
+      "id": "NP",
+      "name": "Nuclear & Particle Physics",
+      "books": [
+        {"title":"Introductory Nuclear Physics","author":"Kenneth S. Krane","use":"Nuclear properties, models, decay, reactions and forces","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/physics-11ph/nuclear-high-energy-physics-11ph2/introductory-nuclear-physics-978-0-471-80553-3"},
+        {"title":"Introduction to Elementary Particles","author":"David J. Griffiths","use":"Particle physics foundations, symmetries, quarks and interactions","read":"https://www.cambridge.org/highereducation/books/introduction-to-elementary-particle-physics/9941F6C45FE55255F930BDD16665FEE0"},
+        {"title":"Nuclear Physics","author":"S. N. Ghoshal","use":"Indian exam-oriented nuclear physics reference","read":"https://books.google.com/books/about/Nuclear_Physics.html"},
+        {"title":"Nuclear Physics: Principles and Applications","author":"John Lilley","use":"Nuclear structure, decay, reactions, detectors and applications","read":"https://www.wiley.com/en-us/Nuclear+Physics%3A+Principles+and+Applications-p-9780470845228"},
+        {"title":"Quarks and Leptons","author":"Francis Halzen & Alan D. Martin","use":"Relativistic quantum mechanics, quarks, leptons and fundamental interactions","read":"https://www.wiley.com/en-us/Quarks+and+Leptons%3A+An+Introductory+Course+in+Modern+Particle+Physics-p-9780471887416"},
+        {"title":"Nuclear Physics","author":"S. S. M. Wong","use":"Advanced nuclear structure, reactions and nuclear models","read":"https://www.wiley.com/en-us/Introductory+Nuclear+Physics-p-9783527411764"}
+      ]
+    },
+    {
+      "id": "REL",
+      "name": "Relativity",
+      "books": [
+        {"title":"Spacetime and Geometry","author":"Sean Carroll","use":"Special relativity foundations and an introduction to general relativity","read":"https://www.cambridge.org/highereducation/books/spacetime-and-geometry/38EDABF9E2BADCE6FBCF2B22DC12BFFE"},
+        {"title":"A First Course in General Relativity","author":"Bernard Schutz","use":"Metric, geodesics, curvature and Einstein equation fundamentals","read":"https://www.cambridge.org/highereducation/books/a-first-course-in-general-relativity/933C1A8C84420EF1349B676F0D70A065"},
+        {"title":"Special Relativity","author":"A. P. French","use":"Lorentz transformations, four-vectors and relativistic dynamics","read":"https://www.routledge.com/Special-Relativity/French/p/book/9780748764228"},
+        {"title":"Introduction to Special Relativity","author":"Robert Resnick","use":"Four-vectors, relativistic dynamics, energy-momentum and spacetime","read":"https://books.google.com/books?q=Robert+Resnick+Introduction+to+Special+Relativity"},
+        {"title":"Gravitation","author":"Misner, Thorne & Wheeler","use":"Advanced spacetime geometry, gravitation and general relativity","read":"https://press.princeton.edu/books/hardcover/9780691177793/gravitation"}
+      ]
+    }
   ],
-  "free_full_text":[
+  "free_full_text": [
     {"title":"The Theory of Heat Radiation","author":"Max Planck","subject":"Thermodynamics & Statistical Physics","url":"https://www.gutenberg.org/ebooks/40030","format":"Free full text / PDF"},
     {"title":"Eight Lectures on Theoretical Physics","author":"Max Planck","subject":"Mathematical Physics","url":"https://www.gutenberg.org/files/39017/39017-pdf.pdf","format":"Free full-text PDF"},
     {"title":"Relativity: The Special and General Theory","author":"Albert Einstein","subject":"Relativity","url":"https://www.gutenberg.org/ebooks/5001","format":"Free full text"}
