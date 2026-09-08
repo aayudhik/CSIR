@@ -1,7 +1,7 @@
 {
-  "version":"V5.8.1",
+  "version":"V5.12",
   "title":"CSIR-NET Physical Sciences Reference Library",
-  "note":"Reference links now open direct book records, publisher/eBook pages, or legal previews. Copyrighted books are not redistributed by the portal.",
+  "note":"Reference links open direct book records, publisher/eBook pages, or legal previews. Copyrighted books are not redistributed by the portal.",
   "subjects":[
     {"id":"PA","name":"Part A — General Aptitude","books":[
       {"title":"How to Solve It","author":"G. Polya","use":"Problem-solving method and reasoning discipline","read":"https://books.google.com/books/about/How_to_Solve_it.html?id=2TM4AAAAMAAJ"},
@@ -13,17 +13,19 @@
       {"title":"Advanced Engineering Mathematics","author":"Erwin Kreyszig","use":"Differential equations, Fourier methods, complex variables and linear algebra practice","read":"https://www.wileyindia.com/advanced-engineering-mathematics-11ed-an-indian-adaptation.html"}
     ]},
     {"id":"CM","name":"Classical Mechanics","books":[
-      {"title":"Classical Mechanics","author":"H. Goldstein, C. Poole & J. Safko","use":"Lagrangian/Hamiltonian mechanics, canonical transformations and rigid-body dynamics","read":"https://www.pearson.com/en-gb/subject-catalog/p/Goldstein-Classical-Mechanics-Pearson-New-International-Edition-3rd-Edition/P200000004309"},
+      {"title":"Classical Mechanics","author":"H. Goldstein, C. Poole & J. Safko","use":"Lagrangian/Hamiltonian mechanics, canonical transformations and rigid-body dynamics","read":"https://www.pearsoned.co.in/web/books/9788131758915_Classical-Mechanics_Herbert-Goldstein.aspx"},
+      {"title":"Classical Mechanics","author":"John R. Taylor","use":"Clear undergraduate-to-intermediate treatment of mechanics, oscillations, Lagrangian/Hamiltonian methods and problem solving","read":"https://uscibooks.aip.org/books/classical-mechanics/"},
       {"title":"Classical Dynamics of Particles and Systems","author":"Thornton & Marion","use":"Problem-solving and standard mechanics applications","read":"https://www.cengage.com/c/classical-dynamics-of-particles-and-systems-5e-thornton/9780534408961PF/"},
       {"title":"Mathematical Methods of Classical Mechanics","author":"V. I. Arnold","use":"Advanced mechanics and geometric viewpoint","read":"https://link.springer.com/book/10.1007/978-1-4757-2063-1"}
     ]},
     {"id":"EM","name":"Electromagnetic Theory","books":[
-      {"title":"Introduction to Electrodynamics","author":"David J. Griffiths","use":"Electrostatics, magnetostatics, Maxwell equations, waves and radiation","read":"https://www.cambridge.org/highereducation/books/introduction-to-electrodynamics/"},
+      {"title":"Introduction to Electrodynamics","author":"David J. Griffiths","use":"Electrostatics, magnetostatics, Maxwell equations, waves and radiation","read":"https://www.cambridge.org/highereducation/books/introduction-to-electrodynamics/3AB220820DBB628E5A43D52C4B011ED4"},
       {"title":"Classical Electrodynamics","author":"J. D. Jackson","use":"Advanced field theory, boundary-value problems and radiation","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/physics-11ph/electricity-11pha/classical-electrodynamics-978-1-119-77076-3"},
       {"title":"Electricity and Magnetism","author":"Purcell & Morin","use":"Physical intuition and standard E&M problem solving","read":"https://www.cambridge.org/gb/titles/electricity-and-magnetism-3rd-edition"}
     ]},
     {"id":"QM","name":"Quantum Mechanics","books":[
       {"title":"Introduction to Quantum Mechanics","author":"David J. Griffiths & Darrell Schroeter","use":"Foundations, operators, 1-D systems, angular momentum and approximation methods","read":"https://www.cambridge.org/highereducation/books/introduction-to-quantum-mechanics/990799CA07A83FC5312402AF6860311E"},
+      {"title":"Quantum Mechanics: Concepts and Applications","author":"Nouredine Zettili","use":"Problem-heavy quantum mechanics reference with extensive solved examples and exercises","read":"https://www.wiley-vch.de/en/areas-interest/natural-sciences/quantum-mechanics-978-1-118-30789-2"},
       {"title":"Principles of Quantum Mechanics","author":"R. Shankar","use":"Rigorous mathematical formulation, harmonic oscillator, angular momentum and perturbation theory","read":"https://link.springer.com/book/10.1007/978-1-4757-0576-8"},
       {"title":"Modern Quantum Mechanics","author":"J. J. Sakurai & Jim Napolitano","use":"Graduate-level operator methods and modern quantum mechanics","read":"https://www.cambridge.org/highereducation/books/modern-quantum-mechanics/DF43277E8AEDF83CC12EA62887C277DC"}
     ]},
